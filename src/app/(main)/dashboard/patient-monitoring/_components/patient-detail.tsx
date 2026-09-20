@@ -70,6 +70,9 @@ function NumericVital({
 }
 
 export function PatientDetail({ hasActiveAlarm, patient }: PatientDetailProps) {
+  if (!patient) {
+    return <div className="p-8 text-center text-muted-foreground text-sm">No active records. System connected to live backend stream.</div>;
+  }
   return (
     <div className="grid min-w-0 xl:grid-cols-[minmax(0,1fr)_15.5rem]">
       <div className="min-w-0 border-border after:hidden xl:grid xl:grid-rows-6 xl:border-r xl:after:block xl:after:border-border xl:after:border-b">

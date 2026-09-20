@@ -1,49 +1,97 @@
-import Link from "next/link";
-
-import { Command } from "lucide-react";
+import { ArrowRight, Bot, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import type { Metadata } from "next";
 
+import { Badge } from "@/components/ui/badge";
+
 import { LoginForm } from "../../_components/login-form";
-import { GoogleButton } from "../../_components/social-auth/google-button";
 
 export const metadata: Metadata = {
-  title: "Open Source Split Screen Login Page with shadcn/ui",
-  description:
-    "Explore an open source split screen login page with email and password fields, social sign-in, and a registration link.",
+  title: "Kalo Systems - Secure Login",
+  description: "Login to Kalo Systems AI Client Acquisition & Financial OS Dashboard",
 };
 
 export default function LoginV1() {
   return (
-    <div className="flex h-dvh">
-      <div className="hidden bg-primary lg:block lg:w-1/3">
-        <div className="flex h-full flex-col items-center justify-center p-12 text-center">
-          <div className="space-y-6">
-            <Command className="mx-auto size-12 text-primary-foreground" />
-            <div className="space-y-2">
-              <h1 className="font-light text-5xl text-primary-foreground">Hello again</h1>
-              <p className="text-primary-foreground/80 text-xl">Login to continue</p>
+    <div className="flex h-dvh w-full overflow-hidden bg-background">
+      {/* Left Column: Impeccable Branding & Feature Showcase */}
+      <div className="relative hidden w-1/2 flex-col justify-between border-r bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 p-12 text-white lg:flex">
+        {/* Subtle Background Glow */}
+        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute bottom-0 right-10 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
+
+        {/* Brand Header */}
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/30">
+            <Sparkles className="size-5" />
+          </div>
+          <div>
+            <span className="font-bold text-xl tracking-tight">Kalo Systems</span>
+            <span className="ml-2 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] text-neutral-300">
+              Enterprise v2.2
+            </span>
+          </div>
+        </div>
+
+        {/* Center Hero Content */}
+        <div className="relative z-10 my-auto space-y-6 max-w-lg">
+          <Badge
+            variant="outline"
+            className="border-primary/40 bg-primary/10 text-primary-foreground px-3 py-1 text-xs"
+          >
+            ⚡ AI Client Acquisition OS
+          </Badge>
+          <h1 className="font-extrabold text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+            Sub-45s Speed-to-Lead & Autonomous AI Fleet
+          </h1>
+          <p className="text-neutral-400 text-sm leading-relaxed">
+            Powering 5 Canadian branch hubs with FSA postal routing, CASL regulatory compliance shield, and LangGraph
+            Multi-Agent orchestration.
+          </p>
+
+          <div className="grid grid-cols-2 gap-3 pt-4">
+            <div className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-md">
+              <Zap className="size-4 text-amber-400 shrink-0" />
+              <span className="font-medium text-xs text-neutral-200">Sub-45s AI Voice Calls</span>
+            </div>
+            <div className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-md">
+              <ShieldCheck className="size-4 text-emerald-400 shrink-0" />
+              <span className="font-medium text-xs text-neutral-200">CASL Audit Shield</span>
+            </div>
+            <div className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-md">
+              <Bot className="size-4 text-blue-400 shrink-0" />
+              <span className="font-medium text-xs text-neutral-200">Paperclip AI Fleet</span>
+            </div>
+            <div className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-md">
+              <Sparkles className="size-4 text-purple-400 shrink-0" />
+              <span className="font-medium text-xs text-neutral-200">ciel/intentleads Engine</span>
             </div>
           </div>
         </div>
+
+        {/* Footer info */}
+        <div className="relative z-10 flex items-center justify-between text-neutral-500 text-xs border-t border-white/10 pt-6">
+          <span>© 2026 Kalo Systems Inc.</span>
+          <span>5 Canadian Locations Active</span>
+        </div>
       </div>
 
-      <div className="flex w-full items-center justify-center bg-background p-8 lg:w-2/3">
-        <div className="w-full max-w-md space-y-10 py-24 lg:py-32">
-          <div className="space-y-4 text-center">
-            <div className="font-medium tracking-tight">Login</div>
-            <div className="mx-auto max-w-xl text-muted-foreground">
-              Welcome back. Enter your email and password, let&apos;s hope you remember them this time.
+      {/* Right Column: Impeccable Login Form */}
+      <div className="flex w-full items-center justify-center p-8 lg:w-1/2">
+        <div className="w-full max-w-md space-y-8 rounded-2xl border bg-card p-8 shadow-xl">
+          <div className="space-y-2 text-center">
+            <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-3">
+              <Sparkles className="size-6" />
             </div>
-          </div>
-          <div className="space-y-4">
-            <LoginForm />
-            <GoogleButton className="w-full" variant="outline" />
-            <p className="text-center text-muted-foreground text-xs">
-              Don&apos;t have an account?{" "}
-              <Link prefetch={false} href="register" className="text-primary">
-                Register
-              </Link>
+            <h2 className="font-bold text-2xl tracking-tight text-foreground">Welcome to Kalo Systems</h2>
+            <p className="text-muted-foreground text-xs">
+              Enter your corporate email and password to access the AI OS.
             </p>
+          </div>
+
+          <LoginForm />
+
+          <div className="border-t pt-4 text-center text-muted-foreground text-xs">
+            Need workspace access? Contact <span className="font-semibold text-primary">admin@kalosystems.com</span>
           </div>
         </div>
       </div>

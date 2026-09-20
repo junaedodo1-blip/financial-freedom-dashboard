@@ -1,14 +1,15 @@
 import {
   Banknote,
+  BookOpen,
   Calendar,
   ChartBar,
   CheckSquare,
+  Cpu,
+  Database,
   Fingerprint,
-  FolderOpen,
-  Forklift,
   Gauge,
   GraduationCap,
-  HeartPulse,
+  HardDrive,
   Kanban,
   LayoutDashboard,
   ListTodo,
@@ -17,9 +18,8 @@ import {
   Mail,
   MessageSquare,
   ReceiptText,
-  Server,
   ShoppingBag,
-  SquareArrowUpRight,
+  Sparkles,
   UserRound,
   Users,
 } from "lucide-react";
@@ -65,31 +65,126 @@ export interface NavGroup {
 export const sidebarItems: NavGroup[] = [
   {
     id: 1,
-    label: "Dashboards",
+    label: "Kalo OS Core",
     items: [
       {
         id: "default",
-        title: "Default",
+        title: "Kalo Executive CRM",
         url: "/dashboard/default",
         icon: LayoutDashboard,
       },
       {
         id: "crm",
-        title: "CRM",
+        title: "Scraped Lead Radar",
         url: "/dashboard/crm",
         icon: ChartBar,
       },
+      {
+        id: "analytics",
+        title: "Analytics & CASL Shield",
+        url: "/dashboard/analytics",
+        icon: Gauge,
+      },
+      {
+        id: "twenty-crm",
+        title: "Twenty Open-Source CRM",
+        url: "/dashboard/twenty-crm",
+        icon: Database,
+        badge: "new",
+      },
+    ],
+  },
+  {
+    id: 2,
+    label: "Kalo AI & Services",
+    items: [
+      {
+        id: "chat",
+        title: "Kalo AI Fleet Chat",
+        url: "/dashboard/chat",
+        icon: MessageSquare,
+        badge: "new",
+      },
+      {
+        id: "open-notebook",
+        title: "Open-Notebook Brain",
+        url: "/dashboard/open-notebook",
+        icon: BookOpen,
+        badge: "new",
+      },
+      {
+        id: "lightmem",
+        title: "LightMem AI Memory",
+        url: "/dashboard/lightmem",
+        icon: HardDrive,
+        badge: "new",
+      },
+      {
+        id: "mailflare",
+        title: "Mailflare Business Email",
+        url: "/dashboard/mailflare",
+        icon: Mail,
+        badge: "new",
+      },
+      {
+        id: "intent-leads",
+        title: "ciel/intentleads Engine",
+        url: "/dashboard/intent-leads",
+        icon: Sparkles,
+        badge: "new",
+      },
+      {
+        id: "agents",
+        title: "Paperclip AI Cockpit",
+        url: "/dashboard/agents",
+        icon: Cpu,
+      },
+      {
+        id: "workshops",
+        title: "Canadian Workshop Engine",
+        url: "/dashboard/workshops",
+        icon: GraduationCap,
+      },
+      {
+        id: "calculator",
+        title: "Freedom Gap Calculator",
+        url: "/dashboard/calculator",
+        icon: Banknote,
+      },
+    ],
+  },
+  {
+    id: 3,
+    label: "Authentication",
+    items: [
+      {
+        id: "login",
+        title: "Login Screen",
+        url: "/login",
+        icon: Lock,
+      },
+      {
+        id: "authentication-sub",
+        title: "Auth Variations",
+        icon: Fingerprint,
+        subItems: [
+          { id: "auth-login-v1", title: "Login v1", url: "/auth/v1/login", newTab: true },
+          { id: "auth-login-v2", title: "Login v2", url: "/auth/v2/login", newTab: true },
+          { id: "auth-register-v1", title: "Register v1", url: "/auth/v1/register", newTab: true },
+          { id: "auth-register-v2", title: "Register v2", url: "/auth/v2/register", newTab: true },
+        ],
+      },
+    ],
+  },
+  {
+    id: 4,
+    label: "Shadcn Templates",
+    items: [
       {
         id: "finance",
         title: "Finance",
         url: "/dashboard/finance",
         icon: Banknote,
-      },
-      {
-        id: "analytics",
-        title: "Analytics",
-        url: "/dashboard/analytics",
-        icon: Gauge,
       },
       {
         id: "productivity",
@@ -104,52 +199,10 @@ export const sidebarItems: NavGroup[] = [
         icon: ShoppingBag,
       },
       {
-        id: "academy",
-        title: "Academy",
-        url: "/dashboard/academy",
-        icon: GraduationCap,
-      },
-      {
-        id: "logistics",
-        title: "Logistics",
-        url: "/dashboard/logistics",
-        icon: Forklift,
-      },
-      {
-        id: "infrastructure",
-        title: "Infrastructure",
-        url: "/dashboard/infrastructure",
-        icon: Server,
-      },
-      {
-        id: "file-manager",
-        title: "File Manager",
-        url: "/dashboard/file-manager",
-        icon: FolderOpen,
-      },
-      {
-        id: "patient-monitoring",
-        title: "Patient Monitoring",
-        url: "/dashboard/patient-monitoring",
-        icon: HeartPulse,
-      },
-    ],
-  },
-  {
-    id: 2,
-    label: "Pages",
-    items: [
-      {
         id: "email",
         title: "Email",
         url: "/dashboard/mail",
         icon: Mail,
-      },
-      {
-        id: "chat",
-        title: "Chat",
-        url: "/dashboard/chat",
-        icon: MessageSquare,
       },
       {
         id: "calendar",
@@ -186,53 +239,6 @@ export const sidebarItems: NavGroup[] = [
         title: "Users",
         url: "/dashboard/users",
         icon: Users,
-      },
-      {
-        id: "roles",
-        title: "Roles",
-        url: "/dashboard/roles",
-        icon: Lock,
-      },
-      {
-        id: "authentication",
-        title: "Authentication",
-        icon: Fingerprint,
-        subItems: [
-          { id: "auth-login-v1", title: "Login v1", url: "/auth/v1/login", newTab: true },
-          { id: "auth-login-v2", title: "Login v2", url: "/auth/v2/login", newTab: true },
-          { id: "auth-register-v1", title: "Register v1", url: "/auth/v1/register", newTab: true },
-          { id: "auth-register-v2", title: "Register v2", url: "/auth/v2/register", newTab: true },
-        ],
-      },
-    ],
-  },
-  {
-    id: 3,
-    label: "Legacy",
-    items: [
-      {
-        id: "legacy-dashboards",
-        title: "Dashboards",
-        subItems: [
-          { id: "legacy-default", title: "Default V1", url: "/dashboard/default-v1" },
-          { id: "legacy-crm", title: "CRM V1", url: "/dashboard/crm-v1" },
-          { id: "legacy-finance", title: "Finance V1", url: "/dashboard/finance-v1" },
-          { id: "legacy-analytics", title: "Analytics V1", url: "/dashboard/analytics-v1" },
-        ],
-      },
-    ],
-  },
-  {
-    id: 4,
-    label: "Misc",
-    items: [
-      {
-        id: "others",
-        title: "Others",
-        url: "/dashboard/coming-soon",
-        icon: SquareArrowUpRight,
-        badge: "soon",
-        disabled: true,
       },
     ],
   },

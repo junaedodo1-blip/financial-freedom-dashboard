@@ -10,8 +10,8 @@ import { ShipmentList } from "./shipment-list";
 
 export function Logistics() {
   const [detailsOpen, setDetailsOpen] = React.useState(false);
-  const [selectedShipmentId, setSelectedShipmentId] = React.useState<string | null>(shipments[0].id);
-  const selectedShipment = shipments.find((shipment) => shipment.id === selectedShipmentId) ?? shipments[0];
+  const [selectedShipmentId, setSelectedShipmentId] = React.useState<string | null>(shipments[0]?.id ?? null);
+  const selectedShipment = shipments.find((shipment) => shipment.id === selectedShipmentId) ?? shipments[0] ?? null;
 
   function handleSelectShipment(shipmentId: string) {
     setSelectedShipmentId(shipmentId);

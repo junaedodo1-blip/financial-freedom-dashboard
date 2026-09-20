@@ -1,4 +1,4 @@
-import { DollarSign, TrendingDown, TrendingUp, UserPlus, Users, Waves } from "lucide-react";
+import { DollarSign, TrendingUp, UserPlus, Users, Waves } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,10 +17,10 @@ export function MetricCards() {
         </CardHeader>
         <CardContent className="flex flex-col gap-1">
           <div className="flex flex-wrap items-center gap-2">
-            <div className="font-medium text-3xl tabular-nums leading-none tracking-tight">$1,250.00</div>
+            <div className="font-medium text-3xl tabular-nums leading-none tracking-tight">$0.00</div>
             <Badge>
               <TrendingUp className="size-3" />
-              +12.5%
+              0%
             </Badge>
           </div>
           <p className="text-muted-foreground text-sm">Visitors for the last 6 months</p>
@@ -38,13 +38,13 @@ export function MetricCards() {
         </CardHeader>
         <CardContent className="flex flex-col gap-1">
           <div className="flex flex-wrap items-center gap-2">
-            <div className="font-medium text-3xl tabular-nums leading-none tracking-tight">1,234</div>
-            <Badge variant="destructive">
-              <TrendingDown className="size-3" />
-              -20%
+            <div className="font-medium text-3xl tabular-nums leading-none tracking-tight">0</div>
+            <Badge variant="outline">
+              <TrendingUp className="size-3" />
+              0%
             </Badge>
           </div>
-          <p className="text-muted-foreground text-sm">Acquisition needs attention</p>
+          <p className="text-muted-foreground text-sm">Baseline state active</p>
         </CardContent>
       </Card>
 
@@ -59,13 +59,13 @@ export function MetricCards() {
         </CardHeader>
         <CardContent className="flex flex-col gap-1">
           <div className="flex flex-wrap items-center gap-2">
-            <div className="font-medium text-3xl tabular-nums leading-none tracking-tight">45,678</div>
+            <div className="font-medium text-3xl tabular-nums leading-none tracking-tight">0</div>
             <Badge>
               <TrendingUp className="size-3" />
-              +12.5%
+              0%
             </Badge>
           </div>
-          <p className="text-muted-foreground text-sm">Engagement exceeds targets</p>
+          <p className="text-muted-foreground text-sm">Engagement baseline</p>
         </CardContent>
       </Card>
 
@@ -80,13 +80,13 @@ export function MetricCards() {
         </CardHeader>
         <CardContent className="flex flex-col gap-1">
           <div className="flex flex-wrap items-center gap-2">
-            <div className="font-medium text-3xl tabular-nums leading-none tracking-tight">4.5%</div>
+            <div className="font-medium text-3xl tabular-nums leading-none tracking-tight">0.0%</div>
             <Badge>
               <TrendingUp className="size-3" />
-              +4.5%
+              0%
             </Badge>
           </div>
-          <p className="text-muted-foreground text-sm">Meets growth projections</p>
+          <p className="text-muted-foreground text-sm">Baseline growth projection</p>
         </CardContent>
       </Card>
     </div>

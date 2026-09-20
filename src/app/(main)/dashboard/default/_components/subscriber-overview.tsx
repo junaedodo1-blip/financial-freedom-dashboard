@@ -15,7 +15,7 @@ export function SubscriberOverview() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="leading-none">18,426 Customers</CardTitle>
+        <CardTitle className="leading-none">{customers.length} Customers</CardTitle>
         <CardDescription>Recent customer records with plan, billing, status, and signup activity.</CardDescription>
         <CardAction>
           <Button variant="outline" size="sm">

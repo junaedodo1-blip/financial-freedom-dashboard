@@ -26,6 +26,20 @@ export function Chat({ conversations }: ChatProps) {
   const isMobile = useIsMobile();
 
   const activeConversation = conversations.find((c) => c.id === chat.selected) ?? conversations[0];
+  const contact = activeConversation?.contact ?? {
+    name: "No conversation selected",
+    role: "Select or start a chat",
+    company: "",
+    email: "",
+    phone: "",
+    website: "",
+    location: "",
+    timezone: "",
+    status: "",
+    qualifiedAt: "",
+    tags: [],
+  };
+  const messages = activeConversation?.messages ?? [];
 
   return (
     <>
@@ -46,8 +60,8 @@ export function Chat({ conversations }: ChatProps) {
           onSelectConversation={() => setShowThread(true)}
         />
         <ChatThread
-          contact={activeConversation.contact}
-          messages={activeConversation.messages}
+          contact={contact}
+          messages={messages}
           showBackButton={isMobile}
           onBack={() => setShowThread(false)}
           onOpenContact={() => setShowContact(true)}
@@ -69,7 +83,7 @@ export function Chat({ conversations }: ChatProps) {
               showContact ? "translate-x-0 opacity-100" : "translate-x-full opacity-0",
             )}
           >
-            <ChatProfileDetails contact={activeConversation.contact} onClose={() => setShowContact(false)} />
+            <ChatProfileDetails contact={contact} onClose={() => setShowContact(false)} />
           </div>
         </div>
       </div>
@@ -80,7 +94,7 @@ export function Chat({ conversations }: ChatProps) {
           <SheetContent side="right" className="w-80 p-0" showCloseButton={false}>
             <SheetTitle className="sr-only">Contact profile</SheetTitle>
             <SheetDescription className="sr-only">View contact details and activity</SheetDescription>
-            <ChatProfileDetails contact={activeConversation.contact} onClose={() => setShowContact(false)} />
+            <ChatProfileDetails contact={contact} onClose={() => setShowContact(false)} />
           </SheetContent>
         </Sheet>
       )}

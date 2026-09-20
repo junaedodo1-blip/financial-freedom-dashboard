@@ -4,11 +4,11 @@ import { CalendarDays, CalendarRange } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const proposalSent = 12;
-const proposalGoal = 18;
-const proposalProgressPercentage = Math.round((proposalSent / proposalGoal) * 100);
+const proposalSent = 0;
+const proposalGoal = 0;
+const proposalProgressPercentage = proposalGoal > 0 ? Math.round((proposalSent / proposalGoal) * 100) : 0;
 const proposalGoalBarCount = 42;
-const activeProposalBars = Math.round((proposalSent / proposalGoal) * proposalGoalBarCount);
+const activeProposalBars = proposalGoal > 0 ? Math.round((proposalSent / proposalGoal) * proposalGoalBarCount) : 0;
 
 const proposalGoalBars = Array.from({ length: proposalGoalBarCount }, (_, index) => ({
   id: `proposal-goal-${index + 1}`,
@@ -51,16 +51,16 @@ export function TaskReminders() {
 
             <div className="relative h-14">
               <div className="absolute inset-x-3 top-1/2 h-px -translate-y-1/2 bg-border/80" />
-              <div className="absolute top-2 bottom-2 left-[22%] flex w-[44%] items-center rounded-lg bg-primary px-2 text-primary-foreground shadow-sm">
+              <div className="absolute top-2 bottom-2 left-[22%] flex w-[44%] items-center rounded-lg bg-muted px-2 text-muted-foreground border shadow-xs">
                 <div className="flex items-center gap-2">
-                  <div className="flex size-7 items-center justify-center rounded-full bg-background text-primary">
+                  <div className="flex size-7 items-center justify-center rounded-full bg-background text-foreground">
                     <CalendarRange className="size-3.5" />
                   </div>
                   <div className="min-w-0">
-                    <div className="truncate font-medium text-primary-foreground text-xs leading-none">
-                      Product demo with Tim
+                    <div className="truncate font-medium text-xs leading-none">
+                      No upcoming meetings scheduled
                     </div>
-                    <div className="truncate text-[10px] text-primary-foreground/75">Weblabs Studio</div>
+                    <div className="truncate text-[10px] text-muted-foreground">Standing by for strategy calls</div>
                   </div>
                 </div>
               </div>

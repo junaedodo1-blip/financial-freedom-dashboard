@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
-
-import { MetricCards } from "./_components/metric-cards";
-import { PerformanceOverview } from "./_components/performance-overview";
-import { SubscriberOverview } from "./_components/subscriber-overview";
+import { ConnectedMasterDashboard } from "@/components/dashboard/ConnectedMasterDashboard";
+import { TwentyCrmHub } from "@/components/crm/TwentyCrmHub";
 
 export const metadata: Metadata = {
-  title: "Open Source Business Dashboard with shadcn/ui",
+  title: "Customer Lead & Meeting Growth System | Dashboard",
   description:
-    "Explore an open source admin dashboard with business metrics, customer activity, performance charts, and customer data.",
+    "Simple, intuitive customer growth dashboard. Find leads, connect in 45 seconds, book meetings, and sync sales deals.",
 };
 
 export default function Page() {
   return (
-    <div className="@container/main flex flex-col gap-4 md:gap-6">
-      <MetricCards />
-      <PerformanceOverview />
-      <SubscriberOverview />
+    <div className="@container/main flex flex-col gap-6">
+      <ConnectedMasterDashboard />
+      <TwentyCrmHub />
     </div>
   );
 }

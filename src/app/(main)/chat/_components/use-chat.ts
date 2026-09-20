@@ -13,7 +13,7 @@ type ChatStore = {
 
 const useChatStore = create<ChatStore>((set) => ({
   chat: {
-    selected: conversations[0].id,
+    selected: conversations[0]?.id ?? null,
   },
   setChat: (chat) => set({ chat }),
 }));

@@ -13,7 +13,7 @@ type MailStore = {
 
 const useMailStore = create<MailStore>((set) => ({
   mail: {
-    selected: mails[0].id,
+    selected: mails[0]?.id ?? null,
   },
   setMail: (mail) => set({ mail }),
 }));
