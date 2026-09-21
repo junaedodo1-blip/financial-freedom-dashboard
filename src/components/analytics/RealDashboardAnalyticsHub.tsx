@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   Activity,
@@ -34,10 +34,10 @@ export function RealDashboardAnalyticsHub() {
     pipelineAum: "$0.00",
   });
 
-  const fetchLiveMetrics = async () => {
+  const fetchLiveMetrics = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/branches");
+      const res = await fetch("/api/branches");
       if (res.ok) {
         const branches = await res.json();
         if (branches && branches.length > 0) {
@@ -53,7 +53,7 @@ export function RealDashboardAnalyticsHub() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchLiveMetrics();

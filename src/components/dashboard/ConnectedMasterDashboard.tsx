@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   Calendar,
@@ -44,10 +44,10 @@ export function ConnectedMasterDashboard() {
   const [callingId, setCallingId] = useState<string | null>(null);
   const [isSyncingCrm, setIsSyncingCrm] = useState(false);
 
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     setIsLoadingLeads(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/leads");
+      const res = await fetch("/api/leads");
       if (res.ok) {
         const data = await res.json();
         setLeads(data || []);
@@ -57,7 +57,7 @@ export function ConnectedMasterDashboard() {
     } finally {
       setIsLoadingLeads(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchLeads();
@@ -66,7 +66,7 @@ export function ConnectedMasterDashboard() {
   const handleStartLeadFinder = async () => {
     setIsScraping(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/scrapers/run", {
+      const res = await fetch("/api/scrapers/run", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -99,7 +99,7 @@ export function ConnectedMasterDashboard() {
     });
 
     try {
-      await fetch("http://127.0.0.1:8000/api/simulate-speed-to-lead", {
+      await fetch("/api/simulate-speed-to-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prospect_name: targetName, city: selectedCity }),

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Link from "next/link";
 
@@ -51,10 +51,10 @@ export function AppleCrmHub() {
   const [callingId, setCallingId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/leads");
+      const res = await fetch("/api/leads");
       if (res.ok) {
         const data = await res.json();
         if (data && data.length > 0) {
@@ -66,7 +66,7 @@ export function AppleCrmHub() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchLeads();

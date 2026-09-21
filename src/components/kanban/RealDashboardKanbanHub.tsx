@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { RefreshCw, Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -109,10 +109,10 @@ export function RealDashboardKanbanHub() {
     ],
   });
 
-  const fetchLiveLeads = async () => {
+  const fetchLiveLeads = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/leads");
+      const res = await fetch("/api/leads");
       if (res.ok) {
         const data: LeadRecord[] = await res.json();
         if (data && data.length > 0) {
@@ -143,7 +143,7 @@ export function RealDashboardKanbanHub() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchLiveLeads();
