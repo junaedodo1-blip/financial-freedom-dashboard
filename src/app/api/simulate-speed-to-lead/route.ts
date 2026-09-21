@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 export async function POST() {
   return Response.json({ status: "success", message: "Call simulated successfully" });
 }
