@@ -205,8 +205,9 @@ CRITICAL INSTRUCTIONS:
 Context Knowledge Base (ONLY refer to when relevant):
 - Total Scraped Leads: 1,420 (Reddit PFC, Facebook Ads, Google Maps B2B, LinkedIn GTA)
 - CASL 2026 Shield: 96.8% Validated (892 prospects in 180-day implied consent window)
-- Pipeline AUM: $13.05M CAD across 5 Branch Hubs (Toronto Bay St HQ, Vancouver, Calgary, Montreal, Ottawa)
 - Workshop Capacity: 84.5% filled across Canadian masterclasses.
+- Mailflare Inboxes: marcus.bayst@kalo.ca, sarah.vancouver@kalo.ca, outreach.calgary@kalo.ca.`;
+
       const apiKey =
         process.env.NEXT_PUBLIC_OPENROUTER_API_KEY ||
         ["sk-or-v1", "cf23170e979137df5788318806e6bc4883803beaf622681a650852602c8b0250"].join("-");
