@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+
 import { FreedomCalculatorHub } from "@/components/calculator/FreedomCalculatorHub";
 
 export const metadata: Metadata = {

@@ -1,18 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Banknote,
-  Bot,
-  GraduationCap,
-  LayoutDashboard,
-  Mail,
-  MessageSquare,
-  Sparkles,
-  Zap,
-} from "lucide-react";
+
+import { GraduationCap, LayoutDashboard, Mail, MessageSquare, Sparkles, Zap } from "lucide-react";
 
 import { PitchDemoModal } from "./PitchDemoModal";
 
@@ -39,28 +32,25 @@ export function MobileNav() {
               key={item.url}
               href={item.url}
               className={`flex flex-col items-center px-2 py-1 transition-colors ${
-                active ? "text-amber-400 font-bold" : "text-slate-400 hover:text-slate-200"
+                active ? "font-bold text-amber-400" : "text-slate-400 hover:text-slate-200"
               }`}
             >
               <Icon className="h-4 w-4" />
-              <span className="text-[10px] mt-0.5">{item.label}</span>
+              <span className="mt-0.5 text-[10px]">{item.label}</span>
             </Link>
           );
         })}
 
         <button
           onClick={() => setShowPitchModal(true)}
-          className="ml-1 flex flex-col items-center rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-2.5 py-1 text-slate-950 font-bold shadow-md shadow-amber-500/20"
+          className="ml-1 flex flex-col items-center rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-2.5 py-1 font-bold text-slate-950 shadow-amber-500/20 shadow-md"
         >
           <Zap className="h-4 w-4 fill-slate-950" />
           <span className="text-[9px]">PITCH</span>
         </button>
       </div>
 
-      <PitchDemoModal
-        isOpen={showPitchModal}
-        onClose={() => setShowPitchModal(false)}
-      />
+      <PitchDemoModal isOpen={showPitchModal} onClose={() => setShowPitchModal(false)} />
     </>
   );
 }

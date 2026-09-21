@@ -16,16 +16,16 @@ export function AnalyticsKpiStrip() {
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-4">
-              <div className="text-2xl leading-none tracking-tight">213.1k</div>
-              <Badge className="bg-green-500/10 text-green-700 dark:bg-green-500/15 dark:text-green-300">
+              <div className="text-2xl leading-none tracking-tight">0</div>
+              <Badge className="bg-zinc-500/10 text-zinc-400">
                 <ArrowUpRight />
-                2.8%
+                0.0%
               </Badge>
             </div>
 
             <div className="flex items-center gap-2 text-muted-foreground text-xs">
               <span>
-                from <span className="text-foreground">207.3k</span>
+                from <span className="text-foreground">0</span>
               </span>
               <span>•</span>
               <span>last 4 weeks</span>
@@ -42,16 +42,16 @@ export function AnalyticsKpiStrip() {
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-4">
-              <div className="text-2xl leading-none tracking-tight">248.6k</div>
-              <Badge className="bg-green-500/10 text-green-700 dark:bg-green-500/15 dark:text-green-300">
+              <div className="text-2xl leading-none tracking-tight">0</div>
+              <Badge className="bg-zinc-500/10 text-zinc-400">
                 <ArrowUpRight />
-                2.1%
+                0.0%
               </Badge>
             </div>
 
             <div className="flex items-center gap-2 text-muted-foreground text-xs">
               <span>
-                from <span className="text-foreground">243.5k</span>
+                from <span className="text-foreground">0</span>
               </span>
               <span>•</span>
               <span>last 4 weeks</span>
@@ -68,16 +68,16 @@ export function AnalyticsKpiStrip() {
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-4">
-              <div className="text-2xl leading-none tracking-tight">547.9k</div>
-              <Badge className="bg-destructive/10 text-destructive">
+              <div className="text-2xl leading-none tracking-tight">0</div>
+              <Badge className="bg-zinc-500/10 text-zinc-400">
                 <ArrowDownRight />
-                3.3%
+                0.0%
               </Badge>
             </div>
 
             <div className="flex items-center gap-2 text-muted-foreground text-xs">
               <span>
-                from <span className="text-foreground">566.8k</span>
+                from <span className="text-foreground">0</span>
               </span>
               <span>•</span>
               <span>last 4 weeks</span>
@@ -94,16 +94,16 @@ export function AnalyticsKpiStrip() {
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-4">
-              <div className="text-2xl leading-none tracking-tight">61.4%</div>
-              <Badge className="bg-green-500/10 text-green-700 dark:bg-green-500/15 dark:text-green-300">
+              <div className="text-2xl leading-none tracking-tight">0.0%</div>
+              <Badge className="bg-zinc-500/10 text-zinc-400">
                 <ArrowUpRight />
-                4.2%
+                0.0%
               </Badge>
             </div>
 
             <div className="flex items-center gap-2 text-muted-foreground text-xs">
               <span>
-                from <span className="text-foreground">58.9%</span>
+                from <span className="text-foreground">0.0%</span>
               </span>
               <span>•</span>
               <span>last 4 weeks</span>
@@ -120,16 +120,16 @@ export function AnalyticsKpiStrip() {
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-4">
-              <div className="text-2xl leading-none tracking-tight">8.4%</div>
-              <Badge className="bg-destructive/10 text-destructive">
+              <div className="text-2xl leading-none tracking-tight">0.0%</div>
+              <Badge className="bg-zinc-500/10 text-zinc-400">
                 <ArrowDownRight />
-                5.6%
+                0.0%
               </Badge>
             </div>
 
             <div className="flex items-center gap-2 text-muted-foreground text-xs">
               <span>
-                from <span className="text-foreground">8.9%</span>
+                from <span className="text-foreground">0.0%</span>
               </span>
               <span>•</span>
               <span>last 4 weeks</span>

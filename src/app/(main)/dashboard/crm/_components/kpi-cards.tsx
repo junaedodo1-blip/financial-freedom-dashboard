@@ -78,8 +78,7 @@ export function KpiCards() {
                 variant="outline"
                 className="border-green-200 bg-green-500/10 text-green-700 dark:border-green-900/40 dark:bg-green-500/15 dark:text-green-300"
               >
-                <TrendingUp />
-                0
+                <TrendingUp />0
               </Badge>
             </div>
             <p className="text-sm">

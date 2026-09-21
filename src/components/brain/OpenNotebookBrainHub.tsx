@@ -1,28 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
+
 import {
   BookOpen,
   Bot,
   Brain,
   CheckCircle2,
-  Cpu,
   Database,
-  ExternalLink,
   FilePlus,
   FileText,
   Filter,
-  FolderPlus,
-  Layers,
-  Lightbulb,
-  Plus,
   RefreshCw,
   Search,
   ShieldCheck,
   Sparkles,
-  Tag,
   Wand2,
-  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -99,7 +93,7 @@ export function OpenNotebookBrainHub() {
 
   useEffect(() => {
     fetchBrainData();
-  }, []);
+  }, [fetchBrainData]);
 
   const handleRagSearch = async (queryToSearch?: string) => {
     const q = queryToSearch !== undefined ? queryToSearch : aiQuery;
@@ -122,7 +116,7 @@ export function OpenNotebookBrainHub() {
       } else {
         toast.error("RAG search query failed");
       }
-    } catch (err) {
+    } catch (_err) {
       toast.error("Error executing RAG search query");
     } finally {
       setIsAiSearching(false);
@@ -161,34 +155,25 @@ export function OpenNotebookBrainHub() {
       } else {
         toast.error("Failed to index playbook document");
       }
-    } catch (err) {
+    } catch (_err) {
       toast.error("Error connecting to document indexer");
     } finally {
       setIsSubmittingDoc(false);
     }
   };
 
-  const categories = [
-    "All",
-    "Tax & Wealth Strategy",
-    "Regulatory & Legal",
-    "Sales & AI Pitch",
-    "Branch Operations",
-  ];
+  const categories = ["All", "Tax & Wealth Strategy", "Regulatory & Legal", "Sales & AI Pitch", "Branch Operations"];
 
-  const filteredSources =
-    activeCategory === "All"
-      ? sources
-      : sources.filter((s) => s.category === activeCategory);
+  const filteredSources = activeCategory === "All" ? sources : sources.filter((s) => s.category === activeCategory);
 
   return (
     <div className="relative min-h-screen space-y-8 bg-slate-950 p-6 text-slate-100">
       {/* Impeccable Radial Glow Backdrops */}
-      <div className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
-      <div className="pointer-events-none absolute right-10 top-40 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -top-20 -left-20 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute top-40 right-10 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
 
       {/* Header Banner */}
-      <div className="relative flex flex-col gap-4 border-b border-slate-800 pb-6 md:flex-row md:items-center md:justify-between">
+      <div className="relative flex flex-col gap-4 border-slate-800 border-b pb-6 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 ring-1 ring-emerald-500/30">
@@ -196,15 +181,14 @@ export function OpenNotebookBrainHub() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-3xl font-extrabold tracking-tight text-white">
-                  Open-Notebook Knowledge Brain
-                </h1>
+                <h1 className="font-extrabold text-3xl text-white tracking-tight">Open-Notebook Knowledge Brain</h1>
                 <Badge className="bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-500/40">
                   RAG Vector Active
                 </Badge>
               </div>
-              <p className="mt-1 text-sm text-slate-400">
-                Kalo Systems enterprise knowledge base powered by open-notebook repository. AI Fleet Agents automatically query this brain for real-time compliance & strategy context.
+              <p className="mt-1 text-slate-400 text-sm">
+                Kalo Systems enterprise knowledge base powered by open-notebook repository. AI Fleet Agents
+                automatically query this brain for real-time compliance & strategy context.
               </p>
             </div>
           </div>
@@ -222,7 +206,7 @@ export function OpenNotebookBrainHub() {
           </Button>
           <Button
             onClick={() => setShowIndexModal(true)}
-            className="bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg shadow-emerald-900/30 hover:from-emerald-500 hover:to-cyan-500"
+            className="bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-emerald-900/30 shadow-lg hover:from-emerald-500 hover:to-cyan-500"
           >
             <FilePlus className="mr-2 h-4 w-4" />
             Index Playbook
@@ -235,20 +219,14 @@ export function OpenNotebookBrainHub() {
         <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-md">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
-                Connection Status
-              </span>
-              <Badge className="bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/30">
-                CONNECTED
-              </Badge>
+              <span className="font-medium text-slate-400 text-xs uppercase tracking-wider">Connection Status</span>
+              <Badge className="bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/30">CONNECTED</Badge>
             </div>
             <div className="mt-3 flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-              <span className="text-xl font-bold text-white">
-                {status?.brain_name || "Kalo Enterprise Brain"}
-              </span>
+              <span className="font-bold text-white text-xl">{status?.brain_name || "Kalo Enterprise Brain"}</span>
             </div>
-            <p className="mt-1 truncate text-xs text-slate-500">
+            <p className="mt-1 truncate text-slate-500 text-xs">
               Path: {status?.local_repo_path || "c:...\\open-notebook"}
             </p>
           </CardContent>
@@ -257,29 +235,23 @@ export function OpenNotebookBrainHub() {
         <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-md">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
+              <span className="font-medium text-slate-400 text-xs uppercase tracking-wider">
                 Indexed Knowledge Sources
               </span>
               <BookOpen className="h-4 w-4 text-cyan-400" />
             </div>
             <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-cyan-300">
-                {sources.length}
-              </span>
-              <span className="text-xs text-slate-400">Active Playbooks</span>
+              <span className="font-extrabold text-3xl text-cyan-300">{sources.length}</span>
+              <span className="text-slate-400 text-xs">Active Playbooks</span>
             </div>
-            <p className="mt-1 text-xs text-slate-500">
-              100% Vectorized for Paperclip RAG
-            </p>
+            <p className="mt-1 text-slate-500 text-xs">100% Vectorized for Paperclip RAG</p>
           </CardContent>
         </Card>
 
         <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-md">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
-                Vector Index Engine
-              </span>
+              <span className="font-medium text-slate-400 text-xs uppercase tracking-wider">Vector Index Engine</span>
               <Database className="h-4 w-4 text-purple-400" />
             </div>
             <div className="mt-3 flex items-center gap-2">
@@ -287,33 +259,27 @@ export function OpenNotebookBrainHub() {
                 {status?.vector_index_status || "INDEXED_READY"}
               </Badge>
             </div>
-            <p className="mt-1 text-xs text-slate-500">
-              Cosine Similarity Keyword Vector Matrix
-            </p>
+            <p className="mt-1 text-slate-500 text-xs">Cosine Similarity Keyword Vector Matrix</p>
           </CardContent>
         </Card>
 
         <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-md">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
-                AI Fleet Agent Access
-              </span>
+              <span className="font-medium text-slate-400 text-xs uppercase tracking-wider">AI Fleet Agent Access</span>
               <Bot className="h-4 w-4 text-amber-400" />
             </div>
             <div className="mt-3 flex items-center gap-2">
-              <span className="text-xl font-bold text-amber-300">4 Fleet Bots</span>
+              <span className="font-bold text-amber-300 text-xl">4 Fleet Bots</span>
             </div>
-            <p className="mt-1 text-xs text-slate-500">
-              Speed-to-Lead, Scout, CASL & Mastermind
-            </p>
+            <p className="mt-1 text-slate-500 text-xs">Speed-to-Lead, Scout, CASL & Mastermind</p>
           </CardContent>
         </Card>
       </div>
 
       {/* AI Agent RAG Advisor Box (Impeccable Design) */}
       <Card className="relative overflow-hidden border-emerald-500/30 bg-gradient-to-r from-slate-900 via-slate-900/90 to-emerald-950/40 shadow-2xl backdrop-blur-xl">
-        <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-emerald-500/10 blur-2xl" />
+        <div className="absolute top-0 right-0 h-48 w-48 rounded-full bg-emerald-500/10 blur-2xl" />
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -321,24 +287,20 @@ export function OpenNotebookBrainHub() {
                 <Wand2 className="h-5 w-5 animate-pulse text-emerald-400" />
               </div>
               <div>
-                <CardTitle className="text-lg font-bold text-white">
-                  Paperclip AI Knowledge Advisor
-                </CardTitle>
+                <CardTitle className="font-bold text-lg text-white">Paperclip AI Knowledge Advisor</CardTitle>
                 <CardDescription className="text-slate-400">
                   Ask natural language questions to query Open-Notebook RAG vector context in real-time.
                 </CardDescription>
               </div>
             </div>
-            <Badge className="bg-emerald-500/10 text-emerald-300 border-emerald-500/30">
-              RAG Engine v1.0
-            </Badge>
+            <Badge className="border-emerald-500/30 bg-emerald-500/10 text-emerald-300">RAG Engine v1.0</Badge>
           </div>
         </CardHeader>
 
         <CardContent className="space-y-4">
           <div className="flex flex-col gap-2 sm:flex-row">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-slate-500" />
+              <Search className="absolute top-3 left-3 h-4 w-4 text-slate-500" />
               <Input
                 placeholder="Ask your company brain (e.g., 'What is our CASL 180-day consent rule?')..."
                 value={aiQuery}
@@ -363,7 +325,7 @@ export function OpenNotebookBrainHub() {
 
           {/* Quick RAG Presets */}
           <div className="flex flex-wrap items-center gap-2 pt-1">
-            <span className="text-xs text-slate-400">Preset Queries:</span>
+            <span className="text-slate-400 text-xs">Preset Queries:</span>
             {[
               "CASL 180-day implied consent rule",
               "Canadian HoldCo tax sheltering strategy",
@@ -376,7 +338,7 @@ export function OpenNotebookBrainHub() {
                   setAiQuery(preset);
                   handleRagSearch(preset);
                 }}
-                className="rounded-md border border-slate-800 bg-slate-950/60 px-2.5 py-1 text-xs text-emerald-300 transition-colors hover:border-emerald-500/50 hover:bg-emerald-950/30"
+                className="rounded-md border border-slate-800 bg-slate-950/60 px-2.5 py-1 text-emerald-300 text-xs transition-colors hover:border-emerald-500/50 hover:bg-emerald-950/30"
               >
                 ⚡ {preset}
               </button>
@@ -385,36 +347,27 @@ export function OpenNotebookBrainHub() {
 
           {/* RAG Search Results Output Card */}
           {ragResult && (
-            <div className="mt-4 rounded-xl border border-emerald-500/30 bg-slate-950/90 p-4 space-y-3">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+            <div className="mt-4 space-y-3 rounded-xl border border-emerald-500/30 bg-slate-950/90 p-4">
+              <div className="flex items-center justify-between border-slate-800 border-b pb-2">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                  <span className="text-sm font-semibold text-emerald-300">
+                  <span className="font-semibold text-emerald-300 text-sm">
                     RAG Context Citation: {ragResult.top_citation}
                   </span>
                 </div>
-                <Badge className="bg-slate-800 text-xs text-slate-300">
-                  {ragResult.matches_count} Sources Matched
-                </Badge>
+                <Badge className="bg-slate-800 text-slate-300 text-xs">{ragResult.matches_count} Sources Matched</Badge>
               </div>
 
               <div className="space-y-3">
                 {ragResult.sources.map((src, idx) => (
-                  <div
-                    key={src.id}
-                    className="rounded-lg border border-slate-800 bg-slate-900/60 p-3"
-                  >
+                  <div key={src.id} className="rounded-lg border border-slate-800 bg-slate-900/60 p-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-white">
+                      <span className="font-bold text-sm text-white">
                         [{idx + 1}] {src.title}
                       </span>
-                      <Badge className="bg-cyan-500/20 text-cyan-300 text-xs">
-                        {src.category}
-                      </Badge>
+                      <Badge className="bg-cyan-500/20 text-cyan-300 text-xs">{src.category}</Badge>
                     </div>
-                    <p className="mt-2 text-xs leading-relaxed text-slate-300">
-                      {src.content}
-                    </p>
+                    <p className="mt-2 text-slate-300 text-xs leading-relaxed">{src.content}</p>
                     <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500">
                       <span>Author: {src.author}</span>
                       <span>Source ID: {src.id}</span>
@@ -432,20 +385,18 @@ export function OpenNotebookBrainHub() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             <FileText className="h-5 w-5 text-emerald-400" />
-            <h2 className="text-xl font-bold text-white">
-              Indexed Company Knowledge Playbooks
-            </h2>
+            <h2 className="font-bold text-white text-xl">Indexed Company Knowledge Playbooks</h2>
             <Badge className="bg-slate-800 text-slate-300">{filteredSources.length}</Badge>
           </div>
 
           {/* Category Filter Badges */}
           <div className="flex flex-wrap items-center gap-2">
-            <Filter className="h-4 w-4 text-slate-400 mr-1" />
+            <Filter className="mr-1 h-4 w-4 text-slate-400" />
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
+                className={`rounded-lg px-3 py-1.5 font-medium text-xs transition-all ${
                   activeCategory === cat
                     ? "bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-500/50"
                     : "bg-slate-900/80 text-slate-400 hover:bg-slate-800 hover:text-slate-200"
@@ -470,7 +421,7 @@ export function OpenNotebookBrainHub() {
                     <Badge className="mb-2 bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/30">
                       {src.category}
                     </Badge>
-                    <CardTitle className="text-base font-bold text-white group-hover:text-emerald-300">
+                    <CardTitle className="font-bold text-base text-white group-hover:text-emerald-300">
                       {src.title}
                     </CardTitle>
                   </div>
@@ -480,10 +431,8 @@ export function OpenNotebookBrainHub() {
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-xs leading-relaxed text-slate-300">
-                  {src.content}
-                </p>
-                <div className="flex items-center justify-between border-t border-slate-800/80 pt-3 text-xs text-slate-500">
+                <p className="text-slate-300 text-xs leading-relaxed">{src.content}</p>
+                <div className="flex items-center justify-between border-slate-800/80 border-t pt-3 text-slate-500 text-xs">
                   <div className="flex items-center gap-1.5">
                     <BookOpen className="h-3.5 w-3.5 text-slate-400" />
                     <span>{src.author}</span>
@@ -503,14 +452,14 @@ export function OpenNotebookBrainHub() {
       {showIndexModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
           <div className="w-full max-w-xl rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div className="flex items-center justify-between border-slate-800 border-b pb-4">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400">
                   <FilePlus className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">Index New Playbook</h3>
-                  <p className="text-xs text-slate-400">
+                  <h3 className="font-bold text-lg text-white">Index New Playbook</h3>
+                  <p className="text-slate-400 text-xs">
                     Add company documents into Open-Notebook for real-time AI Fleet RAG lookup.
                   </p>
                 </div>
@@ -527,9 +476,7 @@ export function OpenNotebookBrainHub() {
 
             <form onSubmit={handleIndexDocument} className="mt-4 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
-                  Document Title
-                </label>
+                <label className="block font-semibold text-slate-300 text-xs">Document Title</label>
                 <Input
                   placeholder="e.g. 2026 High-Yield HoldCo Strategy & Compliance Manual"
                   value={newTitle}
@@ -541,13 +488,11 @@ export function OpenNotebookBrainHub() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300">
-                    Category
-                  </label>
+                  <label className="block font-semibold text-slate-300 text-xs">Category</label>
                   <select
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
-                    className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-2 text-xs text-white focus:border-emerald-500 focus:outline-none"
+                    className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-2 text-white text-xs focus:border-emerald-500 focus:outline-none"
                   >
                     <option value="Tax & Wealth Strategy">Tax & Wealth Strategy</option>
                     <option value="Regulatory & Legal">Regulatory & Legal</option>
@@ -557,9 +502,7 @@ export function OpenNotebookBrainHub() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300">
-                    Author / Department
-                  </label>
+                  <label className="block font-semibold text-slate-300 text-xs">Author / Department</label>
                   <Input
                     placeholder="e.g. CASL Compliance Officer"
                     value={newAuthor}
@@ -570,15 +513,13 @@ export function OpenNotebookBrainHub() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
-                  Playbook Content & Key Rules
-                </label>
+                <label className="block font-semibold text-slate-300 text-xs">Playbook Content & Key Rules</label>
                 <textarea
                   rows={5}
                   placeholder="Enter detailed knowledge content, regulations, pitch scripts, or operational procedures..."
                   value={newContent}
                   onChange={(e) => setNewContent(e.target.value)}
-                  className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-3 text-xs text-white focus:border-emerald-500 focus:outline-none"
+                  className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-3 text-white text-xs focus:border-emerald-500 focus:outline-none"
                   required
                 />
               </div>

@@ -1,16 +1,11 @@
-import type { Metadata } from "next";
-import { TwentyCrmHub } from "@/components/crm/TwentyCrmHub";
+"use client";
 
-export const metadata: Metadata = {
-  title: "CRM Dashboard | Financial Freedom OS & Twenty CRM",
-  description:
-    "Explore Financial Freedom OS Canada & Twenty Open-Source CRM with live prospect radar, speed calls, and pipeline activity.",
-};
+import { AppleCrmHub } from "@/components/crm/AppleCrmHub";
 
-export default function Page() {
+export default function CrmDashboardPage() {
   return (
-    <div className="flex flex-col gap-4 md:gap-6">
-      <TwentyCrmHub />
+    <div className="p-4 md:p-6">
+      <AppleCrmHub />
     </div>
   );
 }

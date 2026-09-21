@@ -51,15 +51,13 @@ export function TaskReminders() {
 
             <div className="relative h-14">
               <div className="absolute inset-x-3 top-1/2 h-px -translate-y-1/2 bg-border/80" />
-              <div className="absolute top-2 bottom-2 left-[22%] flex w-[44%] items-center rounded-lg bg-muted px-2 text-muted-foreground border shadow-xs">
+              <div className="absolute top-2 bottom-2 left-[22%] flex w-[44%] items-center rounded-lg border bg-muted px-2 text-muted-foreground shadow-xs">
                 <div className="flex items-center gap-2">
                   <div className="flex size-7 items-center justify-center rounded-full bg-background text-foreground">
                     <CalendarRange className="size-3.5" />
                   </div>
                   <div className="min-w-0">
-                    <div className="truncate font-medium text-xs leading-none">
-                      No upcoming meetings scheduled
-                    </div>
+                    <div className="truncate font-medium text-xs leading-none">No upcoming meetings scheduled</div>
                     <div className="truncate text-[10px] text-muted-foreground">Standing by for strategy calls</div>
                   </div>
                 </div>

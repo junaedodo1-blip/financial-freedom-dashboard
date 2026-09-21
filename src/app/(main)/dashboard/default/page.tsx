@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { ConnectedMasterDashboard } from "@/components/dashboard/ConnectedMasterDashboard";
+
 import { TwentyCrmHub } from "@/components/crm/TwentyCrmHub";
+import { ConnectedMasterDashboard } from "@/components/dashboard/ConnectedMasterDashboard";
 
 export const metadata: Metadata = {
   title: "Customer Lead & Meeting Growth System | Dashboard",

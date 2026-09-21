@@ -1,20 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  Building2,
-  Calendar,
-  CheckCircle2,
-  Clock,
-  GraduationCap,
-  MapPin,
-  Plus,
-  RefreshCw,
-  Search,
-  Sparkles,
-  Users,
-  Wand2,
-} from "lucide-react";
+import type React from "react";
+import { useState } from "react";
+
+import { Calendar, Clock, GraduationCap, MapPin, RefreshCw, Sparkles, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
@@ -115,7 +104,7 @@ export function WorkshopEngineHub() {
     try {
       if (selectedWorkshop) {
         setWorkshops((prev) =>
-          prev.map((w) => (w.id === selectedWorkshop.id ? { ...w, reserved: w.reserved + 1 } : w))
+          prev.map((w) => (w.id === selectedWorkshop.id ? { ...w, reserved: w.reserved + 1 } : w)),
         );
       }
 
@@ -127,7 +116,7 @@ export function WorkshopEngineHub() {
       setLeadName("");
       setLeadEmail("");
       setLeadPhone("");
-    } catch (err) {
+    } catch (_err) {
       toast.error("Failed to reserve seat.");
     } finally {
       setIsSubmitting(false);
@@ -169,34 +158,37 @@ export function WorkshopEngineHub() {
   const overallFillRate = totalCapacity > 0 ? Math.round((totalReserved / totalCapacity) * 100) : 0;
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex w-full flex-col gap-6">
       {/* 1. Masterclass Workshop Header */}
       <div className="relative overflow-hidden rounded-2xl border bg-gradient-to-r from-purple-950 via-slate-900 to-purple-950 p-6 text-white shadow-lg">
         <div className="absolute -top-12 -left-12 h-64 w-64 rounded-full bg-purple-500/20 blur-3xl" />
-        <div className="absolute -bottom-12 -right-12 h-64 w-64 rounded-full bg-indigo-500/20 blur-3xl" />
+        <div className="absolute -right-12 -bottom-12 h-64 w-64 rounded-full bg-indigo-500/20 blur-3xl" />
 
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="relative z-10 flex flex-col justify-between gap-4 md:flex-row md:items-center">
           <div className="flex items-start gap-4">
             <div className="flex size-12 items-center justify-center rounded-2xl bg-purple-600 text-white shadow-md shadow-purple-600/40">
               <GraduationCap className="size-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="font-extrabold text-xl tracking-tight text-white">Canadian Masterclass Workshop Engine</h2>
-                <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30 text-xs">
-                  5 Physical Hubs
-                </Badge>
+                <h2 className="font-extrabold text-white text-xl tracking-tight">
+                  Canadian Masterclass Workshop Engine
+                </h2>
+                <Badge className="border-purple-400/30 bg-purple-500/20 text-purple-300 text-xs">5 Physical Hubs</Badge>
               </div>
-              <p className="text-slate-300 text-xs mt-1 max-w-2xl">
-                Physical branch masterclasses across Toronto, Vancouver, Calgary, Montreal & Ottawa. Real-time seat reservation & No-Show Killer Bot SMS reminders.
+              <p className="mt-1 max-w-2xl text-slate-300 text-xs">
+                Physical branch masterclasses across Toronto, Vancouver, Calgary, Montreal & Ottawa. Real-time seat
+                reservation & No-Show Killer Bot SMS reminders.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 shrink-0">
+          <div className="flex shrink-0 items-center gap-4">
             <div className="text-right">
-              <div className="text-xs text-purple-200 uppercase font-semibold tracking-wider">System Fill Rate</div>
-              <div className="text-xl font-black text-white">{overallFillRate}% ({totalReserved}/{totalCapacity} Seats)</div>
+              <div className="font-semibold text-purple-200 text-xs uppercase tracking-wider">System Fill Rate</div>
+              <div className="font-black text-white text-xl">
+                {overallFillRate}% ({totalReserved}/{totalCapacity} Seats)
+              </div>
             </div>
           </div>
         </div>
@@ -211,14 +203,18 @@ export function WorkshopEngineHub() {
                 <Sparkles className="size-5" />
               </div>
               <div>
-                <CardTitle className="text-sm font-semibold flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 font-semibold text-sm">
                   <span>Masterclass AI Workshop Strategist</span>
-                  <Badge variant="outline" className="bg-purple-500/10 text-purple-600 border-purple-500/20 text-[10px]">
+                  <Badge
+                    variant="outline"
+                    className="border-purple-500/20 bg-purple-500/10 text-[10px] text-purple-600"
+                  >
                     SHOW-UP MAXIMIZER
                   </Badge>
                 </CardTitle>
                 <CardDescription className="text-xs">
-                  Ask AI to optimize workshop seat fill rates, generate SMS reminder cadences, or add new masterclass sessions.
+                  Ask AI to optimize workshop seat fill rates, generate SMS reminder cadences, or add new masterclass
+                  sessions.
                 </CardDescription>
               </div>
             </div>
@@ -236,13 +232,13 @@ export function WorkshopEngineHub() {
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
               placeholder="e.g. 'Optimize Toronto Bay St HQ masterclass seat fill rate...'"
-              className="flex-1 text-xs bg-background"
+              className="flex-1 bg-background text-xs"
             />
             <Button
               type="submit"
               disabled={isAiThinking || !aiPrompt.trim()}
               size="sm"
-              className="bg-purple-600 hover:bg-purple-500 text-white gap-1.5 shrink-0"
+              className="shrink-0 gap-1.5 bg-purple-600 text-white hover:bg-purple-500"
             >
               {isAiThinking ? <RefreshCw className="size-3.5 animate-spin" /> : <Wand2 className="size-3.5" />}
               Execute AI Workshop Strategy
@@ -267,7 +263,7 @@ export function WorkshopEngineHub() {
                   setAiPrompt(preset);
                   handleAiWorkshopStrategy(preset);
                 }}
-                className="rounded-full border bg-background px-2.5 py-0.5 text-foreground hover:bg-purple-500/10 hover:border-purple-500/40 transition-all text-[11px]"
+                className="rounded-full border bg-background px-2.5 py-0.5 text-[11px] text-foreground transition-all hover:border-purple-500/40 hover:bg-purple-500/10"
               >
                 {preset}
               </button>
@@ -275,7 +271,7 @@ export function WorkshopEngineHub() {
           </div>
 
           {aiResult && (
-            <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs mt-2">
+            <div className="mt-2 rounded-xl border border-purple-500/20 bg-purple-500/10 p-3 text-purple-300 text-xs">
               <strong>Strategist Output:</strong> {aiResult}
             </div>
           )}
@@ -283,43 +279,53 @@ export function WorkshopEngineHub() {
       </Card>
 
       {/* 3. Workshops Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {workshops.map((ws) => {
           const fillPct = Math.round((ws.reserved / ws.capacity) * 100);
 
           return (
-            <Card key={ws.id} className="border bg-card shadow-xs flex flex-col justify-between">
+            <Card key={ws.id} className="flex flex-col justify-between border bg-card shadow-xs">
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
-                  <Badge variant="outline" className="bg-purple-500/10 text-purple-600 border-purple-500/20 text-[10px]">
+                  <Badge
+                    variant="outline"
+                    className="border-purple-500/20 bg-purple-500/10 text-[10px] text-purple-600"
+                  >
                     📍 {ws.city}
                   </Badge>
-                  <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1">
-                    <Clock className="size-3 inline" /> {ws.date_time}
+                  <span className="flex items-center gap-1 font-medium text-[11px] text-muted-foreground">
+                    <Clock className="inline size-3" /> {ws.date_time}
                   </span>
                 </div>
-                <CardTitle className="text-sm font-bold mt-2">{ws.topic}</CardTitle>
-                <CardDescription className="text-[11px] flex items-center gap-1">
+                <CardTitle className="mt-2 font-bold text-sm">{ws.topic}</CardTitle>
+                <CardDescription className="flex items-center gap-1 text-[11px]">
                   <MapPin className="size-3 text-purple-500" /> {ws.location}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3 pt-0">
                 <div className="space-y-1">
-                  <div className="flex justify-between text-xs font-semibold">
+                  <div className="flex justify-between font-semibold text-xs">
                     <span className="text-muted-foreground">Reserved Capacity</span>
-                    <span className="text-foreground">{ws.reserved}/{ws.capacity} Seats ({fillPct}%)</span>
+                    <span className="text-foreground">
+                      {ws.reserved}/{ws.capacity} Seats ({fillPct}%)
+                    </span>
                   </div>
-                  <div className="w-full bg-muted h-2 rounded-full overflow-hidden">
-                    <div className="bg-purple-600 h-full rounded-full transition-all" style={{ width: `${fillPct}%` }} />
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-purple-600 transition-all"
+                      style={{ width: `${fillPct}%` }}
+                    />
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-muted-foreground border-t pt-2">
-                  <span>Show-Up Rate: <strong>{ws.show_up_rate}%</strong></span>
+                <div className="flex items-center justify-between border-t pt-2 text-muted-foreground text-xs">
+                  <span>
+                    Show-Up Rate: <strong>{ws.show_up_rate}%</strong>
+                  </span>
                   <Button
                     onClick={() => handleOpenRsvpModal(ws)}
                     size="sm"
-                    className="bg-purple-600 hover:bg-purple-500 text-white text-xs h-8 px-3"
+                    className="h-8 bg-purple-600 px-3 text-white text-xs hover:bg-purple-500"
                   >
                     Reserve Seat
                   </Button>
@@ -332,10 +338,10 @@ export function WorkshopEngineHub() {
 
       {/* RSVP Modal */}
       {showRsvpModal && selectedWorkshop && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
           <Card className="w-full max-w-md border bg-card shadow-2xl">
             <CardHeader>
-              <CardTitle className="text-base font-bold">Reserve Seat: {selectedWorkshop.topic}</CardTitle>
+              <CardTitle className="font-bold text-base">Reserve Seat: {selectedWorkshop.topic}</CardTitle>
               <CardDescription className="text-xs">
                 {selectedWorkshop.city} Masterclass • {selectedWorkshop.date_time}
               </CardDescription>
@@ -343,49 +349,44 @@ export function WorkshopEngineHub() {
             <CardContent>
               <form onSubmit={handleConfirmReservation} className="space-y-3">
                 <div>
-                  <label className="text-xs font-medium text-foreground">Full Name</label>
+                  <label className="font-medium text-foreground text-xs">Full Name</label>
                   <Input
                     value={leadName}
                     onChange={(e) => setLeadName(e.target.value)}
                     placeholder="e.g. Marcus Dupont"
-                    className="text-xs mt-1"
+                    className="mt-1 text-xs"
                     required
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-foreground">Email Address</label>
+                  <label className="font-medium text-foreground text-xs">Email Address</label>
                   <Input
                     type="email"
                     value={leadEmail}
                     onChange={(e) => setLeadEmail(e.target.value)}
                     placeholder="e.g. marcus@company.ca"
-                    className="text-xs mt-1"
+                    className="mt-1 text-xs"
                     required
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-foreground">Mobile Phone (for SMS Confirmation)</label>
+                  <label className="font-medium text-foreground text-xs">Mobile Phone (for SMS Confirmation)</label>
                   <Input
                     value={leadPhone}
                     onChange={(e) => setLeadPhone(e.target.value)}
                     placeholder="+1 (416) 555-0199"
-                    className="text-xs mt-1"
+                    className="mt-1 text-xs"
                   />
                 </div>
                 <div className="flex justify-end gap-2 pt-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setShowRsvpModal(false)}
-                    size="sm"
-                  >
+                  <Button type="button" variant="outline" onClick={() => setShowRsvpModal(false)} size="sm">
                     Cancel
                   </Button>
                   <Button
                     type="submit"
                     disabled={isSubmitting}
                     size="sm"
-                    className="bg-purple-600 hover:bg-purple-500 text-white"
+                    className="bg-purple-600 text-white hover:bg-purple-500"
                   >
                     {isSubmitting ? "Reserving..." : "Confirm RSVP"}
                   </Button>

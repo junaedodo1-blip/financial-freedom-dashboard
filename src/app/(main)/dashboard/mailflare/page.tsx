@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+
 import { MailflareHub } from "@/components/mailflare/MailflareHub";
 
 export const metadata: Metadata = {

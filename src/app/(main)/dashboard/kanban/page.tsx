@@ -1,18 +1,11 @@
-import type { Metadata } from "next";
+"use client";
 
-import { initialBoard } from "./_components/data";
-import { Kanban } from "./_components/kanban";
+import { RealDashboardKanbanHub } from "@/components/kanban/RealDashboardKanbanHub";
 
-export const metadata: Metadata = {
-  title: "Open Source Kanban Board with shadcn/ui",
-  description:
-    "Explore an open source Kanban board for organizing work, tracking progress, and managing tasks visually.",
-};
-
-export default function Page() {
+export default function KanbanPage() {
   return (
-    <div data-content-padding="false">
-      <Kanban initialBoard={initialBoard} />
+    <div className="p-4 md:p-6">
+      <RealDashboardKanbanHub />
     </div>
   );
 }

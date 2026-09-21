@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { Bot, Cpu, Play, RefreshCw, Sparkles, Wand2, Zap } from "lucide-react";
+import { useState } from "react";
+
+import { Bot, Play, RefreshCw, Sparkles, Wand2, Zap } from "lucide-react";
 import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 export interface FleetAgent {
@@ -58,7 +59,7 @@ export function PaperclipCockpitHub() {
       role: "Reserves branch seats and sends SMS reminders",
       status: "ACTIVE",
       tasks_completed: 0,
-      cost_per_booking: 2.10,
+      cost_per_booking: 2.1,
       efficiency_score: 96,
       active_channels: ["Toronto HQ", "Vancouver Hub", "Calgary Downtown"],
     },
@@ -72,9 +73,7 @@ export function PaperclipCockpitHub() {
     toast.success(`⚡ Triggered ${agentName}!`, {
       description: `Dispatched task to AI helper.`,
     });
-    setAgents((prev) =>
-      prev.map((a) => (a.name === agentName ? { ...a, tasks_completed: a.tasks_completed + 1 } : a))
-    );
+    setAgents((prev) => prev.map((a) => (a.name === agentName ? { ...a, tasks_completed: a.tasks_completed + 1 } : a)));
   };
 
   const handleRunAiFleetTask = async (preset?: string) => {
@@ -104,34 +103,33 @@ export function PaperclipCockpitHub() {
   };
 
   return (
-    <div className="flex flex-col gap-5 w-full">
+    <div className="flex w-full flex-col gap-5">
       {/* Header Bar */}
       <div className="flex items-center justify-between border-b pb-3">
         <div>
-          <h2 className="font-bold text-lg tracking-tight flex items-center gap-2">
+          <h2 className="flex items-center gap-2 font-bold text-lg tracking-tight">
             <Bot className="size-5 text-emerald-500" />
             24/7 AI Helper Fleet
           </h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
+          <p className="mt-0.5 text-muted-foreground text-xs">
             4 specialized AI assistants working continuously to find leads and book customer meetings.
           </p>
         </div>
         <Button
           onClick={() => handleRunAiFleetTask("Run All Helpers")}
           size="sm"
-          className="bg-emerald-600 hover:bg-emerald-500 text-white gap-1.5 text-xs h-8"
+          className="h-8 gap-1.5 bg-emerald-600 text-white text-xs hover:bg-emerald-500"
         >
           <Zap className="size-3.5" /> Run All AI Helpers
         </Button>
       </div>
 
       {/* Bento Grid AI Instruction Box & Helper Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {/* Simple Input Card (Spans 4 cols) */}
-        <Card className="lg:col-span-4 border shadow-xs p-4 bg-muted/10">
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-semibold text-xs flex items-center gap-1.5">
+        <Card className="border bg-muted/10 p-4 shadow-xs lg:col-span-4">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="flex items-center gap-1.5 font-semibold text-xs">
               <Sparkles className="size-4 text-emerald-500" />
               <span>Ask AI Helpers to Run Any Task</span>
             </span>
@@ -149,13 +147,13 @@ export function PaperclipCockpitHub() {
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
               placeholder="e.g. 'Find new customer leads in Toronto and call them...'"
-              className="flex-1 text-xs bg-background h-8"
+              className="h-8 flex-1 bg-background text-xs"
             />
             <Button
               type="submit"
               disabled={isAiThinking || !aiPrompt.trim()}
               size="sm"
-              className="bg-emerald-600 hover:bg-emerald-500 text-white gap-1 text-xs h-8 shrink-0"
+              className="h-8 shrink-0 gap-1 bg-emerald-600 text-white text-xs hover:bg-emerald-500"
             >
               {isAiThinking ? <RefreshCw className="size-3 animate-spin" /> : <Wand2 className="size-3" />}
               Run Task
@@ -163,7 +161,7 @@ export function PaperclipCockpitHub() {
           </form>
 
           {aiResponse && (
-            <div className="p-2.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs mt-2 font-medium">
+            <div className="mt-2 rounded-md border border-emerald-500/20 bg-emerald-500/10 p-2.5 font-medium text-emerald-700 text-xs dark:text-emerald-300">
               {aiResponse}
             </div>
           )}
@@ -171,31 +169,34 @@ export function PaperclipCockpitHub() {
 
         {/* 4 Bento Agent Helper Cards */}
         {agents.map((agent) => (
-          <Card key={agent.id} className="border shadow-xs p-4 flex flex-col justify-between">
+          <Card key={agent.id} className="flex flex-col justify-between border p-4 shadow-xs">
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex size-7 items-center justify-center rounded-md bg-emerald-500/10 text-emerald-600 font-bold text-xs">
+              <div className="mb-2 flex items-center justify-between">
+                <div className="flex size-7 items-center justify-center rounded-md bg-emerald-500/10 font-bold text-emerald-600 text-xs">
                   🤖
                 </div>
-                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-[10px]">
+                <Badge
+                  variant="outline"
+                  className="border-emerald-500/20 bg-emerald-500/10 text-[10px] text-emerald-600"
+                >
                   {agent.status}
                 </Badge>
               </div>
-              <div className="font-bold text-xs text-foreground">{agent.name}</div>
-              <p className="text-[11px] text-muted-foreground mt-0.5 leading-tight">{agent.role}</p>
+              <div className="font-bold text-foreground text-xs">{agent.name}</div>
+              <p className="mt-0.5 text-[11px] text-muted-foreground leading-tight">{agent.role}</p>
             </div>
 
-            <div className="border-t pt-2 mt-3 flex items-center justify-between">
-              <span className="text-[10px] text-muted-foreground font-medium">
+            <div className="mt-3 flex items-center justify-between border-t pt-2">
+              <span className="font-medium text-[10px] text-muted-foreground">
                 {agent.tasks_completed} Tasks Completed
               </span>
               <Button
                 onClick={() => handleTriggerAgent(agent.name)}
                 size="sm"
                 variant="outline"
-                className="h-6 text-[10px] px-2 text-emerald-600 border-emerald-500/30 hover:bg-emerald-500/10"
+                className="h-6 border-emerald-500/30 px-2 text-[10px] text-emerald-600 hover:bg-emerald-500/10"
               >
-                <Play className="size-2.5 fill-current mr-1" /> Run Helper
+                <Play className="mr-1 size-2.5 fill-current" /> Run Helper
               </Button>
             </div>
           </Card>

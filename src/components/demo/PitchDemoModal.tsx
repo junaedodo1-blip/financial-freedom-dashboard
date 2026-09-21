@@ -1,17 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import {
-  CheckCircle2,
-  MapPin,
-  PhoneCall,
-  Play,
-  RefreshCw,
-  ShieldCheck,
-  Wand2,
-  X,
-  Zap,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+
+import { Play, RefreshCw, X } from "lucide-react";
 import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
@@ -59,22 +50,18 @@ export function PitchDemoModal({ isOpen, onClose, city = "Toronto" }: PitchDemoM
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-      <div className="relative w-full max-w-lg rounded-3xl border border-amber-500/30 bg-slate-900 p-6 shadow-2xl space-y-6 text-slate-100">
+      <div className="relative w-full max-w-lg space-y-6 rounded-3xl border border-amber-500/30 bg-slate-900 p-6 text-slate-100 shadow-2xl">
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 rounded-xl bg-slate-800 p-2 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white"
+          className="absolute top-5 right-5 rounded-xl bg-slate-800 p-2 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white"
         >
           <X className="h-4 w-4" />
         </button>
 
         <div>
-          <Badge className="bg-amber-500/20 text-amber-300 ring-1 ring-amber-500/40">
-            ⚡ LIVE PITCH GOD MODE
-          </Badge>
-          <h2 className="mt-2 text-2xl font-extrabold text-white">
-            Sub-45s Speed-to-Lead Simulator
-          </h2>
-          <p className="mt-1 text-xs text-slate-400">
+          <Badge className="bg-amber-500/20 text-amber-300 ring-1 ring-amber-500/40">⚡ LIVE PITCH GOD MODE</Badge>
+          <h2 className="mt-2 font-extrabold text-2xl text-white">Sub-45s Speed-to-Lead Simulator</h2>
+          <p className="mt-1 text-slate-400 text-xs">
             Simulating real-time 5-node LangGraph Multi-Agent pipeline execution.
           </p>
         </div>
@@ -94,14 +81,14 @@ export function PitchDemoModal({ isOpen, onClose, city = "Toronto" }: PitchDemoM
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+                    className={`flex h-6 w-6 items-center justify-center rounded-full font-bold text-xs ${
                       active ? "bg-amber-500 text-slate-950" : "bg-slate-800 text-slate-500"
                     }`}
                   >
                     {active ? "✓" : i + 1}
                   </div>
                   <div>
-                    <div className="text-xs font-bold">{s.label}</div>
+                    <div className="font-bold text-xs">{s.label}</div>
                     <div className="text-[10px] text-slate-400">{s.desc}</div>
                   </div>
                 </div>
@@ -111,11 +98,11 @@ export function PitchDemoModal({ isOpen, onClose, city = "Toronto" }: PitchDemoM
         </div>
 
         {/* Action Footer */}
-        <div className="flex items-center justify-between border-t border-slate-800 pt-4">
+        <div className="flex items-center justify-between border-slate-800 border-t pt-4">
           <Button
             onClick={handleStartDemo}
             disabled={isRunning}
-            className="bg-amber-500 text-slate-950 font-bold hover:bg-amber-400"
+            className="bg-amber-500 font-bold text-slate-950 hover:bg-amber-400"
           >
             {isRunning ? (
               <RefreshCw className="mr-2 h-4 w-4 animate-spin text-slate-950" />

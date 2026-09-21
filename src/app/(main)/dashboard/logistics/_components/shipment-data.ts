@@ -1,20 +1,4 @@
-import {
-  AlertTriangleIcon,
-  ArrowUp,
-  Ban,
-  CheckCircle2,
-  Droplets,
-  Flame,
-  Forklift,
-  type LucideIcon,
-  PackageCheck,
-  PenLine,
-  ShieldCheck,
-  Snowflake,
-  Star,
-  Thermometer,
-  Truck,
-} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export type ShipmentStatus =
   | "Scheduled"
@@ -74,7 +58,7 @@ export type Shipment = {
   transportNumber: string;
 };
 
-const customerAccounts = {
+const _customerAccounts = {
   techCorp: {
     name: "TechCorp",
     initials: "TC",

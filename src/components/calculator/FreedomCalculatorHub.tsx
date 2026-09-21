@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
+
 import {
   Banknote,
   Building2,
@@ -8,11 +10,9 @@ import {
   CheckCircle2,
   DollarSign,
   GraduationCap,
-  MapPin,
   RefreshCw,
   Sparkles,
   TrendingUp,
-  Wand2,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -67,29 +67,28 @@ export function FreedomCalculatorHub() {
   };
 
   return (
-    <div className="relative min-h-screen space-y-8 bg-slate-950 p-6 text-slate-100">
+    <div className="relative space-y-8 rounded-2xl border border-white/10 bg-zinc-950/80 p-6 text-zinc-100 shadow-2xl backdrop-blur-2xl">
       {/* Impeccable Blue/Emerald Radial Glow Backdrops */}
-      <div className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
-      <div className="pointer-events-none absolute right-10 top-40 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -top-20 -left-20 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute top-40 right-10 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
 
       {/* Header Banner */}
-      <div className="relative flex flex-col gap-4 border-b border-slate-800 pb-6 md:flex-row md:items-center md:justify-between">
+      <div className="relative flex flex-col gap-4 border-white/10 border-b pb-6 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/20 ring-1 ring-blue-500/30">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/20 shadow-lg ring-1 ring-blue-500/30">
               <Banknote className="h-6 w-6 text-blue-400" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-3xl font-extrabold tracking-tight text-white">
+                <h1 className="font-extrabold text-2xl text-white tracking-tight md:text-3xl">
                   Freedom Gap Calculator
                 </h1>
-                <Badge className="bg-blue-500/20 text-blue-300 ring-1 ring-blue-500/40">
-                  Embeddable Lead Magnet
-                </Badge>
+                <Badge className="bg-blue-500/20 text-blue-300 ring-1 ring-blue-500/40">Embeddable Lead Magnet</Badge>
               </div>
-              <p className="mt-1 text-sm text-slate-400">
-                Interactive financial freedom calculator for high earners ($150k+). Calculates monthly freedom gap and matches prospect with local Canadian branch coaches.
+              <p className="mt-1 text-sm text-zinc-400">
+                Interactive financial freedom calculator for high earners ($150k+). Calculates monthly freedom gap and
+                matches prospect with local Canadian branch coaches.
               </p>
             </div>
           </div>
@@ -106,9 +105,7 @@ export function FreedomCalculatorHub() {
                 <Calculator className="h-5 w-5" />
               </div>
               <div>
-                <CardTitle className="text-lg font-bold text-white">
-                  Prospect Financial Profile
-                </CardTitle>
+                <CardTitle className="font-bold text-lg text-white">Prospect Financial Profile</CardTitle>
                 <CardDescription className="text-slate-400">
                   Enter monthly income, expenses, and target passive income.
                 </CardDescription>
@@ -118,13 +115,11 @@ export function FreedomCalculatorHub() {
           <CardContent>
             <form onSubmit={handleCalculate} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
-                  Target Branch City
-                </label>
+                <label className="block font-semibold text-slate-300 text-xs">Target Branch City</label>
                 <select
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-2.5 text-xs text-white focus:border-blue-500 focus:outline-none"
+                  className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-2.5 text-white text-xs focus:border-blue-500 focus:outline-none"
                 >
                   <option value="Toronto">Toronto (M5V - Bay St HQ)</option>
                   <option value="Vancouver">Vancouver (V6B - Burrard Hub)</option>
@@ -135,11 +130,9 @@ export function FreedomCalculatorHub() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
-                  Monthly Active Income ($ CAD)
-                </label>
+                <label className="block font-semibold text-slate-300 text-xs">Monthly Active Income ($ CAD)</label>
                 <div className="relative mt-1">
-                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-slate-500" />
+                  <DollarSign className="absolute top-3 left-3 h-4 w-4 text-slate-500" />
                   <Input
                     type="number"
                     value={monthlyIncome}
@@ -151,11 +144,9 @@ export function FreedomCalculatorHub() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
-                  Monthly Expenses ($ CAD)
-                </label>
+                <label className="block font-semibold text-slate-300 text-xs">Monthly Expenses ($ CAD)</label>
                 <div className="relative mt-1">
-                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-slate-500" />
+                  <DollarSign className="absolute top-3 left-3 h-4 w-4 text-slate-500" />
                   <Input
                     type="number"
                     value={monthlyExpenses}
@@ -167,11 +158,11 @@ export function FreedomCalculatorHub() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
+                <label className="block font-semibold text-slate-300 text-xs">
                   Target Passive Freedom Income ($ CAD/month)
                 </label>
                 <div className="relative mt-1">
-                  <DollarSign className="absolute left-3 top-3 h-4 w-4 text-slate-500" />
+                  <DollarSign className="absolute top-3 left-3 h-4 w-4 text-slate-500" />
                   <Input
                     type="number"
                     value={targetIncome}
@@ -201,16 +192,14 @@ export function FreedomCalculatorHub() {
         {/* Output Card */}
         {calculationResult && (
           <Card className="relative overflow-hidden border-blue-500/30 bg-gradient-to-r from-slate-900 via-slate-900/90 to-blue-950/40 shadow-2xl backdrop-blur-xl">
-            <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-blue-500/10 blur-2xl" />
+            <div className="absolute top-0 right-0 h-48 w-48 rounded-full bg-blue-500/10 blur-2xl" />
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400">
                   <TrendingUp className="h-5 w-5" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg font-bold text-white">
-                    Freedom Gap Analysis
-                  </CardTitle>
+                  <CardTitle className="font-bold text-lg text-white">Freedom Gap Analysis</CardTitle>
                   <CardDescription className="text-slate-400">
                     Calculated for {city} high-earner prospect profile.
                   </CardDescription>
@@ -218,30 +207,28 @@ export function FreedomCalculatorHub() {
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="rounded-xl border border-blue-500/30 bg-slate-950/80 p-5 text-center space-y-2">
-                <span className="text-xs uppercase tracking-wider text-slate-400">
-                  Monthly Freedom Gap
-                </span>
-                <div className="text-4xl font-extrabold text-emerald-400">
+              <div className="space-y-2 rounded-xl border border-blue-500/30 bg-slate-950/80 p-5 text-center">
+                <span className="text-slate-400 text-xs uppercase tracking-wider">Monthly Freedom Gap</span>
+                <div className="font-extrabold text-4xl text-emerald-400">
                   ${calculationResult.freedom_gap.toLocaleString()}{" "}
-                  <span className="text-base text-slate-400 font-normal">/ mo</span>
+                  <span className="font-normal text-base text-slate-400">/ mo</span>
                 </div>
-                <p className="text-xs text-slate-400">
+                <p className="text-slate-400 text-xs">
                   Estimated Timeline to Passive Income Freedom:{" "}
                   <strong className="text-white">{calculationResult.months_to_freedom} Months</strong>
                 </p>
               </div>
 
               <div className="space-y-3 text-xs">
-                <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-3 space-y-1">
-                  <span className="font-bold text-blue-300 flex items-center gap-1.5">
+                <div className="space-y-1 rounded-lg border border-slate-800 bg-slate-900/60 p-3">
+                  <span className="flex items-center gap-1.5 font-bold text-blue-300">
                     <Building2 className="h-3.5 w-3.5" /> Recommended Strategy
                   </span>
                   <p className="text-slate-300">{calculationResult.recommended_strategy}</p>
                 </div>
 
-                <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-3 space-y-1">
-                  <span className="font-bold text-amber-300 flex items-center gap-1.5">
+                <div className="space-y-1 rounded-lg border border-slate-800 bg-slate-900/60 p-3">
+                  <span className="flex items-center gap-1.5 font-bold text-amber-300">
                     <GraduationCap className="h-3.5 w-3.5" /> Matched Physical Workshop
                   </span>
                   <p className="text-slate-300">{calculationResult.suggested_workshop}</p>

@@ -1,16 +1,11 @@
-import type { Metadata } from "next";
+"use client";
 
-import { IntentLeadsEngine } from "@/components/intent/IntentLeadsEngine";
-
-export const metadata: Metadata = {
-  title: "Kalo Systems - ciel/intentleads Intent Engine",
-  description: "Configure custom intent characteristics to surface, rank, and trigger speed-to-lead calls.",
-};
+import { AppleIntentLeadsHub } from "@/components/intent/AppleIntentLeadsHub";
 
 export default function IntentLeadsPage() {
   return (
-    <div className="flex flex-col gap-6">
-      <IntentLeadsEngine />
+    <div className="p-4 md:p-6">
+      <AppleIntentLeadsHub />
     </div>
   );
 }

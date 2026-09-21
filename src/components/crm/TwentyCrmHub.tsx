@@ -1,27 +1,21 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   ArrowRightLeft,
   Bot,
   Building2,
-  Calendar,
-  Check,
   CheckCircle2,
   Cpu,
   Database,
-  ExternalLink,
   Layers,
   Lightbulb,
-  PhoneCall,
   RefreshCw,
   ShieldCheck,
-  Sparkles,
   TrendingUp,
   Users,
   Wand2,
-  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -42,7 +36,7 @@ export interface TwentyStatus {
 
 export function TwentyCrmHub() {
   const [statusData, setStatusData] = useState<TwentyStatus | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [_isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
 
   // AI Agent Box State
@@ -67,7 +61,7 @@ export function TwentyCrmHub() {
 
   useEffect(() => {
     fetchStatus();
-  }, []);
+  }, [fetchStatus]);
 
   const handleSyncTwenty = async () => {
     setIsSyncing(true);
@@ -82,7 +76,7 @@ export function TwentyCrmHub() {
       } else {
         toast.error("Twenty CRM sync failed");
       }
-    } catch (err) {
+    } catch (_err) {
       toast.error("Error connecting to Twenty CRM sync endpoint");
     } finally {
       setIsSyncing(false);
@@ -128,38 +122,38 @@ export function TwentyCrmHub() {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex w-full flex-col gap-6">
       {/* 1. Twenty CRM Header - Impeccable Design */}
       <div className="relative overflow-hidden rounded-2xl border bg-gradient-to-r from-blue-950 via-slate-900 to-blue-950 p-6 text-white shadow-lg">
         {/* Backdrop Glow */}
         <div className="absolute -top-12 -left-12 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl" />
-        <div className="absolute -bottom-12 -right-12 h-64 w-64 rounded-full bg-indigo-500/20 blur-3xl" />
+        <div className="absolute -right-12 -bottom-12 h-64 w-64 rounded-full bg-indigo-500/20 blur-3xl" />
 
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="relative z-10 flex flex-col justify-between gap-4 md:flex-row md:items-center">
           <div className="flex items-start gap-4">
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-600/40">
+            <div className="flex size-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-blue-600/40 shadow-md">
               <Database className="size-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="font-extrabold text-xl tracking-tight text-white">Twenty Open-Source CRM Hub</h2>
-                <Badge className="bg-blue-500/20 text-blue-300 border-blue-400/30 text-xs">
+                <h2 className="font-extrabold text-white text-xl tracking-tight">Twenty Open-Source CRM Hub</h2>
+                <Badge className="border-blue-400/30 bg-blue-500/20 text-blue-300 text-xs">
                   `twentyhq/twenty` Connected
                 </Badge>
               </div>
-              <p className="text-slate-300 text-xs mt-1 max-w-2xl">
+              <p className="mt-1 max-w-2xl text-slate-300 text-xs">
                 Open-Source CRM integration connected to `c:\Users\High Tech\.gemini\antigravity\scratch\twenty`.
                 Powered by 2-way AI sync and LangGraph Multi-Agent automation.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex shrink-0 items-center gap-2">
             <Button
               onClick={handleSyncTwenty}
               disabled={isSyncing}
               size="sm"
-              className="bg-blue-600 hover:bg-blue-500 text-white gap-2 shadow-md"
+              className="gap-2 bg-blue-600 text-white shadow-md hover:bg-blue-500"
             >
               {isSyncing ? <RefreshCw className="size-4 animate-spin" /> : <ArrowRightLeft className="size-4" />}
               Sync Data to Twenty CRM
@@ -177,11 +171,11 @@ export function TwentyCrmHub() {
                 <Bot className="size-5" />
               </div>
               <div>
-                <CardTitle className="text-sm font-semibold flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 font-semibold text-sm">
                   <span>Twenty CRM AI Operations Agent</span>
                   <Badge
                     variant="outline"
-                    className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-[10px]"
+                    className="border-emerald-500/20 bg-emerald-500/10 text-[10px] text-emerald-600"
                   >
                     ONLINE ADVISOR
                   </Badge>
@@ -192,7 +186,7 @@ export function TwentyCrmHub() {
                 </CardDescription>
               </div>
             </div>
-            <div className="hidden sm:flex items-center gap-1.5 text-xs text-muted-foreground">
+            <div className="hidden items-center gap-1.5 text-muted-foreground text-xs sm:flex">
               <Cpu className="size-3.5 text-blue-500" />
               <span>Twenty Agent Engine</span>
             </div>
@@ -210,13 +204,13 @@ export function TwentyCrmHub() {
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
               placeholder="e.g. 'Sync all Toronto M5V high-intent leads to Twenty CRM People...'"
-              className="flex-1 text-xs bg-background"
+              className="flex-1 bg-background text-xs"
             />
             <Button
               type="submit"
               disabled={isAiThinking || !aiPrompt.trim()}
               size="sm"
-              className="bg-blue-600 hover:bg-blue-500 text-white gap-1.5 shrink-0"
+              className="shrink-0 gap-1.5 bg-blue-600 text-white hover:bg-blue-500"
             >
               {isAiThinking ? <RefreshCw className="size-3.5 animate-spin" /> : <Wand2 className="size-3.5" />}
               Auto-Execute CRM Operation
@@ -242,7 +236,7 @@ export function TwentyCrmHub() {
                   setAiPrompt(preset);
                   handleAiCrmOperation(preset);
                 }}
-                className="rounded-full border bg-background px-2.5 py-0.5 text-foreground hover:bg-blue-500/10 hover:border-blue-500/40 transition-all text-[11px]"
+                className="rounded-full border bg-background px-2.5 py-0.5 text-[11px] text-foreground transition-all hover:border-blue-500/40 hover:bg-blue-500/10"
               >
                 {preset}
               </button>
@@ -251,8 +245,8 @@ export function TwentyCrmHub() {
 
           {/* AI Rationale Output */}
           {aiRationale && (
-            <div className="rounded-lg bg-blue-500/10 border border-blue-500/20 p-3 text-xs text-blue-600 dark:text-blue-400 flex items-start gap-2 animate-in fade-in duration-300">
-              <CheckCircle2 className="size-4 shrink-0 mt-0.5 text-blue-500" />
+            <div className="fade-in flex animate-in items-start gap-2 rounded-lg border border-blue-500/20 bg-blue-500/10 p-3 text-blue-600 text-xs duration-300 dark:text-blue-400">
+              <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-blue-500" />
               <div>
                 <span className="font-semibold">{aiRationale}</span>
               </div>
@@ -262,56 +256,56 @@ export function TwentyCrmHub() {
       </Card>
 
       {/* 3. Integration Status Cards - Impeccable Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border shadow-xs hover:border-blue-500/40 transition-all">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Card className="border shadow-xs transition-all hover:border-blue-500/40">
           <CardHeader className="p-4 pb-2">
-            <CardTitle className="text-xs font-medium text-muted-foreground flex items-center justify-between">
+            <CardTitle className="flex items-center justify-between font-medium text-muted-foreground text-xs">
               <span>Connection Status</span>
               <ShieldCheck className="size-4 text-emerald-500" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 pt-0">
-            <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">ACTIVE & CONNECTED</div>
-            <p className="text-[11px] text-muted-foreground mt-0.5">local repo: twentyhq/twenty</p>
+            <div className="font-bold text-emerald-600 text-lg dark:text-emerald-400">ACTIVE & CONNECTED</div>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">local repo: twentyhq/twenty</p>
           </CardContent>
         </Card>
 
-        <Card className="border shadow-xs hover:border-blue-500/40 transition-all">
+        <Card className="border shadow-xs transition-all hover:border-blue-500/40">
           <CardHeader className="p-4 pb-2">
-            <CardTitle className="text-xs font-medium text-muted-foreground flex items-center justify-between">
+            <CardTitle className="flex items-center justify-between font-medium text-muted-foreground text-xs">
               <span>Synced Contacts (People)</span>
               <Users className="size-4 text-blue-500" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 pt-0">
-            <div className="text-2xl font-bold">{statusData?.synced_contacts ?? 0}</div>
-            <p className="text-[11px] text-muted-foreground mt-0.5">Kalo Scraped Leads synced</p>
+            <div className="font-bold text-2xl">{statusData?.synced_contacts ?? 0}</div>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">Kalo Scraped Leads synced</p>
           </CardContent>
         </Card>
 
-        <Card className="border shadow-xs hover:border-blue-500/40 transition-all">
+        <Card className="border shadow-xs transition-all hover:border-blue-500/40">
           <CardHeader className="p-4 pb-2">
-            <CardTitle className="text-xs font-medium text-muted-foreground flex items-center justify-between">
+            <CardTitle className="flex items-center justify-between font-medium text-muted-foreground text-xs">
               <span>Synced Opportunities</span>
               <TrendingUp className="size-4 text-purple-500" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 pt-0">
-            <div className="text-2xl font-bold">{statusData?.synced_opportunities ?? 0}</div>
-            <p className="text-[11px] text-muted-foreground mt-0.5">Booked Strategy Call deals</p>
+            <div className="font-bold text-2xl">{statusData?.synced_opportunities ?? 0}</div>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">Booked Strategy Call deals</p>
           </CardContent>
         </Card>
 
-        <Card className="border shadow-xs hover:border-blue-500/40 transition-all">
+        <Card className="border shadow-xs transition-all hover:border-blue-500/40">
           <CardHeader className="p-4 pb-2">
-            <CardTitle className="text-xs font-medium text-muted-foreground flex items-center justify-between">
+            <CardTitle className="flex items-center justify-between font-medium text-muted-foreground text-xs">
               <span>Canadian Hubs</span>
               <Building2 className="size-4 text-amber-500" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 pt-0">
-            <div className="text-2xl font-bold">{statusData?.active_branches ?? 5}</div>
-            <p className="text-[11px] text-muted-foreground mt-0.5">Toronto, Van, Cal, Mtl, Ott</p>
+            <div className="font-bold text-2xl">{statusData?.active_branches ?? 5}</div>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">Toronto, Van, Cal, Mtl, Ott</p>
           </CardContent>
         </Card>
       </div>
@@ -319,7 +313,7 @@ export function TwentyCrmHub() {
       {/* 4. Twenty Objects Mapping Showcase */}
       <Card className="border shadow-xs">
         <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 font-semibold text-sm">
             <Layers className="size-4 text-primary" />
             <span>Kalo Systems &rarr; Twenty Open-Source CRM Data Schema Mapping</span>
           </CardTitle>
@@ -327,14 +321,14 @@ export function TwentyCrmHub() {
             Automatic 2-way sync maps Kalo lead intent signals directly into Twenty CRM standard objects.
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-          <div className="rounded-xl border p-4 bg-muted/20 space-y-2 hover:border-blue-500/40 transition-all">
+        <CardContent className="grid grid-cols-1 gap-4 text-xs md:grid-cols-3">
+          <div className="space-y-2 rounded-xl border bg-muted/20 p-4 transition-all hover:border-blue-500/40">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-foreground flex items-center gap-1.5">
+              <span className="flex items-center gap-1.5 font-semibold text-foreground">
                 <Users className="size-4 text-blue-500" />
                 Twenty `People`
               </span>
-              <Badge variant="outline" className="text-[10px] bg-blue-500/10 text-blue-600 border-blue-500/20">
+              <Badge variant="outline" className="border-blue-500/20 bg-blue-500/10 text-[10px] text-blue-600">
                 Synced
               </Badge>
             </div>
@@ -344,13 +338,13 @@ export function TwentyCrmHub() {
             </p>
           </div>
 
-          <div className="rounded-xl border p-4 bg-muted/20 space-y-2 hover:border-blue-500/40 transition-all">
+          <div className="space-y-2 rounded-xl border bg-muted/20 p-4 transition-all hover:border-blue-500/40">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-foreground flex items-center gap-1.5">
+              <span className="flex items-center gap-1.5 font-semibold text-foreground">
                 <Building2 className="size-4 text-amber-500" />
                 Twenty `Companies`
               </span>
-              <Badge variant="outline" className="text-[10px] bg-amber-500/10 text-amber-600 border-amber-500/20">
+              <Badge variant="outline" className="border-amber-500/20 bg-amber-500/10 text-[10px] text-amber-600">
                 Synced
               </Badge>
             </div>
@@ -360,13 +354,13 @@ export function TwentyCrmHub() {
             </p>
           </div>
 
-          <div className="rounded-xl border p-4 bg-muted/20 space-y-2 hover:border-blue-500/40 transition-all">
+          <div className="space-y-2 rounded-xl border bg-muted/20 p-4 transition-all hover:border-blue-500/40">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-foreground flex items-center gap-1.5">
+              <span className="flex items-center gap-1.5 font-semibold text-foreground">
                 <TrendingUp className="size-4 text-purple-500" />
                 Twenty `Opportunities`
               </span>
-              <Badge variant="outline" className="text-[10px] bg-purple-500/10 text-purple-600 border-purple-500/20">
+              <Badge variant="outline" className="border-purple-500/20 bg-purple-500/10 text-[10px] text-purple-600">
                 Synced
               </Badge>
             </div>

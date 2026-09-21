@@ -1,21 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import {
   Bot,
-  Building,
   Check,
   CheckCircle2,
-  CornerDownLeft,
   Filter,
   Lightbulb,
   MapPin,
-  PhoneCall,
   RefreshCw,
   Search,
   ShieldCheck,
-  Sliders,
   SlidersHorizontal,
   Sparkles,
   Tag,
@@ -192,7 +188,7 @@ export function IntentLeadsEngine() {
           user_prompt: promptToUse,
         }),
       });
-    } catch (e) {
+    } catch (_e) {
       // Ignore fallback
     }
 
@@ -228,7 +224,7 @@ export function IntentLeadsEngine() {
           description: `Assigned to ${data.assigned_branch} (${data.assigned_coach}). SMS Dispatched.`,
         });
       }
-    } catch (err) {
+    } catch (_err) {
       toast.error("Speed call simulation failed");
     } finally {
       setCallingLeadId(null);
@@ -236,18 +232,18 @@ export function IntentLeadsEngine() {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex w-full flex-col gap-6">
       {/* 1. Header Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-xl border bg-gradient-to-r from-primary/10 via-background to-background p-6 shadow-xs">
+      <div className="flex flex-col justify-between gap-4 rounded-xl border bg-gradient-to-r from-primary/10 via-background to-background p-6 shadow-xs md:flex-row md:items-center">
         <div>
           <div className="flex items-center gap-2">
-            <Sparkles className="size-5 text-primary animate-pulse" />
+            <Sparkles className="size-5 animate-pulse text-primary" />
             <h2 className="font-semibold text-lg tracking-tight">ciel/intentleads Intent Characteristics Engine</h2>
-            <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-xs">
+            <Badge variant="outline" className="border-primary/20 bg-primary/10 text-primary text-xs">
               ciel/intentleads v2.0
             </Badge>
           </div>
-          <p className="text-muted-foreground text-xs mt-1">
+          <p className="mt-1 text-muted-foreground text-xs">
             Configure custom intent characteristics or use the **AI Intent Advisor** to auto-surface high-intent
             prospects across Canada.
           </p>
@@ -267,11 +263,11 @@ export function IntentLeadsEngine() {
                 <Bot className="size-5" />
               </div>
               <div>
-                <CardTitle className="text-sm font-semibold flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 font-semibold text-sm">
                   <span>AI Intent Consultant Agent</span>
                   <Badge
                     variant="outline"
-                    className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-[10px]"
+                    className="border-emerald-500/20 bg-emerald-500/10 text-[10px] text-emerald-600"
                   >
                     ACTIVE ADVISOR
                   </Badge>
@@ -296,9 +292,9 @@ export function IntentLeadsEngine() {
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
               placeholder="e.g. 'I want high-income tech engineers in Toronto needing corporate tax shelters...'"
-              className="flex-1 text-xs bg-background"
+              className="flex-1 bg-background text-xs"
             />
-            <Button type="submit" disabled={isAiThinking || !aiPrompt.trim()} size="sm" className="gap-1.5 shrink-0">
+            <Button type="submit" disabled={isAiThinking || !aiPrompt.trim()} size="sm" className="shrink-0 gap-1.5">
               {isAiThinking ? <RefreshCw className="size-3.5 animate-spin" /> : <Wand2 className="size-3.5" />}
               Auto-Configure Settings
             </Button>
@@ -323,7 +319,7 @@ export function IntentLeadsEngine() {
                   setAiPrompt(preset);
                   handleAiAutoConfigure(preset);
                 }}
-                className="rounded-full border bg-background px-2.5 py-0.5 text-foreground hover:bg-primary/10 hover:border-primary/40 transition-all text-[11px]"
+                className="rounded-full border bg-background px-2.5 py-0.5 text-[11px] text-foreground transition-all hover:border-primary/40 hover:bg-primary/10"
               >
                 {preset}
               </button>
@@ -332,8 +328,8 @@ export function IntentLeadsEngine() {
 
           {/* AI Recommendation Rationale */}
           {aiRecommendation && (
-            <div className="rounded-lg bg-primary/10 border border-primary/20 p-3 text-xs text-primary flex items-start gap-2 animate-in fade-in duration-300">
-              <CheckCircle2 className="size-4 shrink-0 mt-0.5 text-primary" />
+            <div className="fade-in flex animate-in items-start gap-2 rounded-lg border border-primary/20 bg-primary/10 p-3 text-primary text-xs duration-300">
+              <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
               <div>
                 <span className="font-semibold">AI Recommendation Applied:</span> {aiRecommendation}
               </div>
@@ -342,11 +338,11 @@ export function IntentLeadsEngine() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* 3. Left Column: Intent Characteristics Controls */}
-        <Card className="lg:col-span-5 border shadow-xs">
+        <Card className="border shadow-xs lg:col-span-5">
           <CardHeader className="pb-4">
-            <CardTitle className="text-sm font-semibold flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 font-semibold text-sm">
               <SlidersHorizontal className="size-4 text-primary" />
               <span>Intent Characteristics Setup</span>
             </CardTitle>
@@ -370,7 +366,7 @@ export function IntentLeadsEngine() {
                 step="5"
                 value={minIntentScore}
                 onChange={(e) => setMinIntentScore(Number(e.target.value))}
-                className="w-full h-1.5 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-muted accent-primary"
               />
               <div className="flex justify-between text-[10px] text-muted-foreground">
                 <span>50% (Broad)</span>
@@ -381,7 +377,7 @@ export function IntentLeadsEngine() {
 
             {/* Min Freedom Gap */}
             <div className="space-y-1.5">
-              <label className="font-medium text-foreground block">Minimum Monthly Freedom Gap ($/mo):</label>
+              <label className="block font-medium text-foreground">Minimum Monthly Freedom Gap ($/mo):</label>
               <Input
                 type="number"
                 value={minFreedomGap}
@@ -393,7 +389,7 @@ export function IntentLeadsEngine() {
 
             {/* Target Channels */}
             <div className="space-y-2">
-              <label className="font-medium text-foreground block">Target Omnichannel Sources:</label>
+              <label className="block font-medium text-foreground">Target Omnichannel Sources:</label>
               <div className="grid grid-cols-2 gap-2">
                 {[
                   { id: "facebook", label: "Facebook Ads" },
@@ -409,16 +405,16 @@ export function IntentLeadsEngine() {
                       onClick={() => handleChannelToggle(ch.id)}
                       className={`flex items-center gap-2 rounded-lg border p-2 text-left transition-all ${
                         isChecked
-                          ? "border-primary bg-primary/10 text-primary font-medium"
+                          ? "border-primary bg-primary/10 font-medium text-primary"
                           : "border-input bg-background text-muted-foreground hover:bg-muted"
                       }`}
                     >
                       <div
-                        className={`size-3.5 rounded-sm border flex items-center justify-center ${isChecked ? "bg-primary border-primary text-primary-foreground" : "border-muted-foreground"}`}
+                        className={`flex size-3.5 items-center justify-center rounded-sm border ${isChecked ? "border-primary bg-primary text-primary-foreground" : "border-muted-foreground"}`}
                       >
                         {isChecked && <Check className="size-3" />}
                       </div>
-                      <span className="text-[11px] truncate">{ch.label}</span>
+                      <span className="truncate text-[11px]">{ch.label}</span>
                     </button>
                   );
                 })}
@@ -427,7 +423,7 @@ export function IntentLeadsEngine() {
 
             {/* Target Cities */}
             <div className="space-y-2">
-              <label className="font-medium text-foreground block">Target Canadian Territories:</label>
+              <label className="block font-medium text-foreground">Target Canadian Territories:</label>
               <div className="flex flex-wrap gap-1.5">
                 {["Toronto", "Vancouver", "Calgary", "Montreal", "Ottawa"].map((city) => {
                   const isSelected = selectedCities.includes(city);
@@ -435,7 +431,7 @@ export function IntentLeadsEngine() {
                     <Badge
                       key={city}
                       variant={isSelected ? "default" : "outline"}
-                      className="cursor-pointer text-[11px] px-2 py-0.5"
+                      className="cursor-pointer px-2 py-0.5 text-[11px]"
                       onClick={() => handleCityToggle(city)}
                     >
                       {city}
@@ -447,7 +443,7 @@ export function IntentLeadsEngine() {
 
             {/* Intent Keywords */}
             <div className="space-y-1.5">
-              <label className="font-medium text-foreground flex items-center gap-1.5">
+              <label className="flex items-center gap-1.5 font-medium text-foreground">
                 <Tag className="size-3.5 text-primary" />
                 <span>Intent Signal Keywords (comma-separated):</span>
               </label>
@@ -460,11 +456,11 @@ export function IntentLeadsEngine() {
             </div>
 
             {/* CASL Compliance Shield Toggle */}
-            <div className="flex items-center justify-between rounded-lg border p-3 bg-muted/20">
+            <div className="flex items-center justify-between rounded-lg border bg-muted/20 p-3">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="size-4 text-emerald-500" />
                 <div>
-                  <span className="font-medium text-xs block text-foreground">CASL Shield Audit</span>
+                  <span className="block font-medium text-foreground text-xs">CASL Shield Audit</span>
                   <span className="text-[10px] text-muted-foreground">180-day implied consent verified</span>
                 </div>
               </div>
@@ -482,11 +478,11 @@ export function IntentLeadsEngine() {
         </Card>
 
         {/* 4. Right Column: High-Intent Results & Speed-to-Lead Trigger */}
-        <Card className="lg:col-span-7 border shadow-xs flex flex-col">
-          <CardHeader className="pb-3 border-b">
+        <Card className="flex flex-col border shadow-xs lg:col-span-7">
+          <CardHeader className="border-b pb-3">
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-sm font-semibold flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 font-semibold text-sm">
                   <TrendingUp className="size-4 text-primary" />
                   <span>Matching High-Intent Prospects</span>
                 </CardTitle>
@@ -496,29 +492,29 @@ export function IntentLeadsEngine() {
                     : "Run query above to surface leads"}
                 </CardDescription>
               </div>
-              <Badge variant="secondary" className="text-xs font-bold px-2 py-0.5">
+              <Badge variant="secondary" className="px-2 py-0.5 font-bold text-xs">
                 {searchResults.length} Prospects
               </Badge>
             </div>
           </CardHeader>
-          <CardContent className="p-4 flex-1 overflow-y-auto min-h-[350px]">
+          <CardContent className="min-h-[350px] flex-1 overflow-y-auto p-4">
             {isLoading ? (
-              <div className="flex flex-col items-center justify-center h-48 gap-2 text-muted-foreground text-xs">
+              <div className="flex h-48 flex-col items-center justify-center gap-2 text-muted-foreground text-xs">
                 <RefreshCw className="size-6 animate-spin text-primary" />
                 <span>Scanning omnichannel sources with ciel/intentleads rules...</span>
               </div>
             ) : searchResults.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-48 gap-3 text-center p-6 border rounded-xl border-dashed bg-muted/10">
+              <div className="flex h-48 flex-col items-center justify-center gap-3 rounded-xl border border-dashed bg-muted/10 p-6 text-center">
                 <Search className="size-8 text-muted-foreground opacity-50" />
                 <div>
-                  <h4 className="font-medium text-xs text-foreground">No leads matched current characteristics</h4>
-                  <p className="text-[11px] text-muted-foreground mt-0.5">
+                  <h4 className="font-medium text-foreground text-xs">No leads matched current characteristics</h4>
+                  <p className="mt-0.5 text-[11px] text-muted-foreground">
                     Click "Apply & Find High-Intent Leads" or ask the AI Intent Consultant above to auto-configure
                     settings.
                   </p>
                 </div>
-                <Button size="sm" variant="outline" onClick={handleSearchIntentLeads} className="text-xs gap-1.5">
-                  <Zap className="size-3 text-amber-500 fill-amber-500" />
+                <Button size="sm" variant="outline" onClick={handleSearchIntentLeads} className="gap-1.5 text-xs">
+                  <Zap className="size-3 fill-amber-500 text-amber-500" />
                   Run Fresh Scrape
                 </Button>
               </div>
@@ -527,12 +523,12 @@ export function IntentLeadsEngine() {
                 {searchResults.map((lead) => (
                   <div
                     key={lead.id}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border p-3.5 hover:border-primary/40 transition-all bg-card"
+                    className="flex flex-col justify-between gap-3 rounded-lg border bg-card p-3.5 transition-all hover:border-primary/40 sm:flex-row sm:items-center"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-xs text-foreground">{lead.name}</span>
-                        <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-[10px]">
+                        <span className="font-semibold text-foreground text-xs">{lead.name}</span>
+                        <Badge className="border-emerald-500/20 bg-emerald-500/10 text-[10px] text-emerald-600">
                           {lead.intent_score}% Intent
                         </Badge>
                         <Badge variant="outline" className="text-[10px]">
@@ -548,14 +544,14 @@ export function IntentLeadsEngine() {
                           Freedom Gap: <strong className="text-foreground">${lead.monthly_freedom_gap}/mo</strong>
                         </span>
                       </div>
-                      <p className="text-[11px] text-muted-foreground line-clamp-1 italic">{lead.notes}</p>
+                      <p className="line-clamp-1 text-[11px] text-muted-foreground italic">{lead.notes}</p>
                     </div>
 
                     <Button
                       size="sm"
                       onClick={() => triggerSpeedCall(lead)}
                       disabled={callingLeadId === lead.id}
-                      className="gap-1.5 h-8 text-xs shrink-0"
+                      className="h-8 shrink-0 gap-1.5 text-xs"
                     >
                       {callingLeadId === lead.id ? (
                         <RefreshCw className="size-3.5 animate-spin" />

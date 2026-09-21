@@ -63,15 +63,10 @@ export function PatientMonitoring({ patients }: PatientMonitoringProps) {
             <Separator />
 
             {selectedPatient.alarm && (
-              <Alert
-                className="min-h-9 rounded-none border-x-0 border-t-0 pr-32"
-                variant="default"
-              >
+              <Alert className="min-h-9 rounded-none border-x-0 border-t-0 pr-32" variant="default">
                 <AlertTitle>{selectedPatient.alarm}</AlertTitle>
                 {selectedPatient.alarmDuration && (
-                  <AlertDescription>
-                    Active for {selectedPatient.alarmDuration}
-                  </AlertDescription>
+                  <AlertDescription>Active for {selectedPatient.alarmDuration}</AlertDescription>
                 )}
                 <AlertAction className="top-1/2 -translate-y-1/2">
                   <Button

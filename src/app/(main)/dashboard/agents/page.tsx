@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+
 import { PaperclipCockpitHub } from "@/components/fleet/PaperclipCockpitHub";
 
 export const metadata: Metadata = {

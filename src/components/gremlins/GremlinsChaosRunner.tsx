@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { Bug, Play, StopCircle } from "lucide-react";
 import { toast } from "sonner";
@@ -94,10 +94,10 @@ export function GremlinsChaosRunner() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-3 rounded-full border bg-background/95 p-2 px-4 shadow-xl backdrop-blur-md">
+    <div className="fixed right-4 bottom-4 z-50 flex items-center gap-3 rounded-full border bg-background/95 p-2 px-4 shadow-xl backdrop-blur-md">
       <div className="flex items-center gap-2">
-        <Bug className={`size-4 ${isRunning ? "text-amber-500 animate-bounce" : "text-primary"}`} />
-        <span className="font-semibold text-xs text-foreground">Gremlins Chaos</span>
+        <Bug className={`size-4 ${isRunning ? "animate-bounce text-amber-500" : "text-primary"}`} />
+        <span className="font-semibold text-foreground text-xs">Gremlins Chaos</span>
       </div>
 
       <div className="flex items-center gap-2 text-xs">
@@ -115,7 +115,7 @@ export function GremlinsChaosRunner() {
         <Button
           onClick={startChaosHorde}
           size="sm"
-          className="h-7 rounded-full bg-rose-600 hover:bg-rose-500 text-white text-[11px] gap-1 px-3"
+          className="h-7 gap-1 rounded-full bg-rose-600 px-3 text-[11px] text-white hover:bg-rose-500"
         >
           <Play className="size-3 fill-current" />
           Unleash
@@ -125,7 +125,7 @@ export function GremlinsChaosRunner() {
           onClick={stopChaosHorde}
           size="sm"
           variant="destructive"
-          className="h-7 rounded-full text-[11px] gap-1 px-3"
+          className="h-7 gap-1 rounded-full px-3 text-[11px]"
         >
           <StopCircle className="size-3" />
           Stop

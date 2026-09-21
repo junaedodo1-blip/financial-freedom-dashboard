@@ -1,29 +1,21 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
+
 import {
   Activity,
-  Archive,
-  Bot,
   Brain,
   CheckCircle2,
   Clock,
   Cpu,
-  Database,
-  ExternalLink,
-  FilePlus,
   Filter,
   HardDrive,
   History,
-  Layers,
-  Lightbulb,
-  MessageSquare,
   Plus,
   RefreshCw,
   Search,
-  ShieldCheck,
   Sparkles,
-  Tag,
   Wand2,
   Zap,
 } from "lucide-react";
@@ -59,7 +51,7 @@ export interface MemoryItem {
 export function LightMemHub() {
   const [status, setStatus] = useState<LightMemStatus | null>(null);
   const [memories, setMemories] = useState<MemoryItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [_isLoading, setIsLoading] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<string>("all");
   const [isConsolidating, setIsConsolidating] = useState(false);
 
@@ -108,7 +100,7 @@ export function LightMemHub() {
 
   useEffect(() => {
     fetchLightMemData();
-  }, []);
+  }, [fetchLightMemData]);
 
   const handleRetrieveMemories = async (queryToSearch?: string) => {
     const q = queryToSearch !== undefined ? queryToSearch : memoryQuery;
@@ -135,7 +127,7 @@ export function LightMemHub() {
       } else {
         toast.error("Memory retrieval query failed");
       }
-    } catch (err) {
+    } catch (_err) {
       toast.error("Error connecting to LightMem retrieval endpoint");
     } finally {
       setIsSearching(false);
@@ -155,7 +147,7 @@ export function LightMemHub() {
       } else {
         toast.error("Memory consolidation failed");
       }
-    } catch (err) {
+    } catch (_err) {
       toast.error("Error executing LightMem consolidation");
     } finally {
       setIsConsolidating(false);
@@ -200,7 +192,7 @@ export function LightMemHub() {
       } else {
         toast.error("Failed to add memory turn");
       }
-    } catch (err) {
+    } catch (_err) {
       toast.error("Error adding turn to LightMem");
     } finally {
       setIsSubmitting(false);
@@ -216,19 +208,16 @@ export function LightMemHub() {
     { id: "intent-consultant", name: "AI Intent Consultant" },
   ];
 
-  const filteredMemories =
-    selectedAgent === "all"
-      ? memories
-      : memories.filter((m) => m.agent_id === selectedAgent);
+  const filteredMemories = selectedAgent === "all" ? memories : memories.filter((m) => m.agent_id === selectedAgent);
 
   return (
     <div className="relative min-h-screen space-y-8 bg-slate-950 p-6 text-slate-100">
       {/* Impeccable Violet Radial Glow Backdrops */}
-      <div className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-purple-600/10 blur-3xl" />
-      <div className="pointer-events-none absolute right-10 top-40 h-96 w-96 rounded-full bg-indigo-600/10 blur-3xl" />
+      <div className="pointer-events-none absolute -top-20 -left-20 h-96 w-96 rounded-full bg-purple-600/10 blur-3xl" />
+      <div className="pointer-events-none absolute top-40 right-10 h-96 w-96 rounded-full bg-indigo-600/10 blur-3xl" />
 
       {/* Header Banner */}
-      <div className="relative flex flex-col gap-4 border-b border-slate-800 pb-6 md:flex-row md:items-center md:justify-between">
+      <div className="relative flex flex-col gap-4 border-slate-800 border-b pb-6 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 ring-1 ring-purple-500/30">
@@ -236,15 +225,12 @@ export function LightMemHub() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-3xl font-extrabold tracking-tight text-white">
-                  LightMem AI Agent Memory Layer
-                </h1>
-                <Badge className="bg-purple-500/20 text-purple-300 ring-1 ring-purple-500/40">
-                  StructMem Active
-                </Badge>
+                <h1 className="font-extrabold text-3xl text-white tracking-tight">LightMem AI Agent Memory Layer</h1>
+                <Badge className="bg-purple-500/20 text-purple-300 ring-1 ring-purple-500/40">StructMem Active</Badge>
               </div>
-              <p className="mt-1 text-sm text-slate-400">
-                Lightweight long-term memory framework integrated with local LightMem repository. Enables Paperclip AI Fleet Agents to retain event-centric context across user conversations.
+              <p className="mt-1 text-slate-400 text-sm">
+                Lightweight long-term memory framework integrated with local LightMem repository. Enables Paperclip AI
+                Fleet Agents to retain event-centric context across user conversations.
               </p>
             </div>
           </div>
@@ -275,82 +261,61 @@ export function LightMemHub() {
         <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-md">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
-                Engine Status
-              </span>
-              <Badge className="bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/30">
-                CONNECTED
-              </Badge>
+              <span className="font-medium text-slate-400 text-xs uppercase tracking-wider">Engine Status</span>
+              <Badge className="bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/30">CONNECTED</Badge>
             </div>
             <div className="mt-3 flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-purple-400" />
-              <span className="text-xl font-bold text-white">
-                {status?.engine_name || "LightMem Memory Layer"}
-              </span>
+              <span className="font-bold text-white text-xl">{status?.engine_name || "LightMem Memory Layer"}</span>
             </div>
-            <p className="mt-1 truncate text-xs text-slate-500">
-              Path: {status?.local_repo_path || "c:...\\LightMem"}
-            </p>
+            <p className="mt-1 truncate text-slate-500 text-xs">Path: {status?.local_repo_path || "c:...\\LightMem"}</p>
           </CardContent>
         </Card>
 
         <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-md">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
-                Stored Agent Memories
-              </span>
+              <span className="font-medium text-slate-400 text-xs uppercase tracking-wider">Stored Agent Memories</span>
               <HardDrive className="h-4 w-4 text-purple-400" />
             </div>
             <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-purple-300">
-                {memories.length}
-              </span>
-              <span className="text-xs text-slate-400">Interaction Turns</span>
+              <span className="font-extrabold text-3xl text-purple-300">{memories.length}</span>
+              <span className="text-slate-400 text-xs">Interaction Turns</span>
             </div>
-            <p className="mt-1 text-xs text-slate-500">
-              5 AI Fleet Bots Ingesting Context
-            </p>
+            <p className="mt-1 text-slate-500 text-xs">5 AI Fleet Bots Ingesting Context</p>
           </CardContent>
         </Card>
 
         <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-md">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
+              <span className="font-medium text-slate-400 text-xs uppercase tracking-wider">
                 Context Compression Ratio
               </span>
               <Zap className="h-4 w-4 text-amber-400" />
             </div>
             <div className="mt-3 flex items-center gap-2">
-              <span className="text-2xl font-extrabold text-amber-300">
-                {status?.compression_ratio || "4.2x"}
-              </span>
-              <Badge className="bg-amber-500/20 text-amber-300 text-xs">
-                LLMLingua2 Optimized
-              </Badge>
+              <span className="font-extrabold text-2xl text-amber-300">{status?.compression_ratio || "4.2x"}</span>
+              <Badge className="bg-amber-500/20 text-amber-300 text-xs">LLMLingua2 Optimized</Badge>
             </div>
-            <p className="mt-1 text-xs text-slate-500">
-              Event-Centric StructMem Hierarchy
-            </p>
+            <p className="mt-1 text-slate-500 text-xs">Event-Centric StructMem Hierarchy</p>
           </CardContent>
         </Card>
 
         <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-md">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
+              <span className="font-medium text-slate-400 text-xs uppercase tracking-wider">
                 Decay & Offline Consolidation
               </span>
               <Activity className="h-4 w-4 text-cyan-400" />
             </div>
             <div className="mt-3 flex items-center gap-2">
-              <span className="text-sm font-semibold text-cyan-300">
-                AUTO DECAY PASS
-              </span>
+              <span className="font-semibold text-cyan-300 text-sm">AUTO DECAY PASS</span>
             </div>
-            <p className="mt-1 text-xs text-slate-500">
-              Last run: {status?.last_consolidation ? new Date(status.last_consolidation).toLocaleTimeString() : "Just now"}
+            <p className="mt-1 text-slate-500 text-xs">
+              Last run:{" "}
+              {status?.last_consolidation ? new Date(status.last_consolidation).toLocaleTimeString() : "Just now"}
             </p>
           </CardContent>
         </Card>
@@ -358,7 +323,7 @@ export function LightMemHub() {
 
       {/* LightMem AI Memory Advisor Agent Box (Impeccable Design) */}
       <Card className="relative overflow-hidden border-purple-500/30 bg-gradient-to-r from-slate-900 via-slate-900/90 to-purple-950/40 shadow-2xl backdrop-blur-xl">
-        <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-purple-500/10 blur-2xl" />
+        <div className="absolute top-0 right-0 h-48 w-48 rounded-full bg-purple-500/10 blur-2xl" />
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -366,24 +331,20 @@ export function LightMemHub() {
                 <Wand2 className="h-5 w-5 animate-pulse text-purple-400" />
               </div>
               <div>
-                <CardTitle className="text-lg font-bold text-white">
-                  Paperclip LightMem Context Retrieval
-                </CardTitle>
+                <CardTitle className="font-bold text-lg text-white">Paperclip LightMem Context Retrieval</CardTitle>
                 <CardDescription className="text-slate-400">
                   Search long-term interaction memories across all 5 AI Fleet Bots using vector & StructMem key lookup.
                 </CardDescription>
               </div>
             </div>
-            <Badge className="bg-purple-500/10 text-purple-300 border-purple-500/30">
-              LightMem v1.2
-            </Badge>
+            <Badge className="border-purple-500/30 bg-purple-500/10 text-purple-300">LightMem v1.2</Badge>
           </div>
         </CardHeader>
 
         <CardContent className="space-y-4">
           <div className="flex flex-col gap-2 sm:flex-row">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-slate-500" />
+              <Search className="absolute top-3 left-3 h-4 w-4 text-slate-500" />
               <Input
                 placeholder="Query agent long-term memory (e.g., 'Toronto M5V HoldCo tax strategy')..."
                 value={memoryQuery}
@@ -408,7 +369,7 @@ export function LightMemHub() {
 
           {/* Preset Memory Queries */}
           <div className="flex flex-wrap items-center gap-2 pt-1">
-            <span className="text-xs text-slate-400">Quick Presets:</span>
+            <span className="text-slate-400 text-xs">Quick Presets:</span>
             {[
               "Toronto M5V tax strategy memories",
               "Vancouver CASL 180-day implied consent",
@@ -421,7 +382,7 @@ export function LightMemHub() {
                   setMemoryQuery(preset);
                   handleRetrieveMemories(preset);
                 }}
-                className="rounded-md border border-slate-800 bg-slate-950/60 px-2.5 py-1 text-xs text-purple-300 transition-colors hover:border-purple-500/50 hover:bg-purple-950/30"
+                className="rounded-md border border-slate-800 bg-slate-950/60 px-2.5 py-1 text-purple-300 text-xs transition-colors hover:border-purple-500/50 hover:bg-purple-950/30"
               >
                 ⚡ {preset}
               </button>
@@ -430,27 +391,24 @@ export function LightMemHub() {
 
           {/* Memory Search Output Card */}
           {retrievedResult && (
-            <div className="mt-4 rounded-xl border border-purple-500/30 bg-slate-950/90 p-4 space-y-3">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+            <div className="mt-4 space-y-3 rounded-xl border border-purple-500/30 bg-slate-950/90 p-4">
+              <div className="flex items-center justify-between border-slate-800 border-b pb-2">
                 <div className="flex items-center gap-2">
                   <Brain className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm font-semibold text-purple-300">
+                  <span className="font-semibold text-purple-300 text-sm">
                     Retrieved Memories ({retrievedResult.matches_count} Matches)
                   </span>
                 </div>
-                <Badge className="bg-slate-800 text-xs text-slate-300">
+                <Badge className="bg-slate-800 text-slate-300 text-xs">
                   Primary Agent: {retrievedResult.top_memory_agent}
                 </Badge>
               </div>
 
               <div className="space-y-3">
                 {retrievedResult.memories.map((mem, idx) => (
-                  <div
-                    key={mem.id}
-                    className="rounded-lg border border-slate-800 bg-slate-900/60 p-3"
-                  >
+                  <div key={mem.id} className="rounded-lg border border-slate-800 bg-slate-900/60 p-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-purple-400">
+                      <span className="font-bold text-purple-400 text-xs">
                         [{idx + 1}] {mem.agent_name}
                       </span>
                       <div className="flex items-center gap-2">
@@ -461,8 +419,8 @@ export function LightMemHub() {
                         ))}
                       </div>
                     </div>
-                    <div className="mt-2 text-xs space-y-1">
-                      <p className="text-slate-400 font-medium">User: {mem.user_input}</p>
+                    <div className="mt-2 space-y-1 text-xs">
+                      <p className="font-medium text-slate-400">User: {mem.user_input}</p>
                       <p className="text-slate-200">Assistant: {mem.assistant_reply}</p>
                     </div>
                     <div className="mt-2 flex items-center justify-between text-[10px] text-slate-500">
@@ -482,20 +440,18 @@ export function LightMemHub() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             <History className="h-5 w-5 text-purple-400" />
-            <h2 className="text-xl font-bold text-white">
-              AI Fleet Long-Term Memory Timeline
-            </h2>
+            <h2 className="font-bold text-white text-xl">AI Fleet Long-Term Memory Timeline</h2>
             <Badge className="bg-slate-800 text-slate-300">{filteredMemories.length}</Badge>
           </div>
 
           {/* Agent Filter Tabs */}
           <div className="flex flex-wrap items-center gap-2">
-            <Filter className="h-4 w-4 text-slate-400 mr-1" />
+            <Filter className="mr-1 h-4 w-4 text-slate-400" />
             {agentFilters.map((af) => (
               <button
                 key={af.id}
                 onClick={() => setSelectedAgent(af.id)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
+                className={`rounded-lg px-3 py-1.5 font-medium text-xs transition-all ${
                   selectedAgent === af.id
                     ? "bg-purple-500/20 text-purple-300 ring-1 ring-purple-500/50"
                     : "bg-slate-900/80 text-slate-400 hover:bg-slate-800 hover:text-slate-200"
@@ -522,10 +478,7 @@ export function LightMemHub() {
                     </Badge>
                     <div className="flex flex-wrap gap-1.5">
                       {mem.tags.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] text-slate-400"
-                        >
+                        <span key={t} className="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] text-slate-400">
                           #{t}
                         </span>
                       ))}
@@ -537,11 +490,11 @@ export function LightMemHub() {
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="rounded-lg border border-slate-800/80 bg-slate-950/60 p-2.5 text-xs space-y-1.5">
-                  <p className="text-slate-400 font-medium">💬 {mem.user_input}</p>
+                <div className="space-y-1.5 rounded-lg border border-slate-800/80 bg-slate-950/60 p-2.5 text-xs">
+                  <p className="font-medium text-slate-400">💬 {mem.user_input}</p>
                   <p className="text-slate-200">🤖 {mem.assistant_reply}</p>
                 </div>
-                <div className="flex items-center justify-between border-t border-slate-800/80 pt-3 text-xs text-slate-500">
+                <div className="flex items-center justify-between border-slate-800/80 border-t pt-3 text-slate-500 text-xs">
                   <div className="flex items-center gap-1.5">
                     <Clock className="h-3.5 w-3.5 text-slate-400" />
                     <span>{new Date(mem.created_at).toLocaleTimeString()}</span>
@@ -561,14 +514,14 @@ export function LightMemHub() {
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
           <div className="w-full max-w-xl rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div className="flex items-center justify-between border-slate-800 border-b pb-4">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/20 text-purple-400">
                   <HardDrive className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">Inject Memory Turn into LightMem</h3>
-                  <p className="text-xs text-slate-400">
+                  <h3 className="font-bold text-lg text-white">Inject Memory Turn into LightMem</h3>
+                  <p className="text-slate-400 text-xs">
                     Add conversation turn for long-term agent retention and StructMem retrieval.
                   </p>
                 </div>
@@ -586,13 +539,11 @@ export function LightMemHub() {
             <form onSubmit={handleAddMemoryTurn} className="mt-4 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300">
-                    AI Agent Owner
-                  </label>
+                  <label className="block font-semibold text-slate-300 text-xs">AI Agent Owner</label>
                   <select
                     value={agentId}
                     onChange={(e) => setAgentId(e.target.value)}
-                    className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-2 text-xs text-white focus:border-purple-500 focus:outline-none"
+                    className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-2 text-white text-xs focus:border-purple-500 focus:outline-none"
                   >
                     <option value="speed-to-lead-ai">Speed-to-Lead AI</option>
                     <option value="scout-bot">Scout Bot</option>
@@ -602,9 +553,7 @@ export function LightMemHub() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300">
-                    Importance Weight (0.1 - 1.0)
-                  </label>
+                  <label className="block font-semibold text-slate-300 text-xs">Importance Weight (0.1 - 1.0)</label>
                   <Input
                     type="number"
                     step="0.05"
@@ -618,21 +567,19 @@ export function LightMemHub() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
-                  User Input / Lead Query
-                </label>
+                <label className="block font-semibold text-slate-300 text-xs">User Input / Lead Query</label>
                 <textarea
                   rows={2}
                   placeholder="e.g. Lead asked about Toronto M5V branch workshop seating capacity..."
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-3 text-xs text-white focus:border-purple-500 focus:outline-none"
+                  className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-3 text-white text-xs focus:border-purple-500 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
+                <label className="block font-semibold text-slate-300 text-xs">
                   Assistant Reply / Action Resolution
                 </label>
                 <textarea
@@ -640,15 +587,13 @@ export function LightMemHub() {
                   placeholder="e.g. Reserved 2 seats for Toronto masterclass and emailed CASL compliance verification..."
                   value={assistantReply}
                   onChange={(e) => setAssistantReply(e.target.value)}
-                  className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-3 text-xs text-white focus:border-purple-500 focus:outline-none"
+                  className="mt-1 w-full rounded-md border border-slate-800 bg-slate-950 p-3 text-white text-xs focus:border-purple-500 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300">
-                  Tags (Comma Separated)
-                </label>
+                <label className="block font-semibold text-slate-300 text-xs">Tags (Comma Separated)</label>
                 <Input
                   placeholder="e.g. Toronto, Workshop, High Intent"
                   value={tagsInput}
@@ -666,11 +611,7 @@ export function LightMemHub() {
                 >
                   Cancel
                 </Button>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="bg-purple-600 text-white hover:bg-purple-500"
-                >
+                <Button type="submit" disabled={isSubmitting} className="bg-purple-600 text-white hover:bg-purple-500">
                   {isSubmitting ? (
                     <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
                   ) : (

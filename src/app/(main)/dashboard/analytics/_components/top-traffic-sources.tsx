@@ -21,27 +21,27 @@ type TrafficSourceDatum = {
 };
 
 const sourcesData: TrafficSourceDatum[] = [
-  { label: "89.4k", source: "Organic Search", visitors: 89_400 },
-  { label: "55.2k", source: "Direct", visitors: 55_200 },
-  { label: "38.1k", source: "Social", visitors: 38_100 },
-  { label: "30.4k", source: "Referral", visitors: 30_400 },
-  { label: "22.7k", source: "Paid", visitors: 22_700 },
+  { label: "0", source: "Organic Search", visitors: 0 },
+  { label: "0", source: "Direct", visitors: 0 },
+  { label: "0", source: "Social", visitors: 0 },
+  { label: "0", source: "Referral", visitors: 0 },
+  { label: "0", source: "Paid", visitors: 0 },
 ];
 
 const campaignsData: TrafficSourceDatum[] = [
-  { label: "16.8k", source: "Spring Launch", visitors: 16_800 },
-  { label: "12.0k", source: "Newsletter", visitors: 12_000 },
-  { label: "7.7k", source: "Retargeting", visitors: 7700 },
-  { label: "5.9k", source: "Brand Search", visitors: 5900 },
-  { label: "4.3k", source: "Partners", visitors: 4300 },
+  { label: "0", source: "Spring Launch", visitors: 0 },
+  { label: "0", source: "Newsletter", visitors: 0 },
+  { label: "0", source: "Retargeting", visitors: 0 },
+  { label: "0", source: "Brand Search", visitors: 0 },
+  { label: "0", source: "Partners", visitors: 0 },
 ];
 
 const referrersData: TrafficSourceDatum[] = [
-  { label: "18.4k", source: "Google", visitors: 18_400 },
-  { label: "8.9k", source: "LinkedIn", visitors: 8900 },
-  { label: "5.7k", source: "Product Hunt", visitors: 5700 },
-  { label: "4.8k", source: "GitHub", visitors: 4800 },
-  { label: "3.6k", source: "Medium", visitors: 3600 },
+  { label: "0", source: "Google", visitors: 0 },
+  { label: "0", source: "LinkedIn", visitors: 0 },
+  { label: "0", source: "Product Hunt", visitors: 0 },
+  { label: "0", source: "GitHub", visitors: 0 },
+  { label: "0", source: "Medium", visitors: 0 },
 ];
 
 function renderValueLabel(props: LabelProps) {
