@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TablerCard } from "@/components/ui/tabler-card";
+import { ThinkingOrb } from "@/components/ui/thinking-orbs/ThinkingOrb";
 
 export function FreedomCalculatorHub() {
   const [monthlyIncome, setMonthlyIncome] = useState("15000");
@@ -135,7 +136,17 @@ export function FreedomCalculatorHub() {
       </TablerCard>
 
       {/* Result Card */}
-      <TablerCard statusColor="blue" headerTitle="Your Gap Result" headerDescription={`Calculated for ${city} branch.`}>
+      <TablerCard
+        statusColor="blue"
+        headerTitle="Your Gap Result"
+        headerDescription={`Calculated for ${city} branch.`}
+        headerAction={
+          <div className="flex items-center gap-1.5 rounded-full border border-border/50 bg-background/60 px-2 py-0.5 text-[11px] text-muted-foreground">
+            <ThinkingOrb state="solving" size={20} />
+            <span>AI Solved</span>
+          </div>
+        }
+      >
         <div className="space-y-4">
           <div className="rounded-lg border border-border/60 bg-muted/30 p-4 text-center">
             <span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">Monthly Gap</span>

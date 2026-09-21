@@ -10,6 +10,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { users } from "@/data/users";
 import { getPreference } from "@/server/server-actions";
 
+import { ThinkingOrb } from "@/components/ui/thinking-orbs/ThinkingOrb";
 import { AccountSwitcher } from "./_components/header/account-switcher";
 import { LayoutControls } from "./_components/header/layout-controls";
 import { SearchDialog } from "./_components/header/search-dialog";
@@ -60,6 +61,10 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
               <SearchDialog />
             </div>
             <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 rounded-full border border-border/50 bg-muted/40 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                <ThinkingOrb state="breathing" size={20} />
+                <span className="hidden sm:inline">Kalo Active</span>
+              </div>
               <LayoutControls />
               <ThemeSwitcher />
               <AccountSwitcher users={users} />
