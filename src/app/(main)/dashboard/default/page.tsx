@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-
-import { TwentyCrmHub } from "@/components/crm/TwentyCrmHub";
 import { ConnectedMasterDashboard } from "@/components/dashboard/ConnectedMasterDashboard";
 
 export const metadata: Metadata = {
@@ -13,7 +11,6 @@ export default function Page() {
   return (
     <div className="@container/main flex flex-col gap-6">
       <ConnectedMasterDashboard />
-      <TwentyCrmHub />
     </div>
   );
 }

@@ -72,7 +72,7 @@ export const viewItems: NavItem[] = [
 export const conversations: Conversation[] = [];
 
 export const currentUser = {
-  name: "Arham Khan",
-  email: "hello@arhamkhnz.com",
+  name: "Junaed Rahman",
+  email: "junaed@financialfreedom.ca",
   avatar: "",
 };

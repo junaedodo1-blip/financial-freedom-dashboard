@@ -1,104 +1,113 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { IconLock, IconUser, IconShieldCheck, IconAlertTriangle } from "@tabler/icons-react";
 import { toast } from "sonner";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-const formSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
-  remember: z.boolean().optional(),
-});
+// Approved Client Accounts List (only approved users can log in)
+const APPROVED_ACCOUNTS = [
+  { username: "junaed", email: "junaed@financialfreedom.ca", password: "1357" },
+];
 
 export function LoginForm() {
   const router = useRouter();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "admin@kalosystems.com",
-      password: "password123",
-      remember: true,
-    },
-  });
+  const [username, setUsername] = useState("junaed");
+  const [password, setPassword] = useState("1357");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    toast.success("Login Successful", {
-      description: `Welcome back to Kalo Systems, ${data.email}!`,
-    });
-    router.push("/dashboard/default");
-  }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg("");
+    setIsSubmitting(true);
+
+    const inputLower = username.trim().toLowerCase();
+
+    // Check against approved logins
+    const approvedUser = APPROVED_ACCOUNTS.find(
+      (acc) =>
+        (acc.username.toLowerCase() === inputLower || acc.email.toLowerCase() === inputLower) &&
+        acc.password === password
+    );
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+
+      if (approvedUser) {
+        toast.success("Login Successful", {
+          description: `Welcome back, ${approvedUser.username}!`,
+        });
+        router.push("/dashboard/default");
+      } else {
+        const errorText = "Access denied. Account not approved by administrator.";
+        setErrorMsg(errorText);
+        toast.error("Login Failed", {
+          description: errorText,
+        });
+      }
+    }, 300);
+  };
 
   return (
-    <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <FieldGroup className="gap-4">
-        <Controller
-          control={form.control}
-          name="email"
-          render={({ field, fieldState }) => (
-            <Field className="gap-1.5" data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="login-email">Email Address</FieldLabel>
-              <Input
-                {...field}
-                id="login-email"
-                type="email"
-                placeholder="you@example.com"
-                autoComplete="email"
-                aria-invalid={fieldState.invalid}
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          control={form.control}
-          name="password"
-          render={({ field, fieldState }) => (
-            <Field className="gap-1.5" data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="login-password">Password</FieldLabel>
-              <Input
-                {...field}
-                id="login-password"
-                type="password"
-                placeholder="••••••••"
-                autoComplete="current-password"
-                aria-invalid={fieldState.invalid}
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          control={form.control}
-          name="remember"
-          render={({ field, fieldState }) => (
-            <Field orientation="horizontal" data-invalid={fieldState.invalid}>
-              <Checkbox
-                id="login-remember"
-                name={field.name}
-                checked={field.value}
-                onCheckedChange={(checked) => field.onChange(Boolean(checked))}
-                aria-invalid={fieldState.invalid}
-              />
-              <FieldContent>
-                <FieldLabel htmlFor="login-remember" className="font-normal">
-                  Remember me for 30 days
-                </FieldLabel>
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-              </FieldContent>
-            </Field>
-          )}
-        />
-      </FieldGroup>
-      <Button className="w-full" type="submit">
-        Login
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {errorMsg && (
+        <div className="flex items-center gap-2 rounded-md border border-rose-500/30 bg-rose-500/10 p-3 text-xs text-rose-600 dark:text-rose-400">
+          <IconAlertTriangle className="h-4 w-4 shrink-0 text-rose-500" />
+          <span>{errorMsg}</span>
+        </div>
+      )}
+
+      <div>
+        <label className="block text-xs font-medium mb-1.5 text-muted-foreground">
+          Approved Username or Email
+        </label>
+        <div className="relative">
+          <IconUser className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="junaed"
+            className="pl-8 text-xs"
+            required
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-xs font-medium mb-1.5 text-muted-foreground">
+          Password
+        </label>
+        <div className="relative">
+          <IconLock className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••"
+            className="pl-8 text-xs"
+            required
+          />
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between text-xs text-muted-foreground pt-1">
+        <span className="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+          <IconShieldCheck className="h-3.5 w-3.5" /> Approved Client Access Only
+        </span>
+      </div>
+
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full text-xs font-semibold"
+        size="sm"
+      >
+        {isSubmitting ? "Signing in..." : "Sign In"}
       </Button>
     </form>
   );

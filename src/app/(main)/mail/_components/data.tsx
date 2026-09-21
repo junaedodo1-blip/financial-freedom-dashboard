@@ -1,9 +1,9 @@
 import { Archive, CircleHelp, File, Inbox, Keyboard, type LucideIcon, Send, Star, Trash2 } from "lucide-react";
 import type { siFigma } from "simple-icons";
 
-const _arhamKhan = {
-  name: "Arham Khan",
-  email: "hello@arhamkhnz.com",
+const _junaedRahman = {
+  name: "Junaed Rahman",
+  email: "junaed@financialfreedom.ca",
 };
 
 const _weblabsStudio = {
@@ -124,8 +124,8 @@ export const mailNavigation: MailNavigation = {
 export const accounts = [
   {
     id: 1,
-    label: "Arham Khan",
-    email: "hello@arhamkhnz.com",
+    label: "Junaed Rahman",
+    email: "junaed@financialfreedom.ca",
   },
   {
     id: 2,

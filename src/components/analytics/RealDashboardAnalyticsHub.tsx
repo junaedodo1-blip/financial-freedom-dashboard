@@ -1,28 +1,27 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-
+import Link from "next/link";
 import {
-  Activity,
-  ArrowUpRight,
-  BarChart3,
-  Bot,
-  Building2,
-  Flame,
-  RefreshCw,
-  ShieldCheck,
-  Sparkles,
-  Users,
-} from "lucide-react";
+  IconActivity,
+  IconArrowUpRight,
+  IconChartBar,
+  IconBuilding,
+  IconCalendarEvent,
+  IconCurrencyDollar,
+  IconGlobe,
+  IconMapPin,
+  IconPhoneCall,
+  IconRadar,
+  IconShieldCheck,
+  IconTarget,
+  IconTrendingUp,
+  IconUserCheck,
+  IconUsers,
+} from "@tabler/icons-react";
 
-import { AnalyticsKpiStrip } from "@/app/(main)/dashboard/analytics/_components/analytics-kpi-strip";
-import { RealtimeVisitors } from "@/app/(main)/dashboard/analytics/_components/realtime-visitors";
-import { TopPages } from "@/app/(main)/dashboard/analytics/_components/top-pages";
-import { TopTrafficSources } from "@/app/(main)/dashboard/analytics/_components/top-traffic-sources";
-import { TrafficQuality } from "@/app/(main)/dashboard/analytics/_components/traffic-quality";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import "@/styles/flag-icons/flags.css";
+import { TablerCard } from "@/components/ui/tabler-card";
 
 export function RealDashboardAnalyticsHub() {
   const [loading, setLoading] = useState(false);
@@ -49,7 +48,7 @@ export function RealDashboardAnalyticsHub() {
         }
       }
     } catch (e) {
-      console.warn("Analytics API fetch notice (using clean baseline):", e);
+      console.warn("Analytics fetch notice:", e);
     } finally {
       setLoading(false);
     }
@@ -60,127 +59,71 @@ export function RealDashboardAnalyticsHub() {
   }, [fetchLiveMetrics]);
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Live System Data Ribbon */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
-        <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 via-card to-card">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center justify-between font-normal text-muted-foreground text-xs">
-              <span>Scraped Lead Radar</span>
-              <Users className="h-4 w-4 text-blue-400" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="font-bold text-2xl">{metrics.totalLeads.toLocaleString()}</div>
-            <div className="mt-1 flex items-center gap-1 text-xs text-zinc-400">
-              <ArrowUpRight className="h-3.5 w-3.5" />
-              <span>Clean Slate (0.0%)</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 via-card to-card">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center justify-between font-normal text-muted-foreground text-xs">
-              <span>CASL Shield Rate</span>
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="font-bold text-2xl">0.0%</div>
-            <div className="mt-1 flex items-center gap-1 text-xs text-zinc-400">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              <span>{metrics.caslVerified} Validated</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-amber-500/20 bg-gradient-to-br from-amber-500/10 via-card to-card">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center justify-between font-normal text-muted-foreground text-xs">
-              <span>Workshop Capacity</span>
-              <Building2 className="h-4 w-4 text-amber-400" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="font-bold text-2xl">{metrics.workshopCapacityPct}%</div>
-            <div className="mt-1 flex items-center gap-1 text-xs text-zinc-400">
-              <Flame className="h-3.5 w-3.5" />
-              <span>0 Hubs Filled</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/10 via-card to-card">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center justify-between font-normal text-muted-foreground text-xs">
-              <span>Strategy Calls</span>
-              <Bot className="h-4 w-4 text-purple-400" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="font-bold text-2xl">{metrics.bookedCalls}</div>
-            <div className="mt-1 flex items-center gap-1 text-purple-400 text-xs">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>&lt;45s Speed-to-Lead</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-emerald-500/30 bg-gradient-to-br from-emerald-600/10 via-card to-card">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center justify-between font-normal text-muted-foreground text-xs">
-              <span>Pipeline AUM</span>
-              <Activity className="h-4 w-4 text-emerald-400" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="font-bold text-2xl text-emerald-400">{metrics.pipelineAum}</div>
-            <div className="mt-1 flex items-center gap-1 text-xs text-zinc-400">
-              <ArrowUpRight className="h-3.5 w-3.5" />
-              <span>Clean Slate</span>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Analytics Toolbar Header */}
-      <div className="flex items-center justify-between rounded-xl border bg-muted/40 p-3">
+    <div className="flex flex-col gap-6 p-1">
+      {/* Simple Header */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 className="flex items-center gap-2 font-semibold text-sm">
-            <BarChart3 className="h-4 w-4 text-primary" />
-            Full Dashboard Analytics & Traffic Insights
-          </h3>
-          <p className="text-muted-foreground text-xs">
-            Real-time conversion breakdown, visitor quality, and top lead acquisition channels.
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
+            <IconTrendingUp className="h-3.5 w-3.5" />
+            ANALYTICS
+          </div>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight">Analytics &amp; Numbers</h1>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Simple view of your leads, calls, and sales numbers.
           </p>
         </div>
-        <Button size="sm" variant="outline" onClick={fetchLiveMetrics} disabled={loading} className="gap-1.5 text-xs">
-          <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
-          Sync Live Data
-        </Button>
-      </div>
 
-      {/* Template Analytics Widgets connected with Live Data */}
-      <AnalyticsKpiStrip />
-
-      <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-12">
-        <div className="xl:col-span-7">
-          <TrafficQuality />
-        </div>
-        <div className="xl:col-span-5">
-          <RealtimeVisitors />
+        <div className="flex items-center gap-2">
+          <Link href="/dashboard/crm">
+            <Button size="sm" variant="outline" className="text-xs">
+              <IconUsers className="h-4 w-4 mr-1.5" />
+              Open CRM
+            </Button>
+          </Link>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-12">
-        <div className="xl:col-span-7">
-          <TopPages />
-        </div>
-        <div className="xl:col-span-5">
-          <TopTrafficSources />
-        </div>
+      {/* Simple Stats Cards */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <TablerCard statusColor="emerald">
+          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Leads Scraped</span>
+          <div className="mt-2 text-2xl font-bold">{metrics.totalLeads}</div>
+        </TablerCard>
+
+        <TablerCard statusColor="blue">
+          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Verified Calls</span>
+          <div className="mt-2 text-2xl font-bold">{metrics.caslVerified}%</div>
+        </TablerCard>
+
+        <TablerCard statusColor="purple">
+          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Seats Filled</span>
+          <div className="mt-2 text-2xl font-bold">{metrics.workshopCapacityPct}%</div>
+        </TablerCard>
+
+        <TablerCard statusColor="amber">
+          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Calls Made</span>
+          <div className="mt-2 text-2xl font-bold">{metrics.bookedCalls}</div>
+        </TablerCard>
+
+        <TablerCard statusColor="indigo">
+          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Total Gap</span>
+          <div className="mt-2 text-2xl font-bold">{metrics.pipelineAum}</div>
+        </TablerCard>
       </div>
+
+      {/* Traffic Table Card */}
+      <TablerCard
+        headerTitle="🌐 Traffic Overview"
+        headerDescription="Clean slate — traffic numbers will update automatically"
+      >
+        <div className="py-10 text-center text-muted-foreground">
+          <IconGlobe className="mx-auto h-8 w-8 opacity-30" />
+          <p className="mt-2 text-xs font-semibold">No traffic recorded yet</p>
+          <p className="text-[11px] text-muted-foreground max-w-xs mx-auto mt-1">
+            Metrics update automatically as people visit your app.
+          </p>
+        </div>
+      </TablerCard>
     </div>
   );
 }

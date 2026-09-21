@@ -66,7 +66,7 @@ export const defaultInvoiceValues: InvoiceFormValues = {
     taxId: "WS-1029384756",
     paymentAccountName: "Mercury Business",
     routingNumber: "084009519",
-    issuerName: "Arham Khan",
+    issuerName: "Junaed Rahman",
   },
   to: {
     id: "aiy-cap",

@@ -1,55 +1,55 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-
 import Link from "next/link";
-
-import {
-  ArrowUpRight,
-  Building2,
-  Calendar,
-  CheckCircle2,
-  ChevronRight,
-  DollarSign,
-  Mail,
-  MapPin,
-  RefreshCw,
-  Search,
-  ShieldCheck,
-  Sparkles,
-  Users,
-  Zap,
-} from "lucide-react";
 import { toast } from "sonner";
+import {
+  IconArrowUpRight,
+  IconBuilding,
+  IconCalendar,
+  IconCheck,
+  IconCurrencyDollar,
+  IconFilter,
+  IconFlame,
+  IconMail,
+  IconMapPin,
+  IconPhoneCall,
+  IconPlus,
+  IconRadar,
+  IconRefresh,
+  IconSearch,
+  IconShieldCheck,
+  IconSparkles,
+  IconTarget,
+  IconUser,
+  IconUsers,
+} from "@tabler/icons-react";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { TablerCard } from "@/components/ui/tabler-card";
 
 export interface ContactRecord {
   id: string;
   name: string;
-  phone: string;
-  email: string;
   channel: string;
-  city: string;
-  fsa: string;
-  intent_score: number;
   monthly_freedom_gap: number;
-  status: string;
-  notes: string;
-  created_at: string;
+  fsa: string;
+  city: string;
+  casl_verified: boolean;
+  intent_score: number;
+  phone?: string;
+  email?: string;
 }
 
-const INITIAL_CONTACTS: ContactRecord[] = [];
-
 export function AppleCrmHub() {
-  const [contacts, setContacts] = useState<ContactRecord[]>(INITIAL_CONTACTS);
+  const [contacts, setContacts] = useState<ContactRecord[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedChannel, setSelectedChannel] = useState<string>("All");
   const [callingId, setCallingId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [aiQuery, setAiQuery] = useState("");
+  const [aiNote, setAiNote] = useState<string | null>(null);
 
   const fetchLeads = useCallback(async () => {
     setIsLoading(true);
@@ -57,12 +57,10 @@ export function AppleCrmHub() {
       const res = await fetch("/api/leads");
       if (res.ok) {
         const data = await res.json();
-        if (data && data.length > 0) {
-          setContacts(data);
-        }
+        setContacts(data || []);
       }
     } catch (_e) {
-      console.log("Using connected baseline leads");
+      console.log("Using baseline leads");
     } finally {
       setIsLoading(false);
     }
@@ -72,285 +70,277 @@ export function AppleCrmHub() {
     fetchLeads();
   }, [fetchLeads]);
 
+  const handleSyncCrm = async () => {
+    setIsSyncing(true);
+    try {
+      const res = await fetch("/api/twenty-crm/sync", { method: "POST" });
+      if (res.ok) {
+        toast.success("✅ CRM Synced!", {
+          description: "All contacts and deal data are updated.",
+        });
+        fetchLeads();
+      }
+    } catch (_e) {
+      toast.error("CRM sync failed");
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   const handleSpeedCall = (id: string, name: string) => {
     setCallingId(id);
-    toast.info(`⚡ Initiating Speed-to-Lead AI Call to ${name}...`, {
-      description: "Sub-45s voice connection via Canadian territory router.",
+    toast.info("⚡ Calling...", {
+      description: `Calling ${name} now...`,
     });
 
     setTimeout(() => {
       setCallingId(null);
-      toast.success(`📞 Speed Call Connected with ${name}!`, {
-        description: "Recorded in CRM timeline and queued for Mailflare follow-up.",
+      toast.success(`🎉 Call Connected with ${name}!`, {
+        description: "Meeting added to calendar.",
       });
-    }, 1800);
+    }, 1500);
+  };
+
+  const handleAiSearch = (text: string) => {
+    setSearchQuery(text);
+    setAiNote(`Showing results for "${text}"`);
+    toast.success(`Filter applied: ${text}`);
   };
 
   const filteredContacts = contacts.filter((c) => {
     const matchesSearch =
       c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       c.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
       c.fsa.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesChannel = selectedChannel === "All" || c.channel.toLowerCase().includes(selectedChannel.toLowerCase());
-
+    const matchesChannel =
+      selectedChannel === "All" ||
+      c.channel.toLowerCase() === selectedChannel.toLowerCase();
     return matchesSearch && matchesChannel;
   });
 
   return (
-    <div className="relative space-y-6 rounded-3xl border border-white/10 bg-zinc-950/70 p-6 text-foreground shadow-2xl backdrop-blur-3xl md:p-8">
-      {/* Apple Top Header Banner */}
-      <div className="flex flex-col gap-4 border-white/10 border-b pb-6 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-6 p-1">
+      {/* Simple Header */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="font-bold text-2xl text-white tracking-tight md:text-3xl">CRM & Prospects</h1>
-            <Badge className="border border-blue-500/20 bg-blue-500/10 text-blue-400 text-xs">1,420 Active Leads</Badge>
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-400">
+            <IconUsers className="h-3.5 w-3.5" />
+            CRM &amp; CLIENTS
           </div>
-          <p className="mt-1 text-xs text-zinc-400 md:text-sm">
-            Apple-style clean customer relationship manager connected with IntentLeads radar & Mailflare outreach.
+          <h1 className="mt-2 text-2xl font-bold tracking-tight">CRM Hub</h1>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Manage your contacts, make calls, and track deal progress easily.
           </p>
         </div>
 
-        {/* Prominent Apple Action Button for IntentLeads */}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2">
           <Button
-            onClick={fetchLeads}
+            size="sm"
             variant="outline"
-            disabled={isLoading}
-            className="h-10 rounded-2xl border-white/10 bg-zinc-900/60 px-3 text-xs hover:bg-zinc-800"
+            className="text-xs"
+            onClick={handleSyncCrm}
+            disabled={isSyncing}
           >
-            <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? "animate-spin" : ""}`} />
+            <IconRefresh className={`h-4 w-4 mr-1 ${isSyncing ? "animate-spin" : ""}`} />
+            Sync CRM
           </Button>
 
           <Link href="/dashboard/intent-leads">
-            <Button className="flex h-11 items-center gap-2 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 px-5 font-bold text-white shadow-xl transition-all hover:scale-[1.02] hover:from-purple-500 hover:to-indigo-500">
-              <Sparkles className="h-4 w-4 text-purple-200" />
-              <span>IntentLeads Audit System</span>
-              <ChevronRight className="h-4 w-4" />
+            <Button size="sm" className="bg-amber-500 text-black hover:bg-amber-400 text-xs font-semibold">
+              <IconRadar className="h-4 w-4 mr-1.5" />
+              Find New Leads
             </Button>
           </Link>
         </div>
       </div>
 
-      {/* 4 Apple Stat Cards Ribbon */}
+      {/* Simple Stats Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="group rounded-3xl border border-white/10 bg-zinc-900/50 p-5 shadow-lg backdrop-blur-xl transition-all hover:border-blue-500/30">
-          <div className="mb-2 flex items-center justify-between text-xs text-zinc-400">
-            <span className="font-medium">Total Contacts</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400">
-              <Users className="h-4 w-4" />
-            </div>
+        <TablerCard statusColor="blue">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-muted-foreground uppercase">Total People</span>
+            <IconUsers className="h-4 w-4 text-blue-500" />
           </div>
-          <div className="font-bold text-2xl text-white tracking-tight">1,420</div>
-          <div className="mt-1 flex items-center gap-1 font-medium text-[11px] text-emerald-400">
-            <ArrowUpRight className="h-3 w-3" />
-            <span>+14.2% scraped this month</span>
-          </div>
-        </div>
+          <div className="mt-2 text-2xl font-bold">{contacts.length}</div>
+        </TablerCard>
 
-        <div className="group rounded-3xl border border-white/10 bg-zinc-900/50 p-5 shadow-lg backdrop-blur-xl transition-all hover:border-purple-500/30">
-          <div className="mb-2 flex items-center justify-between text-xs text-zinc-400">
-            <span className="font-medium">Active Pipeline</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-500/10 text-purple-400">
-              <Calendar className="h-4 w-4" />
-            </div>
+        <TablerCard statusColor="emerald">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-muted-foreground uppercase">Ready to Call</span>
+            <IconShieldCheck className="h-4 w-4 text-emerald-500" />
           </div>
-          <div className="font-bold text-2xl text-white tracking-tight">61 Calls</div>
-          <div className="mt-1 flex items-center gap-1 font-medium text-[11px] text-purple-300">
-            <CheckCircle2 className="h-3 w-3" />
-            <span>Booked Masterclasses</span>
+          <div className="mt-2 text-2xl font-bold">
+            {contacts.filter((c) => c.casl_verified).length}
           </div>
-        </div>
+        </TablerCard>
 
-        <div className="group rounded-3xl border border-white/10 bg-zinc-900/50 p-5 shadow-lg backdrop-blur-xl transition-all hover:border-amber-500/30">
-          <div className="mb-2 flex items-center justify-between text-xs text-zinc-400">
-            <span className="font-medium">Pipeline AUM</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400">
-              <DollarSign className="h-4 w-4" />
-            </div>
+        <TablerCard statusColor="amber">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-muted-foreground uppercase">Top Intent</span>
+            <IconTarget className="h-4 w-4 text-amber-500" />
           </div>
-          <div className="font-bold text-2xl text-white tracking-tight">$13.05M</div>
-          <div className="mt-1 flex items-center gap-1 font-medium text-[11px] text-amber-400">
-            <Building2 className="h-3 w-3" />
-            <span>Across 5 Canadian Hubs</span>
+          <div className="mt-2 text-2xl font-bold">
+            {contacts.length > 0
+              ? Math.round(contacts.reduce((a, b) => a + (b.intent_score || 0), 0) / contacts.length)
+              : 0}
+            <span className="text-xs text-muted-foreground font-normal">/100</span>
           </div>
-        </div>
+        </TablerCard>
 
-        <div className="group rounded-3xl border border-white/10 bg-zinc-900/50 p-5 shadow-lg backdrop-blur-xl transition-all hover:border-emerald-500/30">
-          <div className="mb-2 flex items-center justify-between text-xs text-zinc-400">
-            <span className="font-medium">CASL Shield Rate</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400">
-              <ShieldCheck className="h-4 w-4" />
-            </div>
+        <TablerCard statusColor="purple">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-muted-foreground uppercase">Pipeline Deals</span>
+            <IconCurrencyDollar className="h-4 w-4 text-purple-500" />
           </div>
-          <div className="font-bold text-2xl text-white tracking-tight">96.8%</div>
-          <div className="mt-1 flex items-center gap-1 font-medium text-[11px] text-emerald-400">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-            <span>892 Validated Consent</span>
-          </div>
-        </div>
+          <div className="mt-2 text-2xl font-bold">$0</div>
+        </TablerCard>
       </div>
 
-      {/* Controls & Search Bar */}
-      <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="relative max-w-md flex-1">
-          <Search className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-zinc-400" />
-          <Input
-            placeholder="Search by name, email, city, or postal code..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-11 rounded-2xl border-white/10 bg-zinc-900/80 pl-10 text-xs text-zinc-100 placeholder:text-zinc-500 focus:ring-2 focus:ring-purple-500/40 md:text-sm"
-          />
+      {/* Simple AI Helper Tool */}
+      <TablerCard statusColor="amber" headerTitle="🤖 Quick AI Filter" headerDescription="Click a quick button to filter your client list">
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            className="text-xs"
+            onClick={() => handleAiSearch("Toronto")}
+          >
+            <IconSparkles className="h-3.5 w-3.5 mr-1 text-amber-500" />
+            Find Toronto People
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="text-xs"
+            onClick={() => handleAiSearch("High Intent")}
+          >
+            <IconFlame className="h-3.5 w-3.5 mr-1 text-rose-500" />
+            Show High Intent
+          </Button>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="text-xs"
+            onClick={() => {
+              setSearchQuery("");
+              setAiNote(null);
+            }}
+          >
+            Clear Filters
+          </Button>
         </div>
 
-        {/* Channel Filter Pills */}
-        <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-          {["All", "Reddit", "Facebook", "Google", "LinkedIn"].map((ch) => (
-            <button
-              key={ch}
-              onClick={() => setSelectedChannel(ch)}
-              className={`rounded-full border px-3.5 py-1.5 font-medium text-xs transition-all ${
-                selectedChannel === ch
-                  ? "border-white bg-white font-semibold text-zinc-950 shadow-md"
-                  : "border-white/10 bg-zinc-900/60 text-zinc-300 hover:bg-zinc-800"
-              }`}
-            >
-              {ch}
-            </button>
-          ))}
-        </div>
-      </div>
+        {aiNote && (
+          <div className="mt-3 rounded-md bg-amber-500/10 border border-amber-500/20 p-2 text-xs text-amber-400 font-medium">
+            {aiNote}
+          </div>
+        )}
+      </TablerCard>
 
-      {/* Apple-Style Contacts Table */}
-      <div className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/40 shadow-xl backdrop-blur-2xl">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs md:text-sm">
-            <thead className="border-white/10 border-b bg-zinc-900/80 font-semibold text-[11px] text-zinc-400 uppercase tracking-wider">
-              <tr>
-                <th className="px-5 py-4">Contact</th>
-                <th className="px-5 py-4">Intent & Gap</th>
-                <th className="px-5 py-4">Location / FSA</th>
-                <th className="px-5 py-4">Channel</th>
-                <th className="px-5 py-4">Status</th>
-                <th className="px-5 py-4 text-right">Quick Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 text-zinc-200">
-              {filteredContacts.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="py-12 text-center text-zinc-400">
-                    <div className="flex flex-col items-center justify-center gap-2">
-                      <Users className="mb-1 h-8 w-8 text-zinc-600" />
-                      <p className="font-semibold text-sm text-zinc-300">Clean Slate — No Contacts Queued</p>
-                      <p className="max-w-sm text-xs text-zinc-500">
-                        Run your first IntentLeads audit or trigger the Omnichannel Lead Scraper to automatically
-                        populate your CRM pipeline.
-                      </p>
-                      <Link href="/dashboard/intent-leads" className="mt-3">
-                        <Button
-                          size="sm"
-                          className="h-9 gap-1.5 rounded-xl bg-purple-600 px-4 font-bold text-white text-xs hover:bg-purple-500"
-                        >
-                          <Sparkles className="h-3.5 w-3.5 text-purple-200" />
-                          <span>Launch IntentLeads Engine</span>
-                        </Button>
-                      </Link>
-                    </div>
-                  </td>
+      {/* Filter and Search Bar */}
+      <TablerCard className="p-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="relative flex-1">
+            <IconSearch className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Type a name or city..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-lg border border-border/60 bg-muted/30 py-2 pl-9 pr-4 text-xs outline-none focus:border-amber-500"
+            />
+          </div>
+
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {["All", "Facebook", "Reddit", "Google Maps", "LinkedIn"].map((ch) => (
+              <button
+                key={ch}
+                onClick={() => setSelectedChannel(ch)}
+                className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                  selectedChannel === ch
+                    ? "bg-amber-500 text-black font-semibold"
+                    : "bg-muted/40 hover:bg-muted/80 text-muted-foreground"
+                }`}
+              >
+                {ch}
+              </button>
+            ))}
+          </div>
+        </div>
+      </TablerCard>
+
+      {/* Contacts List Table */}
+      <TablerCard
+        headerTitle={`Contacts List (${filteredContacts.length})`}
+        headerDescription="Clean slate — new leads will show up here automatically"
+      >
+        {filteredContacts.length === 0 ? (
+          <div className="py-12 text-center text-muted-foreground">
+            <IconUser className="mx-auto h-10 w-10 opacity-30" />
+            <p className="mt-2 text-xs font-semibold">No contacts found</p>
+            <p className="text-[11px] text-muted-foreground mt-1">
+              Click <span className="font-semibold text-foreground">"Find New Leads"</span> above to discover prospects.
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-border/40 bg-muted/20 text-muted-foreground uppercase tracking-wider text-[10px]">
+                  <th className="py-3 px-4">Name</th>
+                  <th className="py-3 px-4">City</th>
+                  <th className="py-3 px-4">Intent</th>
+                  <th className="py-3 px-4">Status</th>
+                  <th className="py-3 px-4 text-right">Action</th>
                 </tr>
-              ) : (
-                filteredContacts.map((contact) => (
-                  <tr key={contact.id} className="group transition-colors hover:bg-white/[0.03]">
-                    {/* Name & Avatar */}
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-9 w-9 border border-white/10 bg-purple-500/10 font-bold text-purple-300">
-                          <AvatarFallback className="bg-purple-500/10 text-purple-300 text-xs">
-                            {contact.name.slice(0, 2).toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
+              </thead>
+              <tbody className="divide-y divide-border/40">
+                {filteredContacts.map((c) => (
+                  <tr key={c.id} className="hover:bg-muted/10 transition-colors">
+                    <td className="py-3 px-4 font-semibold">
+                      <div className="flex items-center gap-2">
+                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-500/10 text-amber-500 font-bold text-[10px]">
+                          {c.name.split(" ").map((n) => n[0]).join("")}
+                        </div>
                         <div>
-                          <div className="font-semibold text-white transition-colors group-hover:text-purple-300">
-                            {contact.name}
+                          <div>{c.name}</div>
+                          <div className="text-[10px] text-muted-foreground font-normal">
+                            {c.email || `${c.name.toLowerCase().replace(" ", ".")}@prospect.ca`}
                           </div>
-                          <div className="text-[11px] text-zinc-400">{contact.email}</div>
                         </div>
                       </div>
                     </td>
-
-                    {/* Intent Score & Freedom Gap */}
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-2">
-                        <Badge className="border-purple-500/20 bg-purple-500/10 font-bold text-[11px] text-purple-300">
-                          {contact.intent_score}% Intent
-                        </Badge>
-                        <span className="font-semibold text-amber-400 text-xs">
-                          ${contact.monthly_freedom_gap.toLocaleString()}/mo Gap
-                        </span>
-                      </div>
+                    <td className="py-3 px-4">
+                      <div className="font-medium">{c.city}</div>
+                      <div className="text-[10px] text-muted-foreground">{c.channel}</div>
                     </td>
-
-                    {/* City & FSA */}
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-1.5 text-zinc-300">
-                        <MapPin className="h-3.5 w-3.5 shrink-0 text-blue-400" />
-                        <span>{contact.city}</span>
-                        <span className="font-mono text-[10px] text-zinc-500">({contact.fsa})</span>
-                      </div>
+                    <td className="py-3 px-4 font-bold text-amber-500">
+                      {c.intent_score}/100
                     </td>
-
-                    {/* Channel */}
-                    <td className="px-5 py-4">
-                      <Badge variant="outline" className="border-white/10 bg-zinc-900 text-[11px] text-zinc-300">
-                        {contact.channel}
-                      </Badge>
+                    <td className="py-3 px-4">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400 border border-emerald-500/20">
+                        <IconShieldCheck className="h-3 w-3" />
+                        Ready
+                      </span>
                     </td>
-
-                    {/* Status */}
-                    <td className="px-5 py-4">
-                      <Badge className="gap-1 border-emerald-500/20 bg-emerald-500/10 text-[11px] text-emerald-400">
-                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-                        {contact.status}
-                      </Badge>
-                    </td>
-
-                    {/* Actions */}
-                    <td className="px-5 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Button
-                          size="sm"
-                          onClick={() => handleSpeedCall(contact.id, contact.name)}
-                          disabled={callingId === contact.id}
-                          className="h-8 gap-1 rounded-xl border border-purple-500/30 bg-purple-600/20 px-3 font-semibold text-purple-300 text-xs transition-all hover:bg-purple-600 hover:text-white"
-                        >
-                          {callingId === contact.id ? (
-                            <RefreshCw className="h-3 w-3 animate-spin" />
-                          ) : (
-                            <Zap className="h-3 w-3 text-amber-400" />
-                          )}
-                          <span>Speed Call</span>
-                        </Button>
-
-                        <Link href="/dashboard/mail">
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="h-8 w-8 rounded-xl p-0 text-zinc-400 hover:bg-zinc-800 hover:text-white"
-                            title="Open Email Outreach"
-                          >
-                            <Mail className="h-3.5 w-3.5" />
-                          </Button>
-                        </Link>
-                      </div>
+                    <td className="py-3 px-4 text-right">
+                      <Button
+                        size="sm"
+                        className="h-7 text-xs bg-amber-500 text-black hover:bg-amber-400"
+                        onClick={() => handleSpeedCall(c.id, c.name)}
+                        disabled={callingId === c.id}
+                      >
+                        <IconPhoneCall className="h-3 w-3 mr-1" />
+                        {callingId === c.id ? "Calling..." : "Call Now"}
+                      </Button>
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </TablerCard>
     </div>
   );
 }

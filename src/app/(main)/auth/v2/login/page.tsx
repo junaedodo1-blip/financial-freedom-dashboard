@@ -1,52 +1,42 @@
-import Link from "next/link";
-
-import { Globe } from "lucide-react";
 import type { Metadata } from "next";
-
-import { APP_CONFIG } from "@/config/app-config";
-
+import { IconBuildingBank } from "@tabler/icons-react";
+import { TablerCard } from "@/components/ui/tabler-card";
 import { LoginForm } from "../../_components/login-form";
-import { GoogleButton } from "../../_components/social-auth/google-button";
 
 export const metadata: Metadata = {
-  title: "Open Source Branded Login Page with shadcn/ui",
-  description:
-    "Explore an open source branded login page with a two-column layout, social sign-in, and email and password fields.",
+  title: "Client Login - Financial Freedom OS",
+  description: "Secure login for approved client accounts.",
 };
 
 export default function LoginV2() {
   return (
-    <>
-      <div className="mx-auto flex w-full flex-col justify-center space-y-8 sm:w-[350px]">
-        <div className="space-y-2 text-center">
-          <h1 className="font-medium text-3xl">Login to your account</h1>
-          <p className="text-muted-foreground text-sm">Please enter your details to login.</p>
-        </div>
-        <div className="space-y-4">
-          <GoogleButton className="w-full" />
-          <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
-            <span className="relative z-10 bg-background px-2 text-muted-foreground">Or continue with</span>
+    <div className="flex min-h-dvh w-full items-center justify-center bg-muted/40 p-4">
+      <div className="w-full max-w-md">
+        <TablerCard
+          statusColor="emerald"
+          headerTitle="Client Login"
+          headerDescription="Enter your approved credentials to access dashboard."
+          footerContent={
+            <div className="text-center text-[11px] text-muted-foreground">
+              Approved client access only.
+            </div>
+          }
+        >
+          <div className="space-y-6">
+            <div className="flex items-center gap-3 border-b border-border/40 pb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                <IconBuildingBank className="h-5 w-5" />
+              </div>
+              <div>
+                <h2 className="font-semibold text-sm text-foreground">Financial Freedom OS</h2>
+                <p className="text-xs text-muted-foreground">Approved Client Gateway</p>
+              </div>
+            </div>
+
+            <LoginForm />
           </div>
-          <LoginForm />
-        </div>
+        </TablerCard>
       </div>
-
-      <div className="absolute top-5 flex w-full justify-end px-10">
-        <div className="text-muted-foreground text-sm">
-          Don&apos;t have an account?{" "}
-          <Link prefetch={false} className="text-foreground" href="register">
-            Register
-          </Link>
-        </div>
-      </div>
-
-      <div className="absolute bottom-5 flex w-full justify-between px-10">
-        <div className="text-sm">{APP_CONFIG.copyright}</div>
-        <div className="flex items-center gap-1 text-sm">
-          <Globe className="size-4 text-muted-foreground" />
-          ENG
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
