@@ -23,6 +23,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { TablerCard } from "@/components/ui/tabler-card";
+import { ThinkingOrb } from "@/components/ui/thinking-orbs/ThinkingOrb";
 
 const MAX_LEAD_LIMIT = 10;
 
@@ -138,15 +139,20 @@ export function ConnectedMasterDashboard() {
       {/* Top Banner */}
       <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950 p-6 text-white">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 font-semibold text-amber-400 text-xs">
-              <IconActivity className="h-3.5 w-3.5" />
-              TEAM TODAY
+          <div className="flex items-center gap-4">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-amber-500/30 bg-amber-500/10 shadow-lg backdrop-blur-md">
+              <ThinkingOrb state="connecting" size={56} />
             </div>
-            <h1 className="mt-2 font-bold text-2xl tracking-tight sm:text-3xl">Daily Summary &amp; Tasks</h1>
-            <p className="mt-1 text-xs text-zinc-400">
-              Your simple daily overview. See what needs to be done today and open any section in 1 click.
-            </p>
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 font-semibold text-amber-400 text-xs">
+                <IconActivity className="h-3.5 w-3.5" />
+                TEAM TODAY
+              </div>
+              <h1 className="mt-2 font-bold text-2xl tracking-tight sm:text-3xl">Daily Summary &amp; Tasks</h1>
+              <p className="mt-1 text-xs text-zinc-400">
+                Your simple daily overview. See what needs to be done today and open any section in 1 click.
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">

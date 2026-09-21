@@ -29,7 +29,7 @@ export type OrbState =
  * its own dot count, dot size and speed tuning — they are separate
  * designs, not a scale factor.
  */
-export type OrbSize = 64 | 20;
+export type OrbSize = 64 | 20 | number;
 
 /**
  * Theme mode.

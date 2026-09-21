@@ -92,8 +92,9 @@ export function resolvePreset(state: OrbState, size: OrbSize): Resolved {
   const hit = cache.get(key);
   if (hit) return hit;
 
-  const mode = STATE_TO_MODE[state];
-  const preset = PRESETS[mode][size];
+  const mode = STATE_TO_MODE[state] || "orbits";
+  const presetKey: OrbSize = Number(size) <= 32 ? 20 : 64;
+  const preset = PRESETS[mode]?.[presetKey] || PRESETS[mode]?.[64] || { speed: 2, count: 1, size: 1 };
   let opts: ModeOpts = { ...BASE_PROFILES[mode] };
   if (preset.count !== 1) opts = scaleCounts(opts, preset.count);
   if (preset.size !== 1) opts = scaleRadii(opts, preset.size);
