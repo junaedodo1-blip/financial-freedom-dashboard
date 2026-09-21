@@ -103,7 +103,7 @@ export function LightMemHub() {
   }, [fetchLightMemData]);
 
   const handleRetrieveMemories = async (queryToSearch?: string) => {
-    const q = queryToSearch !== undefined ? queryToSearch : memoryQuery;
+    const q = queryToSearch ?? memoryQuery;
     if (!q.trim() || isSearching) return;
 
     setIsSearching(true);

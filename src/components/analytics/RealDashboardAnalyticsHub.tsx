@@ -1,30 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+
 import Link from "next/link";
-import {
-  IconActivity,
-  IconArrowUpRight,
-  IconChartBar,
-  IconBuilding,
-  IconCalendarEvent,
-  IconCurrencyDollar,
-  IconGlobe,
-  IconMapPin,
-  IconPhoneCall,
-  IconRadar,
-  IconShieldCheck,
-  IconTarget,
-  IconTrendingUp,
-  IconUserCheck,
-  IconUsers,
-} from "@tabler/icons-react";
+
+import { IconGlobe, IconTrendingUp, IconUsers } from "@tabler/icons-react";
 
 import { Button } from "@/components/ui/button";
 import { TablerCard } from "@/components/ui/tabler-card";
 
 export function RealDashboardAnalyticsHub() {
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
   const [metrics, setMetrics] = useState({
     totalLeads: 0,
     caslVerified: 0,
@@ -63,20 +49,18 @@ export function RealDashboardAnalyticsHub() {
       {/* Simple Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-semibold text-emerald-400 text-xs">
             <IconTrendingUp className="h-3.5 w-3.5" />
             ANALYTICS
           </div>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight">Analytics &amp; Numbers</h1>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Simple view of your leads, calls, and sales numbers.
-          </p>
+          <h1 className="mt-2 font-bold text-2xl tracking-tight">Analytics &amp; Numbers</h1>
+          <p className="mt-1 text-muted-foreground text-xs">Simple view of your leads, calls, and sales numbers.</p>
         </div>
 
         <div className="flex items-center gap-2">
           <Link href="/dashboard/crm">
             <Button size="sm" variant="outline" className="text-xs">
-              <IconUsers className="h-4 w-4 mr-1.5" />
+              <IconUsers className="mr-1.5 h-4 w-4" />
               Open CRM
             </Button>
           </Link>
@@ -86,28 +70,28 @@ export function RealDashboardAnalyticsHub() {
       {/* Simple Stats Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <TablerCard statusColor="emerald">
-          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Leads Scraped</span>
-          <div className="mt-2 text-2xl font-bold">{metrics.totalLeads}</div>
+          <span className="font-semibold text-[10px] text-muted-foreground uppercase">Leads Scraped</span>
+          <div className="mt-2 font-bold text-2xl">{metrics.totalLeads}</div>
         </TablerCard>
 
         <TablerCard statusColor="blue">
-          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Verified Calls</span>
-          <div className="mt-2 text-2xl font-bold">{metrics.caslVerified}%</div>
+          <span className="font-semibold text-[10px] text-muted-foreground uppercase">Verified Calls</span>
+          <div className="mt-2 font-bold text-2xl">{metrics.caslVerified}%</div>
         </TablerCard>
 
         <TablerCard statusColor="purple">
-          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Seats Filled</span>
-          <div className="mt-2 text-2xl font-bold">{metrics.workshopCapacityPct}%</div>
+          <span className="font-semibold text-[10px] text-muted-foreground uppercase">Seats Filled</span>
+          <div className="mt-2 font-bold text-2xl">{metrics.workshopCapacityPct}%</div>
         </TablerCard>
 
         <TablerCard statusColor="amber">
-          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Calls Made</span>
-          <div className="mt-2 text-2xl font-bold">{metrics.bookedCalls}</div>
+          <span className="font-semibold text-[10px] text-muted-foreground uppercase">Calls Made</span>
+          <div className="mt-2 font-bold text-2xl">{metrics.bookedCalls}</div>
         </TablerCard>
 
         <TablerCard statusColor="indigo">
-          <span className="text-[10px] font-semibold text-muted-foreground uppercase">Total Gap</span>
-          <div className="mt-2 text-2xl font-bold">{metrics.pipelineAum}</div>
+          <span className="font-semibold text-[10px] text-muted-foreground uppercase">Total Gap</span>
+          <div className="mt-2 font-bold text-2xl">{metrics.pipelineAum}</div>
         </TablerCard>
       </div>
 
@@ -118,8 +102,8 @@ export function RealDashboardAnalyticsHub() {
       >
         <div className="py-10 text-center text-muted-foreground">
           <IconGlobe className="mx-auto h-8 w-8 opacity-30" />
-          <p className="mt-2 text-xs font-semibold">No traffic recorded yet</p>
-          <p className="text-[11px] text-muted-foreground max-w-xs mx-auto mt-1">
+          <p className="mt-2 font-semibold text-xs">No traffic recorded yet</p>
+          <p className="mx-auto mt-1 max-w-xs text-[11px] text-muted-foreground">
             Metrics update automatically as people visit your app.
           </p>
         </div>

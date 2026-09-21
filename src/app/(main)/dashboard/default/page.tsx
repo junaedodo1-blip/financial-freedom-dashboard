@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import { ConnectedMasterDashboard } from "@/components/dashboard/ConnectedMasterDashboard";
 
 export const metadata: Metadata = {

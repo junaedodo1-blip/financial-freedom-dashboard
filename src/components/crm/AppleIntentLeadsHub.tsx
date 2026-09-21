@@ -1,26 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import Link from "next/link";
-import { toast } from "sonner";
+
 import {
-  IconActivity,
-  IconArrowRight,
   IconBolt,
   IconBrandFacebook,
   IconBrandLinkedin,
   IconBrandReddit,
-  IconCheck,
-  IconFlame,
   IconLock,
   IconMapPin,
   IconPlayerPlay,
   IconRadar,
-  IconShieldCheck,
-  IconSparkles,
-  IconTarget,
   IconUserCheck,
 } from "@tabler/icons-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { TablerCard } from "@/components/ui/tabler-card";
@@ -45,7 +40,14 @@ export function AppleIntentLeadsHub() {
     { id: "fb", name: "Facebook Groups", icon: IconBrandFacebook, platform: "Facebook", count: 0, status: "idle" },
     { id: "reddit", name: "Reddit Posts", icon: IconBrandReddit, platform: "Reddit", count: 0, status: "idle" },
     { id: "gmaps", name: "Google Businesses", icon: IconMapPin, platform: "Google Maps", count: 0, status: "idle" },
-    { id: "linkedin", name: "LinkedIn People", icon: IconBrandLinkedin, platform: "LinkedIn", count: 0, status: "idle" },
+    {
+      id: "linkedin",
+      name: "LinkedIn People",
+      icon: IconBrandLinkedin,
+      platform: "LinkedIn",
+      count: 0,
+      status: "idle",
+    },
   ]);
 
   useEffect(() => {
@@ -102,7 +104,7 @@ export function AppleIntentLeadsHub() {
               ...c,
               status: "active",
               count: 0,
-            }))
+            })),
           );
           toast.success("🎯 Search Complete!");
         }, 1500);
@@ -119,12 +121,12 @@ export function AppleIntentLeadsHub() {
       {/* Simple Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-400">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 font-semibold text-purple-400 text-xs">
             <IconRadar className="h-3.5 w-3.5" />
             FIND LEADS
           </div>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight">Find Leads</h1>
-          <p className="mt-1 text-xs text-muted-foreground">
+          <h1 className="mt-2 font-bold text-2xl tracking-tight">Find Leads</h1>
+          <p className="mt-1 text-muted-foreground text-xs">
             Search social media and business sites to find new people to call.
           </p>
         </div>
@@ -132,7 +134,7 @@ export function AppleIntentLeadsHub() {
         <div className="flex items-center gap-2">
           <Link href="/dashboard/crm">
             <Button size="sm" variant="outline" className="text-xs">
-              <IconUserCheck className="h-4 w-4 mr-1.5" />
+              <IconUserCheck className="mr-1.5 h-4 w-4" />
               Open CRM
             </Button>
           </Link>
@@ -142,18 +144,18 @@ export function AppleIntentLeadsHub() {
             disabled={isRunningAll || isLimitReached}
             className={`font-semibold text-xs ${
               isLimitReached
-                ? "bg-zinc-800 text-zinc-400 cursor-not-allowed border border-zinc-700"
+                ? "cursor-not-allowed border border-zinc-700 bg-zinc-800 text-zinc-400"
                 : "bg-amber-500 text-black hover:bg-amber-400"
             }`}
           >
             {isLimitReached ? (
               <>
-                <IconLock className="h-4 w-4 mr-1 text-amber-400" />
+                <IconLock className="mr-1 h-4 w-4 text-amber-400" />
                 10/10 Limit Reached
               </>
             ) : (
               <>
-                <IconPlayerPlay className={`h-4 w-4 mr-1.5 ${isRunningAll ? "animate-spin" : ""}`} />
+                <IconPlayerPlay className={`mr-1.5 h-4 w-4 ${isRunningAll ? "animate-spin" : ""}`} />
                 {isRunningAll ? "Searching..." : "⚡ Start Lead Search"}
               </>
             )}
@@ -163,12 +165,12 @@ export function AppleIntentLeadsHub() {
 
       {/* Admin Limiter Notice Banner */}
       {isLimitReached && (
-        <div className="flex items-center justify-between rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-xs font-semibold text-amber-400">
+        <div className="flex items-center justify-between rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 font-semibold text-amber-400 text-xs">
           <div className="flex items-center gap-2">
             <IconLock className="h-4 w-4 text-amber-400" />
             <span>🔒 Maximum Lead Limit Active: 10/10 Leads Found. Admin lock active.</span>
           </div>
-          <span className="text-[10px] text-amber-300 font-normal font-mono">MAX_LEAD_LIMIT = 10</span>
+          <span className="font-mono font-normal text-[10px] text-amber-300">MAX_LEAD_LIMIT = 10</span>
         </div>
       )}
 
@@ -176,13 +178,13 @@ export function AppleIntentLeadsHub() {
       <TablerCard statusColor="purple" headerTitle="⚙️ Search Options">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div>
-            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
+            <label className="mb-1.5 block font-semibold text-muted-foreground text-xs uppercase tracking-wider">
               Select City
             </label>
             <select
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
-              className="w-full rounded-lg border border-border/60 bg-muted/30 p-2 text-xs font-semibold outline-none focus:border-purple-500 cursor-pointer"
+              className="w-full cursor-pointer rounded-lg border border-border/60 bg-muted/30 p-2 font-semibold text-xs outline-none focus:border-purple-500"
             >
               <option value="Toronto">Toronto</option>
               <option value="Vancouver">Vancouver</option>
@@ -193,11 +195,11 @@ export function AppleIntentLeadsHub() {
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="mb-1.5 flex items-center justify-between">
+              <label className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
                 Min. Intent Score
               </label>
-              <span className="text-xs font-bold text-amber-500">{intentThreshold}/100</span>
+              <span className="font-bold text-amber-500 text-xs">{intentThreshold}/100</span>
             </div>
             <input
               type="range"
@@ -205,20 +207,22 @@ export function AppleIntentLeadsHub() {
               max="95"
               value={intentThreshold}
               onChange={(e) => setIntentThreshold(Number(e.target.value))}
-              className="w-full accent-amber-500 cursor-pointer"
+              className="w-full cursor-pointer accent-amber-500"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
+            <label className="mb-1.5 block font-semibold text-muted-foreground text-xs uppercase tracking-wider">
               Admin Lead Limiter
             </label>
-            <div className="flex items-center justify-between rounded-lg border border-amber-500/30 bg-amber-500/10 p-2 text-xs font-semibold text-amber-400">
+            <div className="flex items-center justify-between rounded-lg border border-amber-500/30 bg-amber-500/10 p-2 font-semibold text-amber-400 text-xs">
               <span className="flex items-center gap-1.5">
                 <IconLock className="h-4 w-4" />
                 Limit Active
               </span>
-              <span>{currentLeadCount} / {MAX_LEAD_LIMIT} Max</span>
+              <span>
+                {currentLeadCount} / {MAX_LEAD_LIMIT} Max
+              </span>
             </div>
           </div>
         </div>
@@ -226,7 +230,7 @@ export function AppleIntentLeadsHub() {
 
       {/* Simple Platforms Grid */}
       <div>
-        <h2 className="text-sm font-semibold mb-3 flex items-center gap-1.5">
+        <h2 className="mb-3 flex items-center gap-1.5 font-semibold text-sm">
           <IconBolt className="h-4 w-4 text-purple-500" />
           Where We Search
         </h2>
@@ -240,9 +244,9 @@ export function AppleIntentLeadsHub() {
                     <IconComp className="h-6 w-6" />
                   </div>
                   <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                    className={`rounded-full px-2 py-0.5 font-bold text-[10px] ${
                       ch.status === "running"
-                        ? "bg-amber-500/20 text-amber-400 animate-pulse"
+                        ? "animate-pulse bg-amber-500/20 text-amber-400"
                         : "bg-muted/40 text-muted-foreground"
                     }`}
                   >
@@ -251,13 +255,13 @@ export function AppleIntentLeadsHub() {
                 </div>
 
                 <h3 className="mt-3 font-semibold text-sm">{ch.name}</h3>
-                <p className="mt-0.5 text-xs text-muted-foreground">
+                <p className="mt-0.5 text-muted-foreground text-xs">
                   Searches {ch.platform} in {selectedCity}.
                 </p>
 
-                <div className="mt-3 flex items-baseline justify-between border-t border-border/40 pt-2.5">
-                  <span className="text-xs text-muted-foreground font-medium">Found</span>
-                  <span className="text-lg font-bold">{ch.count}</span>
+                <div className="mt-3 flex items-baseline justify-between border-border/40 border-t pt-2.5">
+                  <span className="font-medium text-muted-foreground text-xs">Found</span>
+                  <span className="font-bold text-lg">{ch.count}</span>
                 </div>
               </TablerCard>
             );
@@ -266,16 +270,13 @@ export function AppleIntentLeadsHub() {
       </div>
 
       {/* Live Stream Card */}
-      <TablerCard
-        headerTitle="📡 Live Lead Stream"
-        headerDescription="New leads will show up here in real time"
-      >
+      <TablerCard headerTitle="📡 Live Lead Stream" headerDescription="New leads will show up here in real time">
         <div className="py-10 text-center text-muted-foreground">
-          <IconRadar className="mx-auto h-8 w-8 opacity-30 animate-spin" />
-          <p className="mt-2 text-xs font-semibold">
+          <IconRadar className="mx-auto h-8 w-8 animate-spin opacity-30" />
+          <p className="mt-2 font-semibold text-xs">
             {isLimitReached ? "🔒 10/10 Lead Limit Reached" : "Ready to search"}
           </p>
-          <p className="text-[11px] text-muted-foreground max-w-xs mx-auto mt-1">
+          <p className="mx-auto mt-1 max-w-xs text-[11px] text-muted-foreground">
             {isLimitReached
               ? "Maximum cap of 10 leads reached. Admin lock is active."
               : "Click 'Start Lead Search' above to find new people."}

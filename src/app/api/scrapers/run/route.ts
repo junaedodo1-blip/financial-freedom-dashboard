@@ -15,7 +15,7 @@ export async function POST(req: Request) {
           max_limit: MAX_LEAD_LIMIT,
           scraped_count: 0,
         },
-        { status: 429 }
+        { status: 429 },
       );
     }
 

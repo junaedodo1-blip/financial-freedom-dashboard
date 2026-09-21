@@ -1,14 +1,9 @@
 "use client";
 
 import { useState } from "react";
+
+import { IconSparkles } from "@tabler/icons-react";
 import { toast } from "sonner";
-import {
-  IconRobot,
-  IconFlame,
-  IconRefresh,
-  IconSparkles,
-  IconUsers,
-} from "@tabler/icons-react";
 
 import { Button } from "@/components/ui/button";
 import { TablerCard } from "@/components/ui/tabler-card";
@@ -51,35 +46,30 @@ export function TwentyCrmHub() {
             size="sm"
             onClick={() => handleAiAction()}
             disabled={isAiThinking}
-            className="bg-amber-500 text-black hover:bg-amber-400 text-xs font-semibold"
+            className="bg-amber-500 font-semibold text-black text-xs hover:bg-amber-400"
           >
-            <IconSparkles className="h-4 w-4 mr-1" />
+            <IconSparkles className="mr-1 h-4 w-4" />
             {isAiThinking ? "Thinking..." : "Run AI Filter"}
           </Button>
         </div>
 
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold text-muted-foreground">Quick Filters:</span>
+          <span className="font-semibold text-muted-foreground text-xs">Quick Filters:</span>
           <Button
             size="sm"
             variant="outline"
-            className="text-xs h-7"
+            className="h-7 text-xs"
             onClick={() => handleAiAction("Toronto Contacts")}
           >
             Find Toronto Leads
           </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            className="text-xs h-7"
-            onClick={() => handleAiAction("High Intent")}
-          >
+          <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => handleAiAction("High Intent")}>
             Show High Intent
           </Button>
         </div>
 
         {aiResult && (
-          <div className="mt-3 rounded-md bg-amber-500/10 border border-amber-500/20 p-2.5 text-xs font-medium text-amber-400">
+          <div className="mt-3 rounded-md border border-amber-500/20 bg-amber-500/10 p-2.5 font-medium text-amber-400 text-xs">
             {aiResult}
           </div>
         )}

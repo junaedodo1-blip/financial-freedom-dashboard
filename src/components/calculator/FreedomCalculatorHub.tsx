@@ -2,15 +2,17 @@
 
 import type React from "react";
 import { useState } from "react";
+
 import {
-  IconCalculator,
-  IconCurrencyDollar,
-  IconTrendingUp,
-  IconCheck,
-  IconRefresh,
   IconBuildingBank,
+  IconCalculator,
+  IconCheck,
+  IconCurrencyDollar,
+  IconRefresh,
+  IconTrendingUp,
 } from "@tabler/icons-react";
 import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TablerCard } from "@/components/ui/tabler-card";
@@ -63,9 +65,7 @@ export function FreedomCalculatorHub() {
       >
         <form onSubmit={handleCalculate} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium mb-1 text-muted-foreground">
-              Branch City
-            </label>
+            <label className="mb-1 block font-medium text-muted-foreground text-xs">Branch City</label>
             <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -80,11 +80,9 @@ export function FreedomCalculatorHub() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium mb-1 text-muted-foreground">
-              Money Earned Per Month ($)
-            </label>
+            <label className="mb-1 block font-medium text-muted-foreground text-xs">Money Earned Per Month ($)</label>
             <div className="relative">
-              <IconCurrencyDollar className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <IconCurrencyDollar className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="number"
                 value={monthlyIncome}
@@ -96,11 +94,9 @@ export function FreedomCalculatorHub() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium mb-1 text-muted-foreground">
-              Money Spent Per Month ($)
-            </label>
+            <label className="mb-1 block font-medium text-muted-foreground text-xs">Money Spent Per Month ($)</label>
             <div className="relative">
-              <IconCurrencyDollar className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <IconCurrencyDollar className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="number"
                 value={monthlyExpenses}
@@ -112,11 +108,11 @@ export function FreedomCalculatorHub() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium mb-1 text-muted-foreground">
+            <label className="mb-1 block font-medium text-muted-foreground text-xs">
               Goal Monthly Passive Income ($)
             </label>
             <div className="relative">
-              <IconCurrencyDollar className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <IconCurrencyDollar className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="number"
                 value={targetIncome}
@@ -127,12 +123,7 @@ export function FreedomCalculatorHub() {
             </div>
           </div>
 
-          <Button
-            type="submit"
-            disabled={isCalculating}
-            className="w-full text-xs font-medium"
-            size="sm"
-          >
+          <Button type="submit" disabled={isCalculating} className="w-full font-medium text-xs" size="sm">
             {isCalculating ? (
               <IconRefresh className="mr-2 h-4 w-4 animate-spin" />
             ) : (
@@ -144,34 +135,27 @@ export function FreedomCalculatorHub() {
       </TablerCard>
 
       {/* Result Card */}
-      <TablerCard
-        statusColor="blue"
-        headerTitle="Your Gap Result"
-        headerDescription={`Calculated for ${city} branch.`}
-      >
+      <TablerCard statusColor="blue" headerTitle="Your Gap Result" headerDescription={`Calculated for ${city} branch.`}>
         <div className="space-y-4">
           <div className="rounded-lg border border-border/60 bg-muted/30 p-4 text-center">
-            <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
-              Monthly Gap
-            </span>
-            <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+            <span className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">Monthly Gap</span>
+            <div className="mt-1 font-bold text-3xl text-emerald-600 dark:text-emerald-400">
               ${calculationResult.freedom_gap.toLocaleString()} / mo
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              Time to Freedom:{" "}
-              <strong className="text-foreground">{calculationResult.months_to_freedom} Months</strong>
+            <p className="mt-2 text-muted-foreground text-xs">
+              Time to Freedom: <strong className="text-foreground">{calculationResult.months_to_freedom} Months</strong>
             </p>
           </div>
 
           <div className="space-y-2 text-xs">
-            <div className="flex items-center justify-between rounded-md border border-border/40 p-2.5 bg-background">
-              <span className="text-muted-foreground flex items-center gap-1.5">
+            <div className="flex items-center justify-between rounded-md border border-border/40 bg-background p-2.5">
+              <span className="flex items-center gap-1.5 text-muted-foreground">
                 <IconBuildingBank className="h-4 w-4 text-blue-500" /> Assigned Branch
               </span>
               <span className="font-semibold">{city}</span>
             </div>
-            <div className="flex items-center justify-between rounded-md border border-border/40 p-2.5 bg-background">
-              <span className="text-muted-foreground flex items-center gap-1.5">
+            <div className="flex items-center justify-between rounded-md border border-border/40 bg-background p-2.5">
+              <span className="flex items-center gap-1.5 text-muted-foreground">
                 <IconTrendingUp className="h-4 w-4 text-emerald-500" /> Target Plan
               </span>
               <span className="font-semibold">{city} Asset Strategy</span>

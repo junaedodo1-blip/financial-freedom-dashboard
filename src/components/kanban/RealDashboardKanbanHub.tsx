@@ -1,25 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+
 import Link from "next/link";
+
+import { IconLayoutKanban, IconRefresh, IconUserCheck } from "@tabler/icons-react";
 import { toast } from "sonner";
-import {
-  IconArrowRight,
-  IconCheck,
-  IconChecklist,
-  IconClock,
-  IconFlame,
-  IconLayoutKanban,
-  IconPlus,
-  IconRefresh,
-  IconUserCheck,
-} from "@tabler/icons-react";
 
 import { Kanban } from "@/app/(main)/dashboard/kanban/_components/kanban";
 import type { BoardState, Task } from "@/app/(main)/dashboard/kanban/_components/types";
+import type { ContactRecord } from "@/components/crm/AppleCrmHub";
 import { Button } from "@/components/ui/button";
 import { TablerCard } from "@/components/ui/tabler-card";
-import type { ContactRecord } from "@/components/crm/AppleCrmHub";
 
 export function RealDashboardKanbanHub() {
   const [loading, setLoading] = useState(false);
@@ -121,30 +113,22 @@ export function RealDashboardKanbanHub() {
       {/* Simple Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-400">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 font-semibold text-amber-400 text-xs">
             <IconLayoutKanban className="h-3.5 w-3.5" />
             TASK BOARD
           </div>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight">Task Board</h1>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Drag and drop tasks to manage your work easily.
-          </p>
+          <h1 className="mt-2 font-bold text-2xl tracking-tight">Task Board</h1>
+          <p className="mt-1 text-muted-foreground text-xs">Drag and drop tasks to manage your work easily.</p>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            variant="outline"
-            className="text-xs"
-            onClick={fetchLiveLeads}
-            disabled={loading}
-          >
-            <IconRefresh className={`h-4 w-4 mr-1 ${loading ? "animate-spin" : ""}`} />
+          <Button size="sm" variant="outline" className="text-xs" onClick={fetchLiveLeads} disabled={loading}>
+            <IconRefresh className={`mr-1 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
             Refresh
           </Button>
           <Link href="/dashboard/crm">
-            <Button size="sm" className="bg-amber-500 text-black hover:bg-amber-400 text-xs font-semibold">
-              <IconUserCheck className="h-4 w-4 mr-1.5" />
+            <Button size="sm" className="bg-amber-500 font-semibold text-black text-xs hover:bg-amber-400">
+              <IconUserCheck className="mr-1.5 h-4 w-4" />
               Open CRM
             </Button>
           </Link>

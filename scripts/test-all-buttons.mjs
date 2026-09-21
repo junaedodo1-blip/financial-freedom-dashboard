@@ -52,7 +52,10 @@ async function main() {
         try {
           const isVisible = await btn.isVisible();
           const isDisabled = await btn.isDisabled().catch(() => false);
-          const text = (await btn.innerText().catch(() => "")).trim() || (await btn.getAttribute("aria-label").catch(() => "")) || "Button";
+          const _text =
+            (await btn.innerText().catch(() => "")).trim() ||
+            (await btn.getAttribute("aria-label").catch(() => "")) ||
+            "Button";
 
           if (isVisible && !isDisabled) {
             // Click button safely
@@ -61,7 +64,7 @@ async function main() {
           } else if (isDisabled) {
             disabledCount++;
           }
-        } catch (e) {
+        } catch (_e) {
           // Ignore transient click errors
         }
       }

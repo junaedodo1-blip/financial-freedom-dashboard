@@ -77,7 +77,7 @@ export function PaperclipCockpitHub() {
   };
 
   const handleRunAiFleetTask = async (preset?: string) => {
-    const p = preset !== undefined ? preset : aiPrompt;
+    const p = preset ?? aiPrompt;
     if (!p.trim() || isAiThinking) return;
 
     setIsAiThinking(true);

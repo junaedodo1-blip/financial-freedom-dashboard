@@ -96,7 +96,7 @@ export function OpenNotebookBrainHub() {
   }, [fetchBrainData]);
 
   const handleRagSearch = async (queryToSearch?: string) => {
-    const q = queryToSearch !== undefined ? queryToSearch : aiQuery;
+    const q = queryToSearch ?? aiQuery;
     if (!q.trim() || isAiSearching) return;
 
     setIsAiSearching(true);

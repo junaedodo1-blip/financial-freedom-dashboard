@@ -1,17 +1,17 @@
 "use client";
 
 import { useState } from "react";
+
 import { useRouter } from "next/navigation";
-import { IconLock, IconUser, IconShieldCheck, IconAlertTriangle } from "@tabler/icons-react";
+
+import { IconAlertTriangle, IconLock, IconShieldCheck, IconUser } from "@tabler/icons-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 // Approved Client Accounts List (only approved users can log in)
-const APPROVED_ACCOUNTS = [
-  { username: "junaed", email: "junaed@financialfreedom.ca", password: "1357" },
-];
+const APPROVED_ACCOUNTS = [{ username: "junaed", email: "junaed@financialfreedom.ca", password: "1357" }];
 
 export function LoginForm() {
   const router = useRouter();
@@ -31,7 +31,7 @@ export function LoginForm() {
     const approvedUser = APPROVED_ACCOUNTS.find(
       (acc) =>
         (acc.username.toLowerCase() === inputLower || acc.email.toLowerCase() === inputLower) &&
-        acc.password === password
+        acc.password === password,
     );
 
     setTimeout(() => {
@@ -41,7 +41,7 @@ export function LoginForm() {
         toast.success("Login Successful", {
           description: `Welcome back, ${approvedUser.username}!`,
         });
-        router.push("/dashboard/default");
+        window.location.href = "/dashboard/default";
       } else {
         const errorText = "Access denied. Account not approved by administrator.";
         setErrorMsg(errorText);
@@ -55,18 +55,16 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {errorMsg && (
-        <div className="flex items-center gap-2 rounded-md border border-rose-500/30 bg-rose-500/10 p-3 text-xs text-rose-600 dark:text-rose-400">
+        <div className="flex items-center gap-2 rounded-md border border-rose-500/30 bg-rose-500/10 p-3 text-rose-600 text-xs dark:text-rose-400">
           <IconAlertTriangle className="h-4 w-4 shrink-0 text-rose-500" />
           <span>{errorMsg}</span>
         </div>
       )}
 
       <div>
-        <label className="block text-xs font-medium mb-1.5 text-muted-foreground">
-          Approved Username or Email
-        </label>
+        <label className="mb-1.5 block font-medium text-muted-foreground text-xs">Approved Username or Email</label>
         <div className="relative">
-          <IconUser className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <IconUser className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
             value={username}
@@ -79,11 +77,9 @@ export function LoginForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-medium mb-1.5 text-muted-foreground">
-          Password
-        </label>
+        <label className="mb-1.5 block font-medium text-muted-foreground text-xs">Password</label>
         <div className="relative">
-          <IconLock className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <IconLock className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="password"
             value={password}
@@ -95,18 +91,13 @@ export function LoginForm() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between text-xs text-muted-foreground pt-1">
-        <span className="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+      <div className="flex items-center justify-between pt-1 text-muted-foreground text-xs">
+        <span className="flex items-center gap-1 font-medium text-[11px] text-emerald-600 dark:text-emerald-400">
           <IconShieldCheck className="h-3.5 w-3.5" /> Approved Client Access Only
         </span>
       </div>
 
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full text-xs font-semibold"
-        size="sm"
-      >
+      <Button type="submit" disabled={isSubmitting} className="w-full font-semibold text-xs" size="sm">
         {isSubmitting ? "Signing in..." : "Sign In"}
       </Button>
     </form>

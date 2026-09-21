@@ -173,7 +173,7 @@ export function MailflareHub() {
         toast.success("🔥 Email Warmup State Updated", {
           description: data.message,
         });
-        fetchMailflareData();
+        await fetchMailflareData();
       } else {
         setInboxes((prev) => prev.map((ib) => (ib.id === inboxId ? { ...ib, warmup_active: !ib.warmup_active } : ib)));
         toast.success("🔥 Warmup state toggled for inbox");
@@ -199,7 +199,7 @@ export function MailflareHub() {
           description: data.message || `Imported high-intent prospects under CASL 2026 shield.`,
           id: "transport",
         });
-        fetchMailflareData();
+        await fetchMailflareData();
       } else {
         toast.success("🎯 12 High-Intent Prospects Transported to Queue!", { id: "transport" });
       }
@@ -274,7 +274,7 @@ export function MailflareHub() {
           description: data.message || `Dispatched emails under CASL 2026 shield.`,
           id: "send",
         });
-        fetchMailflareData();
+        await fetchMailflareData();
       } else {
         toast.success("🚀 Campaign Dispatched to 142 CASL-Verified Leads!", { id: "send" });
       }
