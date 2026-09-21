@@ -61,9 +61,9 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
               <SearchDialog />
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-xs font-medium text-foreground shadow-xs">
-                <ThinkingOrb state="working" size={28} />
-                <span className="hidden sm:inline font-semibold">Kalo Active</span>
+              <div className="flex items-center gap-1.5 py-1 text-xs font-medium text-foreground">
+                <ThinkingOrb state="working" size={28} color="amber" />
+                <span className="hidden sm:inline font-semibold text-amber-500 dark:text-amber-400">Kalo Active</span>
               </div>
               <LayoutControls />
               <ThemeSwitcher />

@@ -22,5 +22,6 @@ export type ModeDraw = (
   size: number,
   t: number,
   dark: boolean,
-  opts: ModeOpts
+  opts: ModeOpts,
+  color?: string
 ) => void;

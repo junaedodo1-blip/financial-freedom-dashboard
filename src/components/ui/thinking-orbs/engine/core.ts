@@ -102,12 +102,38 @@ export function makeProj(yaw: number, tilt: number, cx: number, cy: number, scal
  * ink value is mirrored (1 - white) so near dots read bright — the same
  * depth language on an inverted substrate.
  */
-export function paint(ctx: CanvasRenderingContext2D, dots: Dot[], dark: boolean, rMin = 0.3): void {
+export function paint(ctx: CanvasRenderingContext2D, dots: Dot[], dark: boolean, color = "amber"): void {
   for (const d of dots) {
     const alpha = d.a ?? 1;
     const w = Math.min(1, Math.max(0, d.white));
-    const g = Math.round((dark ? 1 - w : w) * 255);
-    ctx.fillStyle = `rgba(${g},${g},${g},${alpha})`;
+    const intensity = dark ? 1 - w : w;
+
+    if (color === "cyan") {
+      const r = Math.round(lerp(34, 6, intensity));
+      const g = Math.round(lerp(211, 182, intensity));
+      const b = Math.round(lerp(238, 212, intensity));
+      ctx.fillStyle = `rgba(${r},${g},${b},${alpha * (0.5 + intensity * 0.5)})`;
+    } else if (color === "emerald") {
+      const r = Math.round(lerp(52, 16, intensity));
+      const g = Math.round(lerp(211, 185, intensity));
+      const b = Math.round(lerp(153, 129, intensity));
+      ctx.fillStyle = `rgba(${r},${g},${b},${alpha * (0.5 + intensity * 0.5)})`;
+    } else if (color === "violet") {
+      const r = Math.round(lerp(167, 139, intensity));
+      const g = Math.round(lerp(139, 92, intensity));
+      const b = Math.round(lerp(250, 246, intensity));
+      ctx.fillStyle = `rgba(${r},${g},${b},${alpha * (0.5 + intensity * 0.5)})`;
+    } else if (color === "rainbow") {
+      const hue = Math.round((d.z + 1) * 180 + d.x * 5) % 360;
+      ctx.fillStyle = `hsla(${hue}, 90%, ${dark ? 65 : 45}%, ${alpha})`;
+    } else {
+      // Default Vibrant Gold / Amber Glow
+      const r = Math.round(lerp(251, 245, intensity));
+      const g = Math.round(lerp(191, 158, intensity));
+      const b = Math.round(lerp(36, 11, intensity));
+      ctx.fillStyle = `rgba(${r},${g},${b},${alpha * (0.55 + intensity * 0.45)})`;
+    }
+
     ctx.beginPath();
     ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
     ctx.fill();
@@ -115,12 +141,19 @@ export function paint(ctx: CanvasRenderingContext2D, dots: Dot[], dark: boolean,
 }
 
 /** Stroke pass for edge-based modes. Runs before `paint` so nodes sit on top. */
-export function paintLines(ctx: CanvasRenderingContext2D, lines: Line[], dark: boolean): void {
+export function paintLines(ctx: CanvasRenderingContext2D, lines: Line[], dark: boolean, color = "amber"): void {
   for (const l of lines) {
     const alpha = l.a ?? 1;
     const w = Math.min(1, Math.max(0, l.white));
-    const g = Math.round((dark ? 1 - w : w) * 255);
-    ctx.strokeStyle = `rgba(${g},${g},${g},${alpha})`;
+    const intensity = dark ? 1 - w : w;
+    let r = 245;
+    let g = 158;
+    let b = 11;
+    if (color === "cyan") { r = 34; g = 211; b = 238; }
+    else if (color === "emerald") { r = 52; g = 211; b = 153; }
+    else if (color === "violet") { r = 167; g = 139; b = 250; }
+
+    ctx.strokeStyle = `rgba(${r},${g},${b},${alpha * 0.75})`;
     ctx.lineWidth = l.w;
     ctx.beginPath();
     ctx.moveTo(l.x1, l.y1);
@@ -129,16 +162,6 @@ export function paintLines(ctx: CanvasRenderingContext2D, lines: Line[], dark: b
   }
 }
 
-/**
- * Turn raw mode output into a finished frame: drop invisible marks, clamp
- * radii to the mode's floor, and z-sort far→near into draw order.
- *
- * This runs in the GEOMETRY step, not the painter, so a frame is a complete
- * set of draw instructions: every value is final and the array order is the
- * order to draw in. That is what lets the RN and SwiftUI ports share this
- * output verbatim — a port draws the list, it never re-derives anything —
- * and what lets the golden-vector tests compare numbers instead of pixels.
- */
 export function finalizeFrame(dots: Dot[], lines: Line[], rMin = 0.3): OrbFrame {
   const visible: Dot[] = [];
   for (const d of dots) {
@@ -151,9 +174,9 @@ export function finalizeFrame(dots: Dot[], lines: Line[], rMin = 0.3): OrbFrame 
 }
 
 /** Paint a finished frame. Lines first, so nodes sit on top of their edges. */
-export function paintFrame(ctx: CanvasRenderingContext2D, frame: OrbFrame, dark: boolean): void {
-  if (frame.lines.length) paintLines(ctx, frame.lines, dark);
-  paint(ctx, frame.dots, dark);
+export function paintFrame(ctx: CanvasRenderingContext2D, frame: OrbFrame, dark: boolean, color = "amber"): void {
+  if (frame.lines.length) paintLines(ctx, frame.lines, dark, color);
+  paint(ctx, frame.dots, dark, color);
 }
 
 /**

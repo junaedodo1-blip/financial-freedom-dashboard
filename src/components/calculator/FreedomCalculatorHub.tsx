@@ -141,9 +141,9 @@ export function FreedomCalculatorHub() {
         headerTitle="Your Gap Result"
         headerDescription={`Calculated for ${city} branch.`}
         headerAction={
-          <div className="flex items-center gap-1.5 rounded-full border border-border/50 bg-background/60 px-2 py-0.5 text-[11px] text-muted-foreground">
-            <ThinkingOrb state="solving" size={20} />
-            <span>AI Solved</span>
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
+            <ThinkingOrb state="solving" size={28} color="emerald" />
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">AI Solved</span>
           </div>
         }
       >
